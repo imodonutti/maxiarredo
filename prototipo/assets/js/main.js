@@ -161,6 +161,68 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
+     8b. SHOWROOM — sezione bloccata con parallasse a più velocità
+         (solo desktop). Il testo resta fermo, le foto salgono a velocità
+         diverse; l'indice dei piani e il numero di sfondo seguono la foto
+         in primo piano.
+     ------------------------------------------------------------------ */
+  mm.add('(min-width: 901px)', () => {
+    const section = $('#showroom');
+    section.classList.add('is-pinned');                 // attiva il layout "a palcoscenico"
+    const vh = () => window.innerHeight;
+    const items = $$('.floor-index li', section);
+    const nums = $$('.showroom__num span', section);
+    let current = -1;
+
+    const setFloor = (i) => {
+      if (i === current) return;
+      items.forEach((li, k) => li.classList.toggle('is-active', k === i));
+      if (nums[current]) gsap.to(nums[current], { yPercent: -60, opacity: 0, duration: 0.8, ease: EASE, overwrite: true });
+      gsap.fromTo(nums[i], { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1, ease: EASE, overwrite: true });
+      current = i;
+    };
+    gsap.set(nums, { yPercent: 60, opacity: 0 });
+    setFloor(0);
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: section, start: 'top top', end: '+=240%',
+        pin: true, scrub: 0.6, invalidateOnRefresh: true,
+        onUpdate(self) {
+          const p = self.progress;
+          setFloor(p < 0.4 ? 0 : p < 0.72 ? 1 : 2);
+        },
+      },
+    });
+
+    /* Ogni livello: [selettore, inizio, durata, posizione di partenza (in vh), arrivo]
+       Durata più breve = velocità più alta. */
+    const layers = [
+      ['.sv--1',  0.00, 0.48, 0.25, 'out'],
+      ['.sv--a1', 0.04, 0.30, 1.05, 'out'],
+      ['.sv--2',  0.18, 0.52, 1.05, 'out'],
+      ['.sv--a2', 0.34, 0.32, 1.05, 'out'],
+      ['.sv--3',  0.46, 0.54, 1.05, 'center'],
+    ];
+    layers.forEach(([sel, start, dur, from, to]) => {
+      const el = $(sel, section);
+      tl.fromTo(el,
+        { y: () => vh() * from },
+        { y: () => (to === 'center' ? vh() / 2 - el.offsetHeight / 2 : -el.offsetHeight - vh() * 0.05), duration: dur },
+        start);
+      // parallasse interno: l'immagine scorre un po' dentro la sua cornice
+      tl.fromTo($('img', el), { yPercent: -7 }, { yPercent: 7, duration: dur }, start);
+    });
+    tl.to({}, { duration: 0.05 });   // piccola pausa finale prima di sbloccare
+
+    return () => {                   // uscendo dal desktop torna la colonna semplice
+      section.classList.remove('is-pinned');
+      gsap.set($$('.sv, .sv img, .showroom__num span', section), { clearProps: 'all' });
+    };
+  });
+
+  /* ------------------------------------------------------------------
      9. NUMERI — contatori
      ------------------------------------------------------------------ */
   $$('[data-count]').forEach((el) => {

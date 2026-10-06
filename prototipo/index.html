@@ -220,34 +220,41 @@
     </ul>
   </section>
 
-  <!-- ============================== _05 SHOWROOM ============================== -->
+  <!-- ============================== _05 SHOWROOM ==============================
+       Desktop: sezione bloccata ("pinned") con foto a velocità diverse.
+       Mobile / movimento ridotto: tutto in colonna, senza blocco. -->
   <section class="section showroom" id="showroom" aria-labelledby="showroom-title">
-    <div class="container">
-      <div class="grid showroom__head">
-        <span class="meta meta--line" data-fade style="grid-column:1/-1"><b>_05</b> Showroom</span>
-        <h2 class="title title--h2" id="showroom-title" data-split>Tre piani per rendere <em>tangibile</em> la nostra idea di casa.</h2>
-        <p class="text" data-fade>Ambienti completi, non pezzi isolati: materiali da toccare, soluzioni da provare dal vivo.</p>
-      </div>
+    <div class="showroom__stage">
+      <div class="showroom__num" aria-hidden="true"><span>0</span><span>+1</span><span>−1</span></div>
 
-      <div class="grid floors">
-        <article class="floor">
-          <figure class="media" data-reveal data-cursor="Piano 0" style="margin:0"><div class="media__inner" data-parallax="10"><img src="assets/img/show1.jpg" alt="Living con divano curvo e lampada a disco dorato" loading="lazy"></div></figure>
-          <div class="floor__cap"><h3 class="floor__name">Esposizione</h3><span class="meta">Piano 0</span></div>
-          <p>Il piano dell'accoglienza: le vetrine raccontano cosa proponiamo e la qualità dei materiali che scegliamo.</p>
-        </article>
-        <article class="floor">
-          <figure class="media" data-reveal data-cursor="Piano +1" style="margin:0"><div class="media__inner" data-parallax="14"><img src="assets/img/show3.jpg" alt="Camera da letto con letto imbottito" loading="lazy"></div></figure>
-          <div class="floor__cap"><h3 class="floor__name">Proposte</h3><span class="meta">Piano +1</span></div>
-          <p>Due appartamenti completi, allestiti per mostrare soluzioni abitative reali.</p>
-        </article>
-        <article class="floor">
-          <figure class="media" data-reveal data-cursor="Piano -1" style="margin:0"><div class="media__inner" data-parallax="8"><img src="assets/img/show2.jpg" alt="Open space con living e zona lavoro" loading="lazy"></div></figure>
-          <div class="floor__cap"><h3 class="floor__name">Loft open-space</h3><span class="meta">Piano -1</span></div>
-          <p>Uno spazio in evoluzione, dedicato al rinnovo espositivo e a un'area tecnica.</p>
-        </article>
-        <div class="showroom__cta">
-          <p class="text" data-fade>Da lunedì a sabato, 9:00–12:30 / 15:00–19:30.</p>
-          <a href="#contatti" class="btn btn--light js-magnetic"><span class="btn__dot"></span>Prenota una visita</a>
+      <div class="container grid showroom__inner">
+        <div class="showroom__copy">
+          <span class="meta meta--line" data-fade><b>_05</b> Showroom</span>
+          <h2 class="title title--h2" id="showroom-title" data-split>Tre piani per rendere <em>tangibile</em> la nostra idea di casa.</h2>
+          <p class="text" data-fade>Ambienti completi, non pezzi isolati: materiali da toccare, soluzioni da provare dal vivo.</p>
+
+          <ol class="floor-index" data-fade>
+            <li class="is-active"><span class="meta">Piano 0</span><strong>Esposizione</strong>
+              <p>Il piano dell'accoglienza: le vetrine raccontano cosa proponiamo e la qualità dei materiali che scegliamo.</p></li>
+            <li><span class="meta">Piano +1</span><strong>Proposte</strong>
+              <p>Due appartamenti completi, allestiti per mostrare soluzioni abitative reali.</p></li>
+            <li><span class="meta">Piano −1</span><strong>Loft open-space</strong>
+              <p>Uno spazio in evoluzione, dedicato al rinnovo espositivo e a un'area tecnica.</p></li>
+          </ol>
+
+          <div class="showroom__cta" data-fade>
+            <a href="#contatti" class="btn btn--light js-magnetic"><span class="btn__dot"></span>Prenota una visita</a>
+            <span class="meta">Lun–Sab 9:00–12:30 / 15:00–19:30</span>
+          </div>
+        </div>
+
+        <!-- Livelli di parallasse: data-floor collega la foto al piano nell'indice -->
+        <div class="showroom__visuals">
+          <figure class="sv sv--1" data-floor="0" data-cursor="Piano 0"><div class="sv__img"><img src="assets/img/show1.jpg" alt="Living con divano curvo e lampada a disco dorato" loading="lazy"></div><figcaption class="meta">Piano 0 — Esposizione</figcaption></figure>
+          <figure class="sv sv--a1" aria-hidden="true"><div class="sv__img"><img src="assets/img/show4.jpg" alt="" loading="lazy"></div></figure>
+          <figure class="sv sv--2" data-floor="1" data-cursor="Piano +1"><div class="sv__img"><img src="assets/img/show3.jpg" alt="Camera da letto con letto imbottito" loading="lazy"></div><figcaption class="meta">Piano +1 — Proposte</figcaption></figure>
+          <figure class="sv sv--a2" aria-hidden="true"><div class="sv__img"><img src="assets/img/show5.jpg" alt="" loading="lazy"></div></figure>
+          <figure class="sv sv--3" data-floor="2" data-cursor="Piano −1"><div class="sv__img"><img src="assets/img/show2.jpg" alt="Open space con living e zona lavoro" loading="lazy"></div><figcaption class="meta">Piano −1 — Loft open-space</figcaption></figure>
         </div>
       </div>
     </div>

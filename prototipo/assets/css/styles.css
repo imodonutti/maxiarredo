@@ -337,27 +337,66 @@ html.lenis, html.lenis body { height: auto; }
 .follower img.is-active { opacity: 1; }
 
 /* ==========================================================================
-   _05 SHOWROOM (sezione scura)
+   _05 SHOWROOM — sezione scura
+   Base (mobile / movimento ridotto): colonna semplice.
+   .is-pinned (aggiunta da JS su desktop): sezione bloccata + parallasse
+   a più velocità.
    ========================================================================== */
-.showroom { background: var(--c-dark); color: var(--c-on-dark); }
+.showroom { background: var(--c-dark); color: var(--c-on-dark); overflow: hidden; }
 .showroom .meta { color: rgba(236, 234, 227, .55); }
 .showroom .meta b { color: var(--c-on-dark); }
 .showroom .text { color: rgba(236, 234, 227, .7); }
 .showroom .title em { color: #C9A96E; }
-.showroom__head { margin-bottom: clamp(3.5rem, 7vw, 7rem); }
-.showroom__head .meta { margin-bottom: 1.8rem; }
-.showroom__head .title { grid-column: 1 / 10; }
-.showroom__head .text { grid-column: 1 / 6; margin-top: 2rem; }
-.floors { align-items: start; }
-.floor:nth-child(1) { grid-column: 1 / 6; }
-.floor:nth-child(2) { grid-column: 7 / 11; margin-top: 30%; }
-.floor:nth-child(3) { grid-column: 3 / 9; margin-top: clamp(4rem, 8vw, 8rem); }
-.floor .media { aspect-ratio: 4 / 5; background: #2a2926; }
-.floor:nth-child(3) .media { aspect-ratio: 16 / 10; }
-.floor__cap { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1.2rem; gap: 1rem; }
-.floor__name { font-family: var(--ff-serif); font-size: var(--fs-h3); line-height: 1; }
-.floor p { color: rgba(236, 234, 227, .65); font-size: var(--fs-small); margin-top: .6rem; max-width: 40ch; }
-.showroom__cta { grid-column: 9 / 13; align-self: end; display: flex; flex-direction: column; gap: 1.5rem; align-items: start; }
+
+.showroom__copy { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 1.8rem; align-items: start; }
+.floor-index { list-style: none; margin: 1rem 0 0; padding: 0; width: 100%; max-width: 30rem; }
+.floor-index li {
+  display: grid; grid-template-columns: 5.5rem 1fr; column-gap: 1rem; align-items: baseline;
+  padding-block: 1.1rem; border-top: 1px solid rgba(236, 234, 227, .16);
+  transition: opacity .6s var(--ease);
+}
+.floor-index strong { font-family: var(--ff-serif); font-weight: 400; font-size: clamp(1.4rem, 1.1rem + .9vw, 2rem); line-height: 1; }
+.floor-index p { grid-column: 2; margin-top: .55rem; font-size: var(--fs-small); color: rgba(236, 234, 227, .62); max-width: 36ch; }
+.showroom__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 1.5rem; margin-top: .6rem; }
+
+.showroom__visuals { grid-column: 1 / -1; display: grid; gap: 3rem; margin-top: 4rem; }
+.sv { margin: 0; }
+.sv__img { overflow: hidden; background: #2a2926; aspect-ratio: 4 / 5; }
+.sv__img img { width: 100%; height: 100%; object-fit: cover; }
+.sv--3 .sv__img { aspect-ratio: 16 / 11; }
+.sv figcaption { margin-top: .8rem; }
+.sv--a1, .sv--a2 { display: none; }
+.showroom__num { display: none; }
+
+/* — Versione bloccata (desktop) — */
+.showroom.is-pinned { padding-block: 0; }
+.is-pinned .showroom__stage { position: relative; height: 100svh; overflow: hidden; }
+.is-pinned .showroom__inner { height: 100%; align-items: center; position: relative; z-index: 2; }
+.is-pinned .showroom__copy { grid-column: 1 / 6; gap: 1.5rem; }
+.is-pinned .showroom__copy .title { font-size: clamp(2.2rem, 1rem + 3vw, 4.4rem); }
+.is-pinned .floor-index li { opacity: .38; }
+.is-pinned .floor-index li.is-active { opacity: 1; }
+.is-pinned .showroom__visuals {
+  position: absolute; top: 0; bottom: 0; left: 40%; right: 0; margin: 0; display: block; z-index: 1;
+}
+.is-pinned .sv { position: absolute; top: 0; will-change: transform; }
+.is-pinned .sv--1 { left: 6%; width: 29vw; }
+.is-pinned .sv--2 { left: 58%; width: 22vw; }
+.is-pinned .sv--3 { left: 12%; width: 37vw; }
+.is-pinned .sv--a1 { display: block; left: 80%; width: 12vw; }
+.is-pinned .sv--a2 { display: block; left: 1%; width: 12vw; opacity: .9; }
+.is-pinned .sv--1, .is-pinned .sv--2, .is-pinned .sv--3 { z-index: 2; }
+.is-pinned .sv--2 .sv__img { aspect-ratio: 3 / 4; }
+.is-pinned .sv--a1 .sv__img { aspect-ratio: 1; }
+.is-pinned .sv__img img { transform: scale(1.18); }      /* margine per il parallasse interno */
+
+.is-pinned .showroom__num {
+  display: block; position: absolute; right: 1vw; bottom: -6vw; z-index: 0;
+  font-family: var(--ff-serif); font-size: 36vw; line-height: .8; pointer-events: none;
+  color: transparent; -webkit-text-stroke: 1px rgba(236, 234, 227, .2);
+  height: 30vw; width: 50vw; overflow: hidden;
+}
+.is-pinned .showroom__num span { position: absolute; right: 0; bottom: 0; }
 
 /* ==========================================================================
    _06 CHIUSURA + FORM
@@ -472,9 +511,6 @@ html.lenis, html.lenis body { height: auto; }
   .service__desc { grid-column: 2 / 3; grid-row: 2; }
   .service__arrow { grid-row: 1; grid-column: 3; }
 
-  .showroom__head .title, .showroom__head .text { grid-column: 1 / -1; }
-  .floor:nth-child(n), .showroom__cta { grid-column: 1 / -1; margin-top: 0; }
-  .floors { row-gap: 3.5rem; }
 
   .contact__title, .contact__intro, .form { grid-column: 1 / -1; }
   .form { grid-template-columns: 1fr; margin-top: 3.5rem; }
