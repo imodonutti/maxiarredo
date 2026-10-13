@@ -135,6 +135,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
+     7b. PROGETTI — tutto guidato dallo scroll
+         - [data-pr-reveal="up|left|right"]: la foto si apre a tenda nella
+           direzione indicata mentre entra, e l'immagine passa da uno zoom
+           ampio alla sua misura;
+         - l'immagine scorre dentro la cornice (parallasse interno);
+         - [data-pr-speed]: elementi che viaggiano più veloci dello scroll
+           (numeri grandi, foto verticale del progetto 01);
+         - il testo di ogni progetto entra a righe sfalsate.
+     ------------------------------------------------------------------ */
+  const prClip = { up: 'inset(100% 0% 0% 0%)', left: 'inset(0% 0% 0% 100%)', right: 'inset(0% 100% 0% 0%)' };
+  $$('[data-pr-reveal]').forEach((fig) => {
+    const box = $('.pr__img', fig), img = $('img', fig);
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: fig, start: 'top 92%', end: 'top 38%', scrub: 0.6 } })
+      .fromTo(box, { clipPath: prClip[fig.dataset.prReveal] || prClip.up }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }, 0)
+      .fromTo(img, { scale: 1.4 }, { scale: 1.12, ease: 'power1.out' }, 0);
+    gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none',
+      scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
+  });
+  $$('[data-pr-speed]').forEach((el) => {
+    const v = parseFloat(el.dataset.prSpeed) / 100;
+    gsap.fromTo(el, { y: () => -v * window.innerHeight }, { y: () => v * window.innerHeight, ease: 'none',
+      scrollTrigger: { trigger: el.closest('.pr'), start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+  });
+  $$('.pr__info').forEach((info) => {
+    gsap.fromTo([...info.children], { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', stagger: 0.12,
+      scrollTrigger: { trigger: info, start: 'top 92%', end: 'top 58%', scrub: 0.6 } });
+  });
+
+  /* ------------------------------------------------------------------
      8. FASI DEL METODO — scorrimento orizzontale con sezione bloccata
         (solo desktop; su mobile restano in colonna)
      ------------------------------------------------------------------ */

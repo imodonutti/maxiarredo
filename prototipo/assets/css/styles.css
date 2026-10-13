@@ -266,38 +266,49 @@ html.lenis, html.lenis body { height: auto; }
 /* ==========================================================================
    _03 PROGETTI
    ========================================================================== */
-.progetti__head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: clamp(3rem, 6vw, 6rem); flex-wrap: wrap; }
+.progetti__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: end; margin-bottom: clamp(4rem, 9vw, 9rem); }
+.progetti__head > div:first-child { grid-column: 1 / 8; }
 .progetti__head .meta { margin-bottom: 1.8rem; }
-.progetti__grid { row-gap: clamp(4rem, 8vw, 8rem); }
-.card { display: block; position: relative; }
-.card--a { grid-column: 1 / 9; }
-.card--b { grid-column: 10 / 13; margin-top: 35%; }
-.card--c { grid-column: 3 / 11; }
-.card__media { aspect-ratio: 16 / 11; }
-.card--b .card__media { aspect-ratio: 3 / 4; }
-.card__media img { transition: transform 1.4s var(--ease); }
-.card:hover .card__media img { transform: scale(1.045); }
-.card__info { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 1.3rem; align-items: start; }
-.card__title { font-family: var(--ff-serif); font-size: clamp(1.4rem, 1.1rem + 1vw, 2.1rem); line-height: 1.1; }
-.card__sub { color: var(--c-muted); font-size: var(--fs-small); margin-top: .3rem; }
+.progetti__aside { grid-column: 9 / 13; display: flex; flex-direction: column; gap: 1.2rem; align-items: start; }
 
-/* Prima / dopo */
-.ba { position: relative; aspect-ratio: 16 / 10; overflow: hidden; touch-action: pan-y; cursor: ew-resize; user-select: none; }
-.ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.ba__after { clip-path: inset(0 0 0 var(--pos, 50%)); }
-.ba__handle {
-  position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); width: 1px; background: var(--c-paper);
-  transform: translateX(-.5px);
+/* — Progetto: griglia a 12 colonne propria, impaginato diverso per ciascuno — */
+.pr { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); position: relative; color: inherit; text-decoration: none; }
+.pr + .pr { margin-top: clamp(6rem, 13vw, 13rem); }
+.pr__media { margin: 0; position: relative; z-index: 1; }
+.pr__img { position: relative; overflow: hidden; background: var(--c-paper-2); aspect-ratio: 4 / 3; }
+.pr__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: filter 1s var(--ease); }
+.pr:hover .pr__img img { filter: brightness(1.04) saturate(1.05); }
+
+.pr__num {                                         /* numero grande a contorno, viaggia a velocità diversa */
+  position: absolute; z-index: 0; pointer-events: none;
+  font-family: var(--ff-serif); font-size: clamp(8rem, 4rem + 14vw, 20rem); line-height: .8;
+  color: transparent; -webkit-text-stroke: 1px rgba(26, 26, 26, .2);
 }
-.ba__knob {
-  position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; border-radius: 50%;
-  transform: translate(-50%, -50%); background: var(--c-paper); display: grid; place-items: center;
-  font-family: var(--ff-mono); font-size: .62rem; letter-spacing: .08em;
-}
-.ba__label {
-  position: absolute; top: 1rem; z-index: 2; background: var(--c-paper); padding: .35rem .6rem;
-}
-.ba__label--l { left: 1rem; } .ba__label--r { right: 1rem; }
+.pr__info { position: relative; z-index: 2; display: flex; flex-direction: column; gap: .9rem; align-items: start; }
+.pr__title { font-family: var(--ff-serif); font-weight: 400; font-size: clamp(1.8rem, 1.1rem + 1.9vw, 3.3rem); line-height: 1.02; }
+.pr__sub { color: var(--c-ink-soft); max-width: 36ch; }
+.pr__more { display: inline-flex; align-items: center; gap: .7rem; margin-top: .6rem; padding-bottom: .35rem; position: relative; }
+.pr__more::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; transition: transform .9s var(--ease); }
+.pr__more svg { transition: transform .9s var(--ease); }
+.pr:hover .pr__more::after { transform: scaleX(1); }
+.pr:hover .pr__more svg { transform: translateX(6px); }
+
+/* 01: orizzontale grande a sinistra, verticale più in basso a destra */
+.pr--1 .pr__media--main { grid-column: 1 / 9; grid-row: 1; }
+.pr--1 .pr__media--side { grid-column: 10 / 13; grid-row: 1 / 3; margin-top: 46%; }
+.pr--1 .pr__media--side .pr__img { aspect-ratio: 3 / 4; }
+.pr--1 .pr__info { grid-column: 1 / 7; grid-row: 2; margin-top: 2rem; }
+.pr--1 .pr__num { right: 0; top: -.32em; }
+/* 02: testo a sinistra in basso, foto grande a destra */
+.pr--2 .pr__info { grid-column: 1 / 5; grid-row: 1; align-self: end; padding-bottom: 1rem; }
+.pr--2 .pr__media { grid-column: 6 / 13; grid-row: 1; }
+.pr--2 .pr__img { aspect-ratio: 5 / 4; }
+.pr--2 .pr__num { left: 0; top: -.1em; }
+/* 03: foto grande rientrata a sinistra, testo a destra */
+.pr--3 .pr__media { grid-column: 2 / 10; grid-row: 1; }
+.pr--3 .pr__img { aspect-ratio: 16 / 10; }
+.pr--3 .pr__info { grid-column: 10 / 13; grid-row: 1; align-self: center; }
+.pr--3 .pr__num { right: 0; bottom: -.25em; }
 
 /* ==========================================================================
    _04 SERVIZI
@@ -527,7 +538,13 @@ html.lenis, html.lenis body { height: auto; }
   .phases__progress { display: none; }
   .facts { grid-template-columns: 1fr 1fr; row-gap: 2.5rem; }
 
-  .card--a, .card--b, .card--c { grid-column: 1 / -1; margin-top: 0; }
+  .progetti__head > div:first-child, .progetti__aside { grid-column: 1 / -1; }
+  .progetti__aside { margin-top: 2rem; }
+  .pr .pr__media, .pr .pr__info { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0; padding: 0; }
+  .pr--1 .pr__media--side { width: 62%; justify-self: end; margin-top: 1rem !important; }
+  .pr .pr__info { margin-top: 1.6rem !important; }
+  .pr--2 .pr__info { order: 2; }
+  .pr__num { font-size: 7rem; top: -.45em !important; bottom: auto !important; right: 0 !important; left: auto !important; }
 
   .servizi__head .title, .servizi__head .text { grid-column: 1 / -1; }
   .service a { grid-template-columns: 2.4rem 1fr 1.5rem; }

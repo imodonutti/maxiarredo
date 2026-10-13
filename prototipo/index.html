@@ -150,51 +150,59 @@
     </div>
   </section>
 
-  <!-- ============================== _03 PROGETTI ============================== -->
+  <!-- ============================== _03 PROGETTI ==============================
+       Tre progetti impaginati in modo asimmetrico. Tutto segue lo scroll:
+       le foto si aprono a tenda ([data-pr-reveal]), l'immagine scorre dentro la
+       cornice e i numeri grandi viaggiano a una velocità diversa ([data-pr-speed]).
+       Titoli e descrizioni sono PROVVISORI (ricavati dalle foto): da confermare. -->
   <section class="section progetti container" id="progetti" aria-labelledby="progetti-title">
     <div class="progetti__head">
       <div>
         <span class="meta meta--line" data-fade><b>_03</b> Progetti</span>
-        <h2 class="title title--h2" id="progetti-title" data-split style="margin-top:1.8rem">I progetti raccontano<br>meglio di noi.</h2>
+        <h2 class="title title--h2" id="progetti-title" data-split style="margin-top:1.8rem">I progetti raccontano<br>meglio di <em>noi.</em></h2>
       </div>
-      <span class="placeholder-note" data-fade>Segnaposto — in attesa di foto prima/dopo reali</span>
+      <div class="progetti__aside" data-fade>
+        <p class="text">Case, negozi e uffici seguiti dal primo rilievo alla consegna delle chiavi. Qui una selezione recente.</p>
+        <span class="placeholder-note">Bozza — titoli dei progetti da confermare</span>
+      </div>
     </div>
 
-    <div class="grid progetti__grid">
-      <!-- Card con confronto prima/dopo trascinabile -->
-      <article class="card card--a">
-        <div class="ba media" data-reveal data-cursor="Trascina" id="ba">
-          <img src="assets/img/progetto1-sketch.jpg" alt="Disegno di progetto del soggiorno" loading="lazy">
-          <img class="ba__after" src="assets/img/progetto1.jpg" alt="Soggiorno realizzato" loading="lazy">
-          <span class="ba__label ba__label--l meta">Prima</span>
-          <span class="ba__label ba__label--r meta">Dopo</span>
-          <div class="ba__handle"><span class="ba__knob"><svg width="26" height="10" viewBox="0 0 26 10" fill="none"><path d="M5 1L1 5l4 4M21 1l4 4-4 4M1 5h24" stroke="currentColor"/></svg></span></div>
-        </div>
-        <div class="card__info">
-          <div><h3 class="card__title">Appartamento anni '70, Piacenza</h3>
-            <p class="card__sub">Da planimetria chiusa a open space luminoso</p></div>
-          <span class="meta">Residenziale</span>
-        </div>
-      </article>
+    <!-- 01 — progetto con due foto: orizzontale grande + verticale più veloce -->
+    <a href="#" class="pr pr--1" data-cursor="Scopri">
+      <span class="pr__num" aria-hidden="true" data-pr-speed="-18">01</span>
+      <figure class="pr__media pr__media--main" data-pr-reveal="up"><div class="pr__img"><img src="assets/img/progetto-1a.jpg" alt="Cucina con isola in acciaio, cappa sospesa e colonne in noce con forni affiancati" width="2000" height="1500" loading="lazy" decoding="async"></div></figure>
+      <figure class="pr__media pr__media--side" data-pr-reveal="up" data-pr-speed="-14"><div class="pr__img"><img src="assets/img/progetto-1b.jpg" alt="Zona pranzo con tavolo rotondo in vetro, sedute in tessuto e lampadario a bracci luminosi davanti alla cucina" width="1200" height="1600" loading="lazy" decoding="async"></div></figure>
+      <div class="pr__info">
+        <span class="meta">01 — Residenziale</span>
+        <h3 class="pr__title">Casa in noce e acciaio</h3>
+        <p class="pr__sub">Cucina a isola, colonne in noce e zona pranzo sotto un lampadario scultoreo.</p>
+        <span class="pr__more meta">Scopri il progetto <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+      </div>
+    </a>
 
-      <a href="#" class="card card--b" data-cursor="Scopri">
-        <figure class="media card__media" data-reveal style="margin:0"><div class="media__inner"><img src="assets/img/progetto3.jpg" alt="Cucina con isola e dispensa a giorno" loading="lazy"></div></figure>
-        <div class="card__info">
-          <div><h3 class="card__title">Studio professionale</h3>
-            <p class="card__sub">Ristrutturazione per fasi, senza fermare l'attività</p></div>
-          <span class="meta">Ufficio</span>
-        </div>
-      </a>
+    <!-- 02 — testo a sinistra, foto grande a destra -->
+    <a href="#" class="pr pr--2" data-cursor="Scopri">
+      <span class="pr__num" aria-hidden="true" data-pr-speed="-24">02</span>
+      <div class="pr__info">
+        <span class="meta">02 — Residenziale</span>
+        <h3 class="pr__title">Cucina sotto gli affreschi</h3>
+        <p class="pr__sub">Isola in marmo e colonne bianche dentro un palazzo storico: il contemporaneo dialoga con il soffitto decorato.</p>
+        <span class="pr__more meta">Scopri il progetto <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+      </div>
+      <figure class="pr__media pr__media--main" data-pr-reveal="left"><div class="pr__img"><img src="assets/img/progetto-2.jpg" alt="Cucina con isola in marmo grigio, colonne bianche e nere e sgabelli blu sotto un soffitto affrescato" width="2000" height="1500" loading="lazy" decoding="async"></div></figure>
+    </a>
 
-      <a href="#" class="card card--c" data-cursor="Scopri">
-        <figure class="media card__media" data-reveal style="margin:0"><div class="media__inner" data-parallax="6"><img src="assets/img/progetto2.jpg" alt="Zona pranzo con parete attrezzata scura" loading="lazy"></div></figure>
-        <div class="card__info">
-          <div><h3 class="card__title">Villa con giardino</h3>
-            <p class="card__sub">Interni e outdoor in continuità</p></div>
-          <span class="meta">Residenziale</span>
-        </div>
-      </a>
-    </div>
+    <!-- 03 — foto grande a sinistra, testo a destra -->
+    <a href="#" class="pr pr--3" data-cursor="Scopri">
+      <span class="pr__num" aria-hidden="true" data-pr-speed="-18">03</span>
+      <figure class="pr__media pr__media--main" data-pr-reveal="right"><div class="pr__img"><img src="assets/img/progetto-3.jpg" alt="Open space con tavolo da pranzo, isola bianca, cucina scura a colonne e libreria divisoria" width="2000" height="1500" loading="lazy" decoding="async"></div></figure>
+      <div class="pr__info">
+        <span class="meta">03 — Residenziale</span>
+        <h3 class="pr__title">Open space contemporaneo</h3>
+        <p class="pr__sub">Cucina, pranzo e living in un unico ambiente, scandito da una libreria divisoria.</p>
+        <span class="pr__more meta">Scopri il progetto <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+      </div>
+    </a>
 
     <div style="margin-top: clamp(3rem,6vw,6rem); display:flex; justify-content:center">
       <a href="#" class="btn btn--ghost js-magnetic">Tutti i progetti</a>
