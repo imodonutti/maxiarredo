@@ -161,6 +161,50 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
+     8a. SHOWROOM — ingresso delle foto
+         Ogni foto si apre come una tenda (clip-path): le verticali
+         salgono dal basso, le quadrate scorrono dal lato esterno.
+         Intanto l'immagine passa da uno zoom ampio alla sua misura, il
+         numero e la didascalia entrano in sequenza e una linea sottile
+         si disegna sopra la didascalia.
+     ------------------------------------------------------------------ */
+  const svClip = (fig) => fig.classList.contains('sv--sq')
+    ? (fig.dataset.side === 'r' ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)')
+    : 'inset(100% 0% 0% 0%)';
+  const svHide = (fig, base) => {
+    fig._in = false;
+    if (fig._tl) fig._tl.kill();
+    gsap.set($('.sv__img', fig), { clipPath: svClip(fig) });
+    gsap.set($('img', fig), { scale: base * 1.32 });
+    gsap.set($$('figcaption > span', fig), { yPercent: 120, opacity: 0 });
+    gsap.set($('figcaption', fig), { '--line': 0 });
+  };
+  const svShow = (fig, base) => {
+    fig._in = true;
+    if (fig._tl) fig._tl.kill();
+    fig._tl = gsap.timeline()
+      .to($('.sv__img', fig), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, 0)
+      .to($('img', fig), { scale: base, duration: 2.1, ease: 'expo.out' }, 0.15)
+      .to($('figcaption', fig), { '--line': 1, duration: 1.2, ease: 'expo.inOut' }, 0.55)
+      .to($$('figcaption > span', fig), { yPercent: 0, opacity: 1, duration: 1.1, ease: EASE, stagger: 0.09 }, 0.75);
+  };
+
+  // Mobile: stesso ingresso, una volta sola, quando la foto entra nello schermo
+  mm.add('(max-width: 900px)', () => {
+    const figs = $$('#showroom .sv');
+    figs.forEach((f) => svHide(f, 1));
+    const batch = ScrollTrigger.batch(figs, {
+      start: 'top 90%', once: true,
+      onEnter: (els) => els.forEach((f, i) => gsap.delayedCall(i * 0.12, () => svShow(f, 1))),
+    });
+    return () => {
+      batch.forEach((t) => t.kill());
+      figs.forEach((f) => { if (f._tl) f._tl.kill(); });
+      gsap.set([...figs.map((f) => $('.sv__img', f)), ...$$('#showroom .sv img, #showroom figcaption, #showroom figcaption > span')], { clearProps: 'all' });
+    };
+  });
+
+  /* ------------------------------------------------------------------
      8b. SHOWROOM — sezione bloccata con parallasse a più velocità
          (solo desktop). Il testo resta fermo e la composizione di foto
          scorre verso l'alto: la colonna destra va più veloce della
@@ -199,6 +243,23 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(nums, { yPercent: 60, opacity: 0 });
     setFloor(0);
 
+    // ingresso: la foto si apre quando il suo bordo alto supera l'85% dello schermo,
+    // si richiude se torna sotto il bordo (così l'effetto si ripete risalendo)
+    const BASE = 1.16;                                   // = scale del CSS (margine per il parallasse)
+    figs.forEach((f) => svHide(f, BASE));
+    const checkReveal = () => {
+      const h = vh();
+      figs.forEach((f) => {
+        const top = f.getBoundingClientRect().top;
+        if (!f._in && top < h * 0.85) svShow(f, BASE);
+        else if (f._in && top > h * 1.02) svHide(f, BASE);
+      });
+    };
+
+    // inclinazione legata alla velocità dello scroll: le foto "si piegano" e tornano dritte
+    const skews = figs.map((f) => gsap.quickTo($('.sv__img', f), 'skewY', { duration: 0.6, ease: 'power3.out' }));
+    const clampSkew = gsap.utils.clamp(-5, 5);
+
     // corsa della composizione: dal basso dello schermo fino all'ultima foto al centro
     const startY = () => vh() * 0.92;
     const speed = (f) => (f.dataset.side === 'r' ? 0.14 : -0.04);   // quota extra per lato (in vh)
@@ -210,7 +271,14 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTrigger: {
         trigger: section, start: 'top top', end: () => '+=' + Math.round(travel() * 1.1),
         pin: true, scrub: 0.6, invalidateOnRefresh: true,
-        onUpdate() { setFloor(floorAtCenter()); },
+        onUpdate(self) {
+          setFloor(floorAtCenter());
+          checkReveal();
+          const sk = clampSkew(self.getVelocity() / -400);
+          skews.forEach((q, i) => q(figs[i].dataset.side === 'r' ? sk * 1.3 : sk));
+        },
+        onLeave() { skews.forEach((q) => q(0)); },
+        onLeaveBack() { skews.forEach((q) => q(0)); },
       },
     });
 
@@ -225,7 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return () => {                   // uscendo dal desktop torna la colonna semplice
       section.classList.remove('is-pinned');
-      gsap.set([track, ...figs, ...$$('.sv img, .showroom__num span', section)], { clearProps: 'all' });
+      figs.forEach((f) => { if (f._tl) f._tl.kill(); });
+      gsap.set([track, ...figs, ...$$('.sv__img, .sv img, .sv figcaption, .sv figcaption > span, .showroom__num span', section)], { clearProps: 'all' });
     };
   });
 
