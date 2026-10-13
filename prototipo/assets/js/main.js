@@ -162,16 +162,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ------------------------------------------------------------------
      8b. SHOWROOM — sezione bloccata con parallasse a più velocità
-         (solo desktop). Il testo resta fermo, le foto salgono a velocità
-         diverse; l'indice dei piani e il numero di sfondo seguono la foto
-         in primo piano.
+         (solo desktop). Il testo resta fermo e la composizione di foto
+         scorre verso l'alto: la colonna destra va più veloce della
+         sinistra e ogni immagine scorre anche dentro la sua cornice.
+         L'indice dei piani e il numero di sfondo seguono la foto più
+         vicina al centro dello schermo.
      ------------------------------------------------------------------ */
   mm.add('(min-width: 901px)', () => {
     const section = $('#showroom');
     section.classList.add('is-pinned');                 // attiva il layout "a palcoscenico"
-    const vh = () => window.innerHeight;
+    const track = $('.showroom__track', section);
+    const figs = $$('.sv', section);
     const items = $$('.floor-index li', section);
     const nums = $$('.showroom__num span', section);
+    const vh = () => window.innerHeight;
+    const last = figs[figs.length - 1];
     let current = -1;
 
     const setFloor = (i) => {
@@ -181,44 +186,46 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.fromTo(nums[i], { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1, ease: EASE, overwrite: true });
       current = i;
     };
+    const floorAtCenter = () => {
+      const mid = vh() / 2;
+      let best = 0, dist = Infinity;
+      figs.forEach((f) => {
+        const r = f.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - mid);
+        if (d < dist) { dist = d; best = +f.dataset.floor; }
+      });
+      return best;
+    };
     gsap.set(nums, { yPercent: 60, opacity: 0 });
     setFloor(0);
+
+    // corsa della composizione: dal basso dello schermo fino all'ultima foto al centro
+    const startY = () => vh() * 0.92;
+    const speed = (f) => (f.dataset.side === 'r' ? 0.14 : -0.04);   // quota extra per lato (in vh)
+    const endY = () => vh() / 2 - (last.offsetTop + last.offsetHeight / 2) + vh() * speed(last);
+    const travel = () => startY() - endY();
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: section, start: 'top top', end: '+=240%',
+        trigger: section, start: 'top top', end: () => '+=' + Math.round(travel() * 1.1),
         pin: true, scrub: 0.6, invalidateOnRefresh: true,
-        onUpdate(self) {
-          const p = self.progress;
-          setFloor(p < 0.4 ? 0 : p < 0.72 ? 1 : 2);
-        },
+        onUpdate() { setFloor(floorAtCenter()); },
       },
     });
 
-    /* Ogni livello: [selettore, inizio, durata, posizione di partenza (in vh), arrivo]
-       Durata più breve = velocità più alta. */
-    const layers = [
-      ['.sv--1',  0.00, 0.48, 0.25, 'out'],
-      ['.sv--a1', 0.04, 0.30, 1.05, 'out'],
-      ['.sv--2',  0.18, 0.52, 1.05, 'out'],
-      ['.sv--a2', 0.34, 0.32, 1.05, 'out'],
-      ['.sv--3',  0.46, 0.54, 1.05, 'center'],
-    ];
-    layers.forEach(([sel, start, dur, from, to]) => {
-      const el = $(sel, section);
-      tl.fromTo(el,
-        { y: () => vh() * from },
-        { y: () => (to === 'center' ? vh() / 2 - el.offsetHeight / 2 : -el.offsetHeight - vh() * 0.05), duration: dur },
-        start);
-      // parallasse interno: l'immagine scorre un po' dentro la sua cornice
-      tl.fromTo($('img', el), { yPercent: -7 }, { yPercent: 7, duration: dur }, start);
+    tl.fromTo(track, { y: startY }, { y: endY, duration: 1 }, 0);
+    // colonna destra più veloce: parte più in basso e arriva più in alto
+    figs.forEach((f) => {
+      const k = speed(f);
+      tl.fromTo(f, { y: () => vh() * k }, { y: () => -vh() * k, duration: 1 }, 0);
+      tl.fromTo($('img', f), { yPercent: -6 }, { yPercent: 6, duration: 1 }, 0);   // parallasse interno
     });
-    tl.to({}, { duration: 0.05 });   // piccola pausa finale prima di sbloccare
+    tl.to({}, { duration: 0.04 });   // piccola pausa finale prima di sbloccare
 
     return () => {                   // uscendo dal desktop torna la colonna semplice
       section.classList.remove('is-pinned');
-      gsap.set($$('.sv, .sv img, .showroom__num span', section), { clearProps: 'all' });
+      gsap.set([track, ...figs, ...$$('.sv img, .showroom__num span', section)], { clearProps: 'all' });
     };
   });
 
