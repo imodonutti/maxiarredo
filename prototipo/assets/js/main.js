@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
          "scrubbata": avanti e indietro seguono la rotella.
      ------------------------------------------------------------------ */
   const svClip = (fig) => fig.classList.contains('sv--sq')
-    ? (fig.dataset.side === 'r' ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)')
+    ? (fig.dataset.col === 'r' ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)')
     : 'inset(100% 0% 0% 0%)';
   // at = inizio, d = durata della fase di ingresso (in unità della timeline)
   const revealInto = (tl, fig, base, at, d) => {
@@ -196,13 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     8b. SHOWROOM — sezione bloccata con parallasse a più velocità
-         (solo desktop). Il testo resta fermo; ogni foto è un livello
-         con la sua corsa (data-start / data-dur / data-from): durata
-         più breve = foto più veloce. L'ingresso a tenda avviene durante
-         la corsa, l'immagine scorre anche dentro la cornice e le foto si
-         inclinano un poco con la velocità dello scroll. L'indice dei
-         piani e il numero di sfondo seguono la foto più vicina al centro.
+     8b. SHOWROOM — sezione bloccata, due colonne a velocità diverse
+         (solo desktop). Il testo resta fermo. Ogni piano ha una foto
+         principale (data-main) grande e lenta; le altre sono piccole e
+         più veloci, nella colonna opposta. Le quote di partenza sono
+         calcolate qui in modo che due foto della stessa colonna non si
+         tocchino mai, anche quando una veloce segue una lenta.
+         L'ingresso a tenda, lo zoom e la didascalia seguono lo scroll.
      ------------------------------------------------------------------ */
   mm.add('(min-width: 901px)', () => {
     const section = $('#showroom');
@@ -212,7 +212,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const nums = $$('.showroom__num span', section);
     const vh = () => window.innerHeight;
     const BASE = 1.16;                                   // = scale del CSS (margine per il parallasse)
+    const K_MAIN = 0.8, K_SMALL = 1.45;                  // velocità rispetto allo scroll
+    const speed = (f) => (f.hasAttribute('data-main') ? K_MAIN : K_SMALL);
     let current = -1;
+
+    /* Layout: per ogni foto la quota iniziale Y (px, a inizio blocco).
+       Durante la sezione la foto sale di speed * S, con S = scroll totale
+       del blocco. Una foto che segue nella stessa colonna deve restare
+       sotto la precedente finché questa è visibile. */
+    const L = new Map();
+    let S = 1;
+    const layout = () => {
+      const h = vh(), gap = h * 0.08;
+      const prev = { l: null, r: null };
+      figs.forEach((f) => {
+        const k = speed(f), H = f.offsetHeight, col = f.dataset.col;
+        let Y;
+        const p = prev[col];
+        if (!p) Y = col === 'l' ? h * 0.3 : h * 0.75;   // partenza: la principale è già quasi in scena
+        else {
+          // quando la nuova foto entra dal basso, la precedente deve averle lasciato spazio…
+          const atEnter = h + k * (p.Y + p.H - h + gap) / p.k;
+          // …e quando la precedente esce in alto, la nuova deve essere ancora sotto di lei
+          const atExit = gap + k * (p.Y + p.H) / p.k;
+          Y = Math.max(atEnter, atExit);
+          if (Y < h) Y = Math.max(Y, p.Y + p.H + gap);   // entrambe già in scena all'inizio
+        }
+        L.set(f, { Y, H, k });
+        prev[col] = { Y, H, k };
+      });
+      // S: alla fine l'ultima foto principale si ferma al centro dello schermo
+      const lastMain = figs.filter((f) => f.hasAttribute('data-main')).pop();
+      const m = L.get(lastMain);
+      S = (m.Y + m.H / 2 - h / 2) / m.k;
+    };
+    layout();
+    ScrollTrigger.addEventListener('refreshInit', layout);
 
     const setFloor = (i) => {
       if (i === current) return;
@@ -227,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
       figs.forEach((f) => {
         const r = f.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh()) return;
-        const d = Math.abs(r.top + r.height / 2 - mid) / (+f.style.getPropertyValue('--z') || 1);   // le foto grandi contano di più
+        const d = Math.abs(r.top + r.height / 2 - mid) / (f.hasAttribute('data-main') ? 2 : 1);   // la principale conta di più
         if (d < dist) { dist = d; best = +f.dataset.floor; }
       });
       return best;
@@ -235,43 +270,43 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(nums, { yPercent: 60, opacity: 0 });
     setFloor(0);
 
-    // inclinazione legata alla velocità dello scroll
+    // leggera inclinazione legata alla velocità dello scroll (più marcata sulle piccole)
     const skews = figs.map((f) => gsap.quickTo($('.sv__img', f), 'skewY', { duration: 0.6, ease: 'power3.out' }));
-    const clampSkew = gsap.utils.clamp(-4, 4);
+    const clampSkew = gsap.utils.clamp(-3, 3);
+    const straighten = gsap.delayedCall(0.12, () => skews.forEach((q) => q(0))).pause();   // quando lo scroll si ferma tornano dritte
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: section, start: 'top top', end: '+=460%',
+        trigger: section, start: 'top top', end: () => '+=' + Math.round(S),
         pin: true, scrub: 0.6, invalidateOnRefresh: true,
         onUpdate(self) {
-          const sk = clampSkew(self.getVelocity() / -450);
-          skews.forEach((q, i) => q(sk * (1.4 - (+figs[i].style.getPropertyValue('--z') || 2) * 0.2)));
+          const sk = clampSkew(self.getVelocity() / -500);
+          skews.forEach((q, i) => q(figs[i].hasAttribute('data-main') ? sk * 0.6 : sk));
+          straighten.restart(true);
         },
         onLeave() { skews.forEach((q) => q(0)); },
         onLeaveBack() { skews.forEach((q) => q(0)); },
       },
     });
 
-    const last = figs[figs.length - 1];
     figs.forEach((el) => {
-      const start = +el.dataset.start, dur = +el.dataset.dur, from = +el.dataset.from;
-      const toCenter = el === last;
-      tl.fromTo(el,
-        { y: () => vh() * from },
-        { y: () => (toCenter ? vh() / 2 - el.offsetHeight / 2 : -el.offsetHeight - vh() * 0.05), duration: dur },
-        start);
-      // parallasse interno: l'immagine scorre un po' dentro la sua cornice
-      tl.fromTo($('img', el), { yPercent: -7 }, { yPercent: 7, duration: dur }, start);
-      // ingresso a tenda nella prima parte della corsa (la prima foto è già quasi dentro)
-      const inAt = from < 1 ? start : start + dur * 0.04;
-      revealInto(tl, el, BASE, inAt, dur * (toCenter ? 0.45 : 0.5));
+      const g = () => L.get(el);
+      tl.fromTo(el, { y: () => g().Y }, { y: () => g().Y - g().k * S, duration: 1 }, 0);
+      tl.fromTo($('img', el), { yPercent: -7 }, { yPercent: 7, duration: 1 }, 0);   // parallasse interno
+      // ingresso: da quando il bordo alto tocca il fondo dello schermo a quando è al 55%
+      const { Y, k } = g(), h = vh();
+      const pIn = Math.max(0, (Y - h) / (k * S));
+      const pFull = Math.max(pIn + 0.02, (Y - h * 0.55) / (k * S));
+      revealInto(tl, el, BASE, pIn, Math.min(pFull, 0.98) - pIn);
     });
-    tl.to({}, { duration: 0.04 });   // piccola pausa finale prima di sbloccare
+    tl.to({}, { duration: 0.03 });   // piccola pausa finale prima di sbloccare
     // l'indice segue le foto mentre la timeline si muove (anche durante lo smorzamento dello scrub)
     tl.eventCallback('onUpdate', () => setFloor(floorAtCenter()));
 
     return () => {                   // uscendo dal desktop torna la colonna semplice
+      ScrollTrigger.removeEventListener('refreshInit', layout);
+      straighten.kill();
       section.classList.remove('is-pinned');
       gsap.set([...figs, ...$$('.sv__img, .sv img, .sv figcaption, .sv figcaption > span, .showroom__num span', section)], { clearProps: 'all' });
     };
