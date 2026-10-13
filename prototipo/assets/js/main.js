@@ -161,66 +161,57 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     8a. SHOWROOM — ingresso delle foto
-         Ogni foto si apre come una tenda (clip-path): le verticali
-         salgono dal basso, le quadrate scorrono dal lato esterno.
-         Intanto l'immagine passa da uno zoom ampio alla sua misura, il
-         numero e la didascalia entrano in sequenza e una linea sottile
-         si disegna sopra la didascalia.
+     8a. SHOWROOM — ingresso delle foto, sempre guidato dallo scroll
+         Ogni foto si apre come una tenda (clip-path: le verticali salgono
+         dal basso, le quadrate scorrono dal lato esterno), l'immagine passa
+         da uno zoom ampio alla sua misura, poi si disegna la linea ed entra
+         la didascalia. revealInto() aggiunge questi passaggi a una timeline
+         "scrubbata": avanti e indietro seguono la rotella.
      ------------------------------------------------------------------ */
   const svClip = (fig) => fig.classList.contains('sv--sq')
     ? (fig.dataset.side === 'r' ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)')
     : 'inset(100% 0% 0% 0%)';
-  const svHide = (fig, base) => {
-    fig._in = false;
-    if (fig._tl) fig._tl.kill();
-    gsap.set($('.sv__img', fig), { clipPath: svClip(fig) });
-    gsap.set($('img', fig), { scale: base * 1.32 });
-    gsap.set($$('figcaption > span', fig), { yPercent: 120, opacity: 0 });
-    gsap.set($('figcaption', fig), { '--line': 0 });
-  };
-  const svShow = (fig, base) => {
-    fig._in = true;
-    if (fig._tl) fig._tl.kill();
-    fig._tl = gsap.timeline()
-      .to($('.sv__img', fig), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, 0)
-      .to($('img', fig), { scale: base, duration: 2.1, ease: 'expo.out' }, 0.15)
-      .to($('figcaption', fig), { '--line': 1, duration: 1.2, ease: 'expo.inOut' }, 0.55)
-      .to($$('figcaption > span', fig), { yPercent: 0, opacity: 1, duration: 1.1, ease: EASE, stagger: 0.09 }, 0.75);
+  // at = inizio, d = durata della fase di ingresso (in unità della timeline)
+  const revealInto = (tl, fig, base, at, d) => {
+    const caps = $$('figcaption > span', fig);
+    tl.fromTo($('.sv__img', fig), { clipPath: svClip(fig) }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power3.inOut', duration: d * 0.55 }, at)
+      .fromTo($('img', fig), { scale: base * 1.35 }, { scale: base, ease: 'power2.out', duration: d }, at)
+      .fromTo($('figcaption', fig), { '--line': 0 }, { '--line': 1, ease: 'power2.inOut', duration: d * 0.45 }, at + d * 0.35)
+      .fromTo(caps, { yPercent: 120, opacity: 0 }, { yPercent: 0, opacity: 1, ease: 'power3.out', duration: d * 0.4, stagger: d * 0.08 }, at + d * 0.5);
   };
 
-  // Mobile: stesso ingresso, una volta sola, quando la foto entra nello schermo
+  // Mobile: ogni foto ha la sua piccola timeline legata allo scroll
   mm.add('(max-width: 900px)', () => {
     const figs = $$('#showroom .sv');
-    figs.forEach((f) => svHide(f, 1));
-    const batch = ScrollTrigger.batch(figs, {
-      start: 'top 90%', once: true,
-      onEnter: (els) => els.forEach((f, i) => gsap.delayedCall(i * 0.12, () => svShow(f, 1))),
+    const tls = figs.map((f) => {
+      const tl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: f, start: 'top 95%', end: 'top 35%', scrub: 0.6 } });
+      revealInto(tl, f, 1, 0, 1);
+      return tl;
     });
     return () => {
-      batch.forEach((t) => t.kill());
-      figs.forEach((f) => { if (f._tl) f._tl.kill(); });
-      gsap.set([...figs.map((f) => $('.sv__img', f)), ...$$('#showroom .sv img, #showroom figcaption, #showroom figcaption > span')], { clearProps: 'all' });
+      tls.forEach((tl) => { tl.scrollTrigger.kill(); tl.kill(); });
+      gsap.set($$('#showroom .sv__img, #showroom .sv img, #showroom figcaption, #showroom figcaption > span'), { clearProps: 'all' });
     };
   });
 
   /* ------------------------------------------------------------------
      8b. SHOWROOM — sezione bloccata con parallasse a più velocità
-         (solo desktop). Il testo resta fermo e la composizione di foto
-         scorre verso l'alto: la colonna destra va più veloce della
-         sinistra e ogni immagine scorre anche dentro la sua cornice.
-         L'indice dei piani e il numero di sfondo seguono la foto più
-         vicina al centro dello schermo.
+         (solo desktop). Il testo resta fermo; ogni foto è un livello
+         con la sua corsa (data-start / data-dur / data-from): durata
+         più breve = foto più veloce. L'ingresso a tenda avviene durante
+         la corsa, l'immagine scorre anche dentro la cornice e le foto si
+         inclinano un poco con la velocità dello scroll. L'indice dei
+         piani e il numero di sfondo seguono la foto più vicina al centro.
      ------------------------------------------------------------------ */
   mm.add('(min-width: 901px)', () => {
     const section = $('#showroom');
     section.classList.add('is-pinned');                 // attiva il layout "a palcoscenico"
-    const track = $('.showroom__track', section);
     const figs = $$('.sv', section);
     const items = $$('.floor-index li', section);
     const nums = $$('.showroom__num span', section);
     const vh = () => window.innerHeight;
-    const last = figs[figs.length - 1];
+    const BASE = 1.16;                                   // = scale del CSS (margine per il parallasse)
     let current = -1;
 
     const setFloor = (i) => {
@@ -232,10 +223,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const floorAtCenter = () => {
       const mid = vh() / 2;
-      let best = 0, dist = Infinity;
+      let best = current < 0 ? 0 : current, dist = Infinity;
       figs.forEach((f) => {
         const r = f.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - mid);
+        if (r.bottom < 0 || r.top > vh()) return;
+        const d = Math.abs(r.top + r.height / 2 - mid) / (+f.style.getPropertyValue('--z') || 1);   // le foto grandi contano di più
         if (d < dist) { dist = d; best = +f.dataset.floor; }
       });
       return best;
@@ -243,58 +235,45 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(nums, { yPercent: 60, opacity: 0 });
     setFloor(0);
 
-    // ingresso: la foto si apre quando il suo bordo alto supera l'85% dello schermo,
-    // si richiude se torna sotto il bordo (così l'effetto si ripete risalendo)
-    const BASE = 1.16;                                   // = scale del CSS (margine per il parallasse)
-    figs.forEach((f) => svHide(f, BASE));
-    const checkReveal = () => {
-      const h = vh();
-      figs.forEach((f) => {
-        const top = f.getBoundingClientRect().top;
-        if (!f._in && top < h * 0.85) svShow(f, BASE);
-        else if (f._in && top > h * 1.02) svHide(f, BASE);
-      });
-    };
-
-    // inclinazione legata alla velocità dello scroll: le foto "si piegano" e tornano dritte
+    // inclinazione legata alla velocità dello scroll
     const skews = figs.map((f) => gsap.quickTo($('.sv__img', f), 'skewY', { duration: 0.6, ease: 'power3.out' }));
-    const clampSkew = gsap.utils.clamp(-5, 5);
-
-    // corsa della composizione: dal basso dello schermo fino all'ultima foto al centro
-    const startY = () => vh() * 0.92;
-    const speed = (f) => (f.dataset.side === 'r' ? 0.14 : -0.04);   // quota extra per lato (in vh)
-    const endY = () => vh() / 2 - (last.offsetTop + last.offsetHeight / 2) + vh() * speed(last);
-    const travel = () => startY() - endY();
+    const clampSkew = gsap.utils.clamp(-4, 4);
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: section, start: 'top top', end: () => '+=' + Math.round(travel() * 1.1),
+        trigger: section, start: 'top top', end: '+=460%',
         pin: true, scrub: 0.6, invalidateOnRefresh: true,
         onUpdate(self) {
-          setFloor(floorAtCenter());
-          checkReveal();
-          const sk = clampSkew(self.getVelocity() / -400);
-          skews.forEach((q, i) => q(figs[i].dataset.side === 'r' ? sk * 1.3 : sk));
+          const sk = clampSkew(self.getVelocity() / -450);
+          skews.forEach((q, i) => q(sk * (1.4 - (+figs[i].style.getPropertyValue('--z') || 2) * 0.2)));
         },
         onLeave() { skews.forEach((q) => q(0)); },
         onLeaveBack() { skews.forEach((q) => q(0)); },
       },
     });
 
-    tl.fromTo(track, { y: startY }, { y: endY, duration: 1 }, 0);
-    // colonna destra più veloce: parte più in basso e arriva più in alto
-    figs.forEach((f) => {
-      const k = speed(f);
-      tl.fromTo(f, { y: () => vh() * k }, { y: () => -vh() * k, duration: 1 }, 0);
-      tl.fromTo($('img', f), { yPercent: -6 }, { yPercent: 6, duration: 1 }, 0);   // parallasse interno
+    const last = figs[figs.length - 1];
+    figs.forEach((el) => {
+      const start = +el.dataset.start, dur = +el.dataset.dur, from = +el.dataset.from;
+      const toCenter = el === last;
+      tl.fromTo(el,
+        { y: () => vh() * from },
+        { y: () => (toCenter ? vh() / 2 - el.offsetHeight / 2 : -el.offsetHeight - vh() * 0.05), duration: dur },
+        start);
+      // parallasse interno: l'immagine scorre un po' dentro la sua cornice
+      tl.fromTo($('img', el), { yPercent: -7 }, { yPercent: 7, duration: dur }, start);
+      // ingresso a tenda nella prima parte della corsa (la prima foto è già quasi dentro)
+      const inAt = from < 1 ? start : start + dur * 0.04;
+      revealInto(tl, el, BASE, inAt, dur * (toCenter ? 0.45 : 0.5));
     });
     tl.to({}, { duration: 0.04 });   // piccola pausa finale prima di sbloccare
+    // l'indice segue le foto mentre la timeline si muove (anche durante lo smorzamento dello scrub)
+    tl.eventCallback('onUpdate', () => setFloor(floorAtCenter()));
 
     return () => {                   // uscendo dal desktop torna la colonna semplice
       section.classList.remove('is-pinned');
-      figs.forEach((f) => { if (f._tl) f._tl.kill(); });
-      gsap.set([track, ...figs, ...$$('.sv__img, .sv img, .sv figcaption, .sv figcaption > span, .showroom__num span', section)], { clearProps: 'all' });
+      gsap.set([...figs, ...$$('.sv__img, .sv img, .sv figcaption, .sv figcaption > span, .showroom__num span', section)], { clearProps: 'all' });
     };
   });
 

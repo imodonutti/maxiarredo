@@ -397,8 +397,8 @@ html.lenis, html.lenis body { height: auto; }
 .is-pinned .showroom__visuals {
   position: absolute; top: 0; bottom: 0; left: 40%; right: 0; margin: 0; z-index: 1; pointer-events: auto;
 }
-.is-pinned .showroom__track { display: block; position: absolute; top: 0; left: 0; right: 0; height: 188vw; will-change: transform; }
-.is-pinned .sv { position: absolute; top: var(--y); left: var(--x); width: var(--w); will-change: transform; grid-column: auto; }
+.is-pinned .showroom__track { display: block; position: absolute; inset: 0; }
+.is-pinned .sv { position: absolute; top: 0; left: var(--x); width: var(--w); z-index: var(--z); will-change: transform; grid-column: auto; }
 .is-pinned .showroom__track > .sv .sv__img { aspect-ratio: 4 / 5; }
 .is-pinned .showroom__track > .sv--sq .sv__img { aspect-ratio: 1; }
 .is-pinned .sv__img img { transform: scale(1.16); }      /* margine per il parallasse interno */
