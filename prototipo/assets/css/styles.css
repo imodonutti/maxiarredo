@@ -333,7 +333,8 @@ html.lenis, html.lenis body { height: auto; }
 .sx__more { grid-column: 2; display: inline-flex; align-items: center; gap: .7rem; justify-self: start; }
 .sx__more svg { transition: transform .8s var(--ease); }
 .sx__item:hover .sx__more svg { transform: translateX(6px); }
-.sx__m { grid-column: 1 / -1; grid-row: 1; margin-bottom: 1.2rem; }
+.sx__m { grid-column: 1 / -1; grid-row: 1; margin-bottom: 1.2rem; overflow: hidden; }
+.sx__m img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 
 /* Segnaposto foto: campitura a righe + cosa fotografare */
 .ph {
@@ -360,7 +361,8 @@ html.lenis, html.lenis body { height: auto; }
   .sx__stage { position: absolute; inset: 0 0 4.2rem 0; overflow: hidden; background: #D6D2C6; }
   .sx__layer { position: absolute; inset: 0; }
   .sx__layer .ph { aspect-ratio: auto; height: 100%; }
-  .sx__layer img { width: 100%; height: 100%; object-fit: cover; }
+  .sx__layer { overflow: hidden; }
+  .sx__layer img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .sx__hud { position: absolute; left: 0; right: 0; bottom: 0; height: 3.2rem; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: .6rem 1rem; }
   .sx__fam { position: relative; height: 1.6rem; overflow: hidden; font-family: var(--ff-serif); font-size: 1.5rem; line-height: 1.1; }
   .sx__fam span { position: absolute; left: 0; top: 0; }
