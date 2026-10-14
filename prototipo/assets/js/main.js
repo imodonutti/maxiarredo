@@ -358,36 +358,83 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     10. SERVIZI — linee che si disegnano + immagine che segue il mouse
+     10. SERVIZI — tre famiglie, tutto guidato dallo scroll
+         Desktop: a sinistra un pannello fermo (sticky) con la foto del
+         servizio attivo. Mentre un servizio sale verso il centro, la sua
+         foto si apre a tenda sopra la precedente, che scivola un po' in
+         alto; il nome passa da contorno a pieno (--on da 0 a 1) e torna
+         spento quando esce. Contatore, famiglia e barra seguono lo scroll.
+         Mobile: ogni servizio ha la sua foto che si apre scorrendo.
      ------------------------------------------------------------------ */
-  $$('.service').forEach((li, i) => {
-    ScrollTrigger.create({ trigger: li, start: 'top 92%', once: true, onEnter: () => setTimeout(() => li.classList.add('is-in'), i * 60) });
-    gsap.from(li.querySelector('a'), { y: 30, opacity: 0, duration: 1.2, ease: EASE, scrollTrigger: { trigger: li, start: 'top 92%', once: true } });
+  const sxItems = $$('.sx__item');
+  const sxInner = (box) => box.firstElementChild;          // .ph oppure <img>
+
+  mm.add('(min-width: 901px)', () => {
+    const layers = $$('.sx__layer');
+    const famSpans = $$('.sx__fam span');
+    const cur = $('.sx__cur');
+    let active = -1, fam = -1;
+    const trig = [];
+
+    gsap.set(famSpans, { yPercent: 110 });
+    const setFam = (f) => {
+      if (f === fam) return;
+      if (famSpans[fam]) gsap.to(famSpans[fam], { yPercent: -110, duration: 0.7, ease: EASE, overwrite: true });
+      gsap.fromTo(famSpans[f], { yPercent: 110 }, { yPercent: 0, duration: 0.8, ease: EASE, overwrite: true });
+      fam = f;
+    };
+    const setActive = (i) => {
+      if (i === active) return;
+      active = i;
+      cur.textContent = String(i + 1).padStart(2, '0');
+      setFam(+sxItems[i].dataset.fam);
+    };
+    setActive(0);
+
+    layers.forEach((layer, i) => {
+      if (i === 0) return;
+      gsap.set(layer, { clipPath: 'inset(100% 0% 0% 0%)' });
+      const tl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: sxItems[i], start: 'top 92%', end: 'center 55%', scrub: 0.6 } });
+      tl.fromTo(layer, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }, 0)
+        .fromTo(sxInner(layer), { scale: 1.25, yPercent: 8 }, { scale: 1, yPercent: 0, ease: 'power1.out' }, 0)
+        .fromTo(sxInner(layers[i - 1]), { yPercent: 0 }, { yPercent: -10 }, 0);
+      trig.push(tl);
+    });
+
+    sxItems.forEach((item, i) => {
+      const last = i === sxItems.length - 1;
+      const tl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: item, start: 'top 85%', end: 'bottom 25%', scrub: 0.4} });
+      tl.fromTo(item, { '--on': 0 }, { '--on': 1, duration: 0.35 }, 0)
+        .to(item, { '--on': last ? 1 : 0, duration: 0.25 }, 0.75);
+      trig.push(tl);
+      // indice attivo: il servizio che attraversa il 55% dello schermo
+      trig.push(ScrollTrigger.create({ trigger: item, start: 'top 55%', end: 'bottom 55%',
+        onEnter: () => setActive(i), onEnterBack: () => setActive(i) }));
+    });
+
+    trig.push(gsap.fromTo('.sx__bar i', { scaleX: 1 / sxItems.length }, { scaleX: 1, ease: 'none',
+      scrollTrigger: { trigger: '.sx__list', start: 'top 55%', end: 'bottom 80%', scrub: 0.4 } }));
+
+    return () => {
+      trig.forEach((t) => { if (t.scrollTrigger) t.scrollTrigger.kill(); if (t.kill) t.kill(); });
+      gsap.set([...layers, ...layers.map(sxInner), ...sxItems, ...famSpans, '.sx__bar i'], { clearProps: 'all' });
+    };
   });
 
-  if (finePointer) {
-    const follower = $('#follower');
-    const fx = gsap.quickTo(follower, 'x', { duration: 0.7, ease: 'power3' });
-    const fy = gsap.quickTo(follower, 'y', { duration: 0.7, ease: 'power3' });
-    const services = $('#services');
-    let lastX = 0;
-    services.addEventListener('pointermove', (e) => {
-      fx(e.clientX); fy(e.clientY);
-      // inclinazione in base alla velocità orizzontale del mouse
-      gsap.to(follower, { rotation: gsap.utils.clamp(-8, 8, (e.clientX - lastX) * 0.4), duration: 0.6, ease: 'power3' });
-      lastX = e.clientX;
+  mm.add('(max-width: 900px)', () => {
+    const tls = sxItems.map((item) => {
+      const box = $('.sx__m', item);
+      const tl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: item, start: 'top 92%', end: 'top 40%', scrub: 0.6 } });
+      tl.fromTo(box, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: 0.6 }, 0)
+        .fromTo(sxInner(box), { scale: 1.25 }, { scale: 1, ease: 'power1.out', duration: 0.8 }, 0)
+        .fromTo($$('.sx__num, .sx__name, .sx__desc, .sx__more', item), { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.4 }, 0.4);
+      return tl;
     });
-    services.addEventListener('pointerenter', (e) => {
-      gsap.set(follower, { x: e.clientX, y: e.clientY });
-      gsap.to(follower, { opacity: 1, scale: 1, duration: 0.6, ease: EASE });
-    });
-    services.addEventListener('pointerleave', () => gsap.to(follower, { opacity: 0, scale: 0.85, duration: 0.5, ease: EASE }));
-    $$('.service').forEach((li) => {
-      li.addEventListener('pointerenter', () => {
-        $$('img', follower).forEach((img) => img.classList.toggle('is-active', img.dataset.key === li.dataset.img));
-      });
-    });
-  }
+    return () => tls.forEach((tl) => { tl.scrollTrigger.kill(); tl.kill(); });
+  });
 
   /* ------------------------------------------------------------------
      11. CURSORE — punto + badge che compare su [data-cursor]

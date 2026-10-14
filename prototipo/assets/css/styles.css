@@ -317,35 +317,68 @@ html.lenis, html.lenis body { height: auto; }
 .servizi__head .meta { grid-column: 1 / -1; margin-bottom: .6rem; }
 .servizi__head .title { grid-column: 1 / 9; }
 .servizi__head .text { grid-column: 9 / 13; align-self: end; }
-.services { list-style: none; margin: 0; padding: 0; position: relative; }
-.service { position: relative; }
-.service::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--c-line);
-  transform-origin: left;
-}
-.js-anim .service::before { transform: scaleX(0); }
-.service.is-in::before { transform: scaleX(1); transition: transform 1.4s var(--ease); }
-.service a {
-  display: grid; grid-template-columns: 4rem 1fr 1.1fr 2rem; gap: var(--gutter); align-items: center;
-  padding-block: clamp(1.4rem, 2.6vw, 2.4rem);
-  transition: color .5s var(--ease), padding .7s var(--ease);
-}
-.service__name { font-family: var(--ff-serif); font-size: clamp(1.9rem, 1.2rem + 2.6vw, 4rem); line-height: 1; }
-.service__desc { color: var(--c-ink-soft); font-size: var(--fs-small); max-width: 40ch; }
-.service__arrow { justify-self: end; transition: transform .7s var(--ease); }
-.services:hover .service a { color: var(--c-muted); }
-.services .service a:hover { color: var(--c-ink); padding-left: 1rem; }
-.service a:hover .service__arrow { transform: rotate(-45deg); }
-.service__thumb { display: none; }
+/* — Elenco in tre famiglie + pannello foto fermo (desktop) — */
+.sx { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); position: relative; }
+.sx__panel { display: none; }
+.sx__list { grid-column: 1 / -1; }
+.sx__group + .sx__group { margin-top: clamp(4rem, 8vw, 7rem); }
+.sx__ghead { display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap; padding-bottom: 1.2rem; border-bottom: 1px solid var(--c-ink); }
+.sx__ghead .meta { color: var(--c-ink); }
+.sx__glead { font-family: var(--ff-serif); font-style: italic; color: var(--c-muted); font-size: 1.1rem; }
 
-/* Immagine che segue il cursore */
-.follower {
-  position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
-  width: clamp(240px, 22vw, 340px); aspect-ratio: 4 / 5; overflow: hidden;
-  opacity: 0; transform: translate(-50%, -50%) scale(.85);
+.sx__item { display: grid; grid-template-columns: 4rem 1fr; column-gap: 1.2rem; row-gap: .7rem; padding-block: clamp(1.8rem, 3vw, 2.8rem); border-bottom: 1px solid var(--c-line); color: inherit; text-decoration: none; position: relative; }
+.sx__num { grid-column: 1; grid-row: 2; padding-top: .9rem; }
+.sx__name { grid-column: 2; grid-row: 2; font-family: var(--ff-serif); font-weight: 400; font-size: clamp(2rem, 1.2rem + 2.8vw, 4.2rem); line-height: 1; }
+.sx__desc { grid-column: 2; color: var(--c-ink-soft); max-width: 46ch; }
+.sx__more { grid-column: 2; display: inline-flex; align-items: center; gap: .7rem; justify-self: start; }
+.sx__more svg { transition: transform .8s var(--ease); }
+.sx__item:hover .sx__more svg { transform: translateX(6px); }
+.sx__m { grid-column: 1 / -1; grid-row: 1; margin-bottom: 1.2rem; }
+
+/* Segnaposto foto: campitura a righe + cosa fotografare */
+.ph {
+  position: relative; width: 100%; height: 100%; min-height: 100%; aspect-ratio: 4 / 3;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: .7rem; padding: clamp(1rem, 2vw, 1.8rem);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(26, 26, 26, .045) 14px 15px),
+    linear-gradient(160deg, #E4E1D8, #D6D2C6);
+  color: var(--c-ink); overflow: hidden;
 }
-.follower img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s var(--ease); }
-.follower img.is-active { opacity: 1; }
+.ph__tag { color: var(--c-accent); }
+.ph__n { position: absolute; top: .1em; right: .15em; font-family: var(--ff-serif); font-size: clamp(5rem, 3rem + 7vw, 11rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(26, 26, 26, .22); }
+/* un tono per ogni segnaposto, così il cambio di foto si vede */
+.ph--02, .ph--05 { background-color: #CFC9BA; background-image: repeating-linear-gradient(45deg, transparent 0 14px, rgba(26, 26, 26, .05) 14px 15px), linear-gradient(160deg, #DAD4C5, #C8C1B0); }
+.ph--03, .ph--06 { background-image: repeating-linear-gradient(90deg, transparent 0 18px, rgba(26, 26, 26, .045) 18px 19px), linear-gradient(160deg, #E6E2D9, #D9D3C4); }
+.ph--04, .ph--07 { background-image: repeating-linear-gradient(0deg, transparent 0 16px, rgba(26, 26, 26, .05) 16px 17px), linear-gradient(160deg, #D3CDBE, #C4BCA9); }
+.ph__need { font-family: var(--ff-serif); font-size: clamp(1.1rem, .9rem + .7vw, 1.6rem); line-height: 1.15; max-width: 22ch; }
+
+/* — Desktop: pannello fermo a sinistra, elenco a destra — */
+@media (min-width: 901px) {
+  .sx__panel {
+    display: block; grid-column: 1 / 6; grid-row: 1; position: sticky; top: 12vh; height: 76vh; align-self: start;
+  }
+  .sx__stage { position: absolute; inset: 0 0 4.2rem 0; overflow: hidden; background: #D6D2C6; }
+  .sx__layer { position: absolute; inset: 0; }
+  .sx__layer .ph { aspect-ratio: auto; height: 100%; }
+  .sx__layer img { width: 100%; height: 100%; object-fit: cover; }
+  .sx__hud { position: absolute; left: 0; right: 0; bottom: 0; height: 3.2rem; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: .6rem 1rem; }
+  .sx__fam { position: relative; height: 1.6rem; overflow: hidden; font-family: var(--ff-serif); font-size: 1.5rem; line-height: 1.1; }
+  .sx__fam span { position: absolute; left: 0; top: 0; }
+  .sx__count b { color: var(--c-ink); font-weight: 500; }
+  .sx__bar { grid-column: 1 / -1; height: 1px; background: var(--c-line); position: relative; }
+  .sx__bar i { position: absolute; inset: 0; background: var(--c-ink); transform-origin: left; transform: scaleX(0); }
+
+  .sx__list { grid-column: 7 / 13; grid-row: 1; padding-bottom: 18vh; }
+  .sx__m { display: none; }
+  .sx__item { grid-template-columns: 4.5rem 1fr; min-height: 34vh; align-content: center; }
+  .sx__num { grid-row: 1; }
+  .sx__name { grid-row: 1; }
+  /* stato "spento" / "acceso" (lo scroll porta --on da 0 a 1) */
+  .js-anim .sx__item { --on: 0; }
+  .js-anim .sx__name { color: rgba(26, 26, 26, calc(.08 + var(--on) * .92)); -webkit-text-stroke: 1px rgba(26, 26, 26, calc(.55 - var(--on) * .55)); }
+  .js-anim .sx__desc, .js-anim .sx__more { opacity: calc(.25 + var(--on) * .75); transform: translateY(calc((1 - var(--on)) * 12px)); }
+  .js-anim .sx__num { opacity: calc(.4 + var(--on) * .6); }
+}
 
 /* ==========================================================================
    _05 SHOWROOM — sezione scura
@@ -547,9 +580,7 @@ html.lenis, html.lenis body { height: auto; }
   .pr__num { font-size: 7rem; top: -.45em !important; bottom: auto !important; right: 0 !important; left: auto !important; }
 
   .servizi__head .title, .servizi__head .text { grid-column: 1 / -1; }
-  .service a { grid-template-columns: 2.4rem 1fr 1.5rem; }
-  .service__desc { grid-column: 2 / 3; grid-row: 2; }
-  .service__arrow { grid-row: 1; grid-column: 3; }
+  .sx__item { grid-template-columns: 3rem 1fr; }
 
 
   .contact__title, .contact__intro, .form { grid-column: 1 / -1; }

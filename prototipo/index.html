@@ -217,15 +217,90 @@
       <p class="text" data-fade>Un progetto di interni tocca discipline diverse. Le seguiamo tutte, con lo stesso team, dalla prima idea alla consegna.</p>
     </div>
 
-    <ul class="services" id="services">
-      <li class="service" data-img="serv-progettazione"><a href="#"><span class="meta">_01</span><span class="service__name">Progettazione d'interni</span><span class="service__desc">Rilievo, concept, disegno esecutivo e capitolato.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="serv-ristrutturazione"><a href="#"><span class="meta">_02</span><span class="service__name">Ristrutturazione</span><span class="service__desc">Dalla demolizione alla posa finale, un solo referente.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="serv-gc"><a href="#"><span class="meta">_03</span><span class="service__name">General contractor</span><span class="service__desc">Imprese, impianti e fornitori sotto un'unica regia.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="luce"><a href="#"><span class="meta">_04</span><span class="service__name">Illuminotecnica</span><span class="service__desc">La luce è l'unico materiale che cambia tutti gli altri.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="serv-domotica"><a href="#"><span class="meta">_05</span><span class="service__name">Domotica</span><span class="service__desc">Luci, clima, tende e sicurezza, gestiti in modo semplice.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="serv-arredamento"><a href="#"><span class="meta">_06</span><span class="service__name">Arredamento</span><span class="service__desc">La scelta del mobile arriva dopo lo studio dello spazio, mai prima.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-      <li class="service" data-img="serv-falegnameria"><a href="#"><span class="meta">_07</span><span class="service__name">Falegnameria su misura</span><span class="service__desc">Disegno ed esecutivo nostri, realizzazione artigianale.</span><svg class="service__arrow" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></a></li>
-    </ul>
+    <!-- Servizi in tre famiglie. Desktop: a sinistra un pannello fermo con la foto del
+         servizio attivo; a destra l'elenco scorre e il servizio al centro dello schermo si
+         "accende". Tutto segue lo scroll. Mobile: ogni servizio ha la sua foto.
+         FOTO: per ora segnaposto (.ph). Per sostituirli, in .sx__layer e .sx__m mettere
+         <img src="assets/img/servizio-NN.jpg" alt="..."> al posto del <div class="ph">. -->
+    <div class="sx" id="services">
+      <div class="sx__panel" aria-hidden="true">
+        <div class="sx__stage">
+          <div class="sx__layer"><div class="ph ph--01" role="img" aria-label="Segnaposto foto: Progettazione d'interni"><span class="ph__n" aria-hidden="true">01</span><span class="ph__tag meta">Segnaposto foto · 01</span><span class="ph__need">Tavolo di progetto: disegni, campioni di materiali, un render a schermo</span></div></div>
+          <div class="sx__layer"><div class="ph ph--02" role="img" aria-label="Segnaposto foto: Illuminotecnica"><span class="ph__n" aria-hidden="true">02</span><span class="ph__tag meta">Segnaposto foto · 02</span><span class="ph__need">Dettaglio di luce: un taglio nel soffitto, un profilo LED, una lampada accesa</span></div></div>
+          <div class="sx__layer"><div class="ph ph--03" role="img" aria-label="Segnaposto foto: Domotica"><span class="ph__n" aria-hidden="true">03</span><span class="ph__tag meta">Segnaposto foto · 03</span><span class="ph__need">Pannello o app di controllo dentro un ambiente finito</span></div></div>
+          <div class="sx__layer"><div class="ph ph--04" role="img" aria-label="Segnaposto foto: Ristrutturazione"><span class="ph__n" aria-hidden="true">04</span><span class="ph__tag meta">Segnaposto foto · 04</span><span class="ph__need">Cantiere in corso: demolizioni, tracce, massetti, posa</span></div></div>
+          <div class="sx__layer"><div class="ph ph--05" role="img" aria-label="Segnaposto foto: General contractor"><span class="ph__n" aria-hidden="true">05</span><span class="ph__tag meta">Segnaposto foto · 05</span><span class="ph__need">Squadre al lavoro o sopralluogo in cantiere con il progetto in mano</span></div></div>
+          <div class="sx__layer"><div class="ph ph--06" role="img" aria-label="Segnaposto foto: Arredamento"><span class="ph__n" aria-hidden="true">06</span><span class="ph__tag meta">Segnaposto foto · 06</span><span class="ph__need">Ambiente arredato e finito, con luce naturale</span></div></div>
+          <div class="sx__layer"><div class="ph ph--07" role="img" aria-label="Segnaposto foto: Falegnameria su misura"><span class="ph__n" aria-hidden="true">07</span><span class="ph__tag meta">Segnaposto foto · 07</span><span class="ph__need">Laboratorio: legno in lavorazione, dettaglio di un incastro o di una finitura</span></div></div>
+        </div>
+        <div class="sx__hud">
+          <div class="sx__fam"><span>Progettare</span><span>Costruire</span><span>Arredare</span></div>
+          <div class="sx__count meta"><b class="sx__cur">01</b> / 07</div>
+          <div class="sx__bar"><i></i></div>
+        </div>
+      </div>
+
+      <div class="sx__list">
+        <div class="sx__group" data-fam="0">
+          <div class="sx__ghead"><span class="meta">Progettare</span><span class="sx__glead">Prima di spendere, vedere la casa finita.</span></div>
+          <a href="#" class="sx__item" data-fam="0" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--01" role="img" aria-label="Segnaposto foto: Progettazione d'interni"><span class="ph__n" aria-hidden="true">01</span><span class="ph__tag meta">Segnaposto foto · 01</span><span class="ph__need">Tavolo di progetto: disegni, campioni di materiali, un render a schermo</span></div></div>
+            <span class="sx__num meta">_01</span>
+            <h3 class="sx__name">Progettazione d'interni</h3>
+            <p class="sx__desc">Rilievo, concept, disegno esecutivo e capitolato. Vedi la casa finita prima di aprire il cantiere, con le scelte già messe nero su bianco.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+          <a href="#" class="sx__item" data-fam="0" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--02" role="img" aria-label="Segnaposto foto: Illuminotecnica"><span class="ph__n" aria-hidden="true">02</span><span class="ph__tag meta">Segnaposto foto · 02</span><span class="ph__need">Dettaglio di luce: un taglio nel soffitto, un profilo LED, una lampada accesa</span></div></div>
+            <span class="sx__num meta">_02</span>
+            <h3 class="sx__name">Illuminotecnica</h3>
+            <p class="sx__desc">La luce è l'unico materiale che cambia tutti gli altri. Decidiamo dove serve, quanta e di che colore, insieme al disegno degli spazi.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+          <a href="#" class="sx__item" data-fam="0" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--03" role="img" aria-label="Segnaposto foto: Domotica"><span class="ph__n" aria-hidden="true">03</span><span class="ph__tag meta">Segnaposto foto · 03</span><span class="ph__need">Pannello o app di controllo dentro un ambiente finito</span></div></div>
+            <span class="sx__num meta">_03</span>
+            <h3 class="sx__name">Domotica</h3>
+            <p class="sx__desc">Luci, clima, tende e sicurezza gestiti in modo semplice. Gli impianti si pensano in fase di progetto, non si aggiungono dopo.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+        </div>
+        <div class="sx__group" data-fam="1">
+          <div class="sx__ghead"><span class="meta">Costruire</span><span class="sx__glead">Un cantiere, una sola regia.</span></div>
+          <a href="#" class="sx__item" data-fam="1" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--04" role="img" aria-label="Segnaposto foto: Ristrutturazione"><span class="ph__n" aria-hidden="true">04</span><span class="ph__tag meta">Segnaposto foto · 04</span><span class="ph__need">Cantiere in corso: demolizioni, tracce, massetti, posa</span></div></div>
+            <span class="sx__num meta">_04</span>
+            <h3 class="sx__name">Ristrutturazione</h3>
+            <p class="sx__desc">Dalla demolizione alla posa finale, con un solo referente che conosce il progetto e segue ogni fase.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+          <a href="#" class="sx__item" data-fam="1" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--05" role="img" aria-label="Segnaposto foto: General contractor"><span class="ph__n" aria-hidden="true">05</span><span class="ph__tag meta">Segnaposto foto · 05</span><span class="ph__need">Squadre al lavoro o sopralluogo in cantiere con il progetto in mano</span></div></div>
+            <span class="sx__num meta">_05</span>
+            <h3 class="sx__name">General contractor</h3>
+            <p class="sx__desc">Imprese, impianti e fornitori sotto un'unica regia. Non devi coordinare nessuno: ci pensiamo noi.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+        </div>
+        <div class="sx__group" data-fam="2">
+          <div class="sx__ghead"><span class="meta">Arredare</span><span class="sx__glead">Il mobile arriva dopo lo spazio, mai prima.</span></div>
+          <a href="#" class="sx__item" data-fam="2" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--06" role="img" aria-label="Segnaposto foto: Arredamento"><span class="ph__n" aria-hidden="true">06</span><span class="ph__tag meta">Segnaposto foto · 06</span><span class="ph__need">Ambiente arredato e finito, con luce naturale</span></div></div>
+            <span class="sx__num meta">_06</span>
+            <h3 class="sx__name">Arredamento</h3>
+            <p class="sx__desc">La scelta degli arredi arriva dopo lo studio dello spazio. Molte proposte le puoi vedere e provare dal vivo in showroom.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+          <a href="#" class="sx__item" data-fam="2" data-cursor="Scopri">
+            <div class="sx__m"><div class="ph ph--07" role="img" aria-label="Segnaposto foto: Falegnameria su misura"><span class="ph__n" aria-hidden="true">07</span><span class="ph__tag meta">Segnaposto foto · 07</span><span class="ph__need">Laboratorio: legno in lavorazione, dettaglio di un incastro o di una finitura</span></div></div>
+            <span class="sx__num meta">_07</span>
+            <h3 class="sx__name">Falegnameria su misura</h3>
+            <p class="sx__desc">Disegno ed esecutivo nostri, realizzazione artigianale. Per gli spazi in cui un mobile di serie non basta.</p>
+            <span class="sx__more meta">Scopri il servizio <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================== _05 SHOWROOM ==============================
@@ -371,7 +446,7 @@
   <span class="booking__text">Prenota una consulenza<small>Su appuntamento</small></span>
   <span class="booking__icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="#F4F4F0"/></svg></span>
 </a>
-<div class="follower" id="follower" aria-hidden="true"><img data-key="serv-progettazione" src="assets/img/serv-progettazione.jpg" alt=""><img data-key="serv-ristrutturazione" src="assets/img/serv-ristrutturazione.jpg" alt=""><img data-key="serv-gc" src="assets/img/serv-gc.jpg" alt=""><img data-key="luce" src="assets/img/luce.jpg" alt=""><img data-key="serv-domotica" src="assets/img/serv-domotica.jpg" alt=""><img data-key="serv-arredamento" src="assets/img/serv-arredamento.jpg" alt=""><img data-key="serv-falegnameria" src="assets/img/serv-falegnameria.jpg" alt=""></div>
+
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="cursor__badge" id="cursor-badge" aria-hidden="true"></div>
 
