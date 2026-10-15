@@ -239,21 +239,44 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* Fasi — scorrimento orizzontale "pinnato" */
-.phases { margin-top: var(--section-pad); overflow: hidden; margin-inline: calc(-1 * var(--gutter)); }
-.phases__intro, .phases__progress { margin-inline: var(--gutter); }
-.phases__intro { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 3rem; }
-.phases__track { display: flex; gap: var(--gutter); width: max-content; padding-inline: var(--gutter); }
-.phase {
-  width: clamp(300px, 34vw, 520px); flex: none;
-  border-top: 1px solid var(--c-ink); padding-top: 1.6rem;
-  display: grid; gap: 1.2rem; align-content: start; min-height: 46vh;
+/* — IL FILO: una linea continua attraversa le quattro fasi — */
+.filo { margin-top: var(--section-pad); }
+.filo__intro { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.filo__stage { position: relative; }
+.filo__wire { display: none; }
+.filo__phases { list-style: none; margin: 0; padding: 0; position: relative; z-index: 2; display: grid; gap: 2.8rem; }
+.filo__phase { display: grid; grid-template-columns: 64px 1fr; column-gap: 1.3rem; align-items: start; align-content: start; }
+.filo__node {
+  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--c-paper); border: 1px solid var(--c-line); position: relative;
 }
-.phase__num { font-family: var(--ff-serif); font-size: clamp(4.5rem, 9vw, 9rem); line-height: .8; color: var(--c-accent); }
-.phase__name { font-family: var(--ff-serif); font-size: var(--fs-h3); line-height: 1; }
-.phase p { color: var(--c-ink-soft); max-width: 32ch; }
-.phases__progress { height: 1px; background: var(--c-line); margin-top: 3rem; position: relative; }
-.phases__progress i { position: absolute; inset: 0; background: var(--c-ink); transform-origin: left; transform: scaleX(0); }
+.filo__icon { width: 30px; height: 30px; stroke: var(--c-ink); stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+.filo__icon * { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.filo__num { display: block; margin-bottom: .7rem; color: var(--c-accent); }
+.filo__name { font-family: var(--ff-serif); font-weight: 400; font-size: var(--fs-h3); line-height: 1; margin-bottom: .9rem; }
+.filo__text { color: var(--c-ink-soft); max-width: 32ch; }
+.filo__get { margin-top: 1.1rem; padding-top: .9rem; border-top: 1px solid var(--c-line); font-size: var(--fs-small); max-width: 32ch; }
+.filo__get .meta { display: block; margin-bottom: .35rem; color: var(--c-muted); }
+/* mobile: linea verticale che scende lungo i nodi */
+.filo__vline { position: absolute; left: 31.5px; top: 32px; bottom: 0; width: 1px; background: var(--c-line); z-index: 1; }
+.filo__vline i { position: absolute; left: 0; top: 0; width: 1px; height: 100%; background: var(--c-ink); }
+.filo__vline i::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--c-accent); }
 
+@media (min-width: 901px) {
+  .filo__vline { display: none; }
+  .filo__wire { display: block; position: relative; height: 140px; }
+  .filo__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .filo__path { fill: none; stroke-width: .95; stroke-linecap: round; }   /* niente non-scaling-stroke: con pathLength sfalsa il disegno */
+  .filo__path--ghost { stroke: rgba(26, 26, 26, .22); stroke-dasharray: 2.5 6; }
+  .filo__path--ink { stroke: var(--c-ink); stroke-dasharray: 1; stroke-dashoffset: 0; }
+  .filo__ref { position: absolute; left: 100%; top: 50%; z-index: 3; width: 0; height: 0; }
+  .filo__ref i { position: absolute; left: -5.5px; top: -5.5px; width: 11px; height: 11px; border-radius: 50%; background: var(--c-accent); box-shadow: 0 0 0 5px rgba(139, 109, 59, .15); }
+  .filo__ref span { position: absolute; left: 0; bottom: 16px; transform: translateX(calc(var(--shift, .5) * -100%)); white-space: nowrap; color: var(--c-accent); background: var(--c-paper); padding: .2em .5em; }
+  .filo__phases { grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: -102px; }
+  .filo__phase { grid-template-columns: 1fr; justify-items: center; text-align: center; padding-inline: clamp(.6rem, 1.5vw, 1.6rem); }
+  .filo__body { margin-top: 1.8rem; display: flex; flex-direction: column; align-items: center; }
+  .filo__get { text-align: center; }
+}
 /* Numeri */
 .facts {
   margin-top: var(--section-pad);
@@ -567,10 +590,7 @@ html.lenis, html.lenis body { height: auto; }
 
   .metodo__title, .metodo__media, .metodo__body { grid-column: 1 / -1; }
   .metodo__body { margin-top: 2.5rem; padding-bottom: 0; }
-  .phases__intro { flex-direction: column; align-items: start; }
-  .phases__track { flex-direction: column; width: auto; }
-  .phase { width: auto; min-height: 0; padding-bottom: 1rem; }
-  .phases__progress { display: none; }
+  .filo__intro { flex-direction: column; align-items: start; }
   .facts { grid-template-columns: 1fr 1fr; row-gap: 2.5rem; }
 
   .progetti__head > div:first-child, .progetti__aside { grid-column: 1 / -1; }

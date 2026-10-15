@@ -165,29 +165,79 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     8. FASI DEL METODO — scorrimento orizzontale con sezione bloccata
-        (solo desktop; su mobile restano in colonna)
+     8. IL FILO — "Un solo team, dalla prima idea alla consegna"
+        Una linea continua si disegna con lo scroll e attraversa le
+        quattro fasi. Quando la punta raggiunge una fase, l'icona si
+        disegna al tratto e il testo entra; il segno "Il tuo referente"
+        viaggia sulla punta. Desktop: orizzontale con sezione bloccata.
+        Mobile: verticale, lungo i nodi.
      ------------------------------------------------------------------ */
   const mm = gsap.matchMedia();
+  const filo = $('#filo');
+  const filoPhases = $$('.filo__phase', filo);
+  const iconParts = (ph) => $$('.filo__icon *', ph);
+  const phaseText = (ph) => $$('.filo__num, .filo__name, .filo__text, .filo__get', ph);
+
   mm.add('(min-width: 901px)', () => {
-    const track = $('.phases__track');
-    const phases = $('#phases');
-    const distance = () => track.scrollWidth - phases.clientWidth;   // quanto deve scorrere il binario
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: phases, start: 'top 12%', end: () => '+=' + distance(),
-        pin: true, scrub: 0.8, invalidateOnRefresh: true,
-      },
+    const ink = $('.filo__path--ink', filo);
+    const ref = $('.filo__ref', filo);
+    const total = ink.getTotalLength();
+    // a che frazione della linea si trova ciascun nodo (centri delle 4 colonne)
+    const nodeAt = [125, 375, 625, 875].map((nx) => {
+      let lo = 0, hi = total;
+      for (let k = 0; k < 30; k++) { const mid = (lo + hi) / 2; if (ink.getPointAtLength(mid).x < nx) lo = mid; else hi = mid; }
+      return lo / total;
     });
-    tl.to(track, { x: () => -distance(), ease: 'none' }, 0)
-      .to('.phases__progress i', { scaleX: 1, ease: 'none' }, 0);
-    // i numeri di ogni fase entrano mentre scorrono
-    $$('.phase__num').forEach((n) => {
-      gsap.from(n, {
-        yPercent: 40, opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: n, containerAnimation: tl, start: 'left 95%', end: 'left 60%', scrub: true },
-      });
+    const placeRef = (f) => {
+      const pt = ink.getPointAtLength(Math.max(0.001, f) * total);
+      ref.style.left = (pt.x / 10) + '%';
+      ref.style.top = (pt.y / 120 * 100) + '%';
+      ref.style.setProperty('--shift', gsap.utils.clamp(0, 1, f * 1.25 - 0.1));   // etichetta sempre dentro lo schermo
+    };
+
+    gsap.set(ink, { strokeDashoffset: 1 });
+    filoPhases.forEach((ph) => {
+      gsap.set(iconParts(ph), { strokeDashoffset: 1 });
+      gsap.set(phaseText(ph), { y: 26, opacity: 0 });
+      gsap.set($('.filo__node', ph), { scale: 0.7, borderColor: 'rgba(26,26,26,.14)' });
     });
+
+    const LINE = 0.9;                                  // la linea occupa il 90% della timeline, poi pausa
+    const draw = { f: 0 };
+    const tl = gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: filo, start: 'center center', end: '+=230%', pin: true, scrub: 0.7, invalidateOnRefresh: true } });
+    tl.to(draw, { f: 1, duration: LINE, onUpdate: () => { ink.style.strokeDashoffset = 1 - draw.f; placeRef(draw.f); } }, 0);
+    filoPhases.forEach((ph, i) => {
+      const t = nodeAt[i] * LINE;
+      tl.to($('.filo__node', ph), { scale: 1, borderColor: 'rgba(26,26,26,.9)', duration: 0.05, ease: 'back.out(2)' }, Math.max(0, t - 0.02))
+        .to(iconParts(ph), { strokeDashoffset: 0, duration: 0.1, stagger: 0.025 }, Math.max(0, t - 0.01))
+        .to(phaseText(ph), { y: 0, opacity: 1, duration: 0.1, stagger: 0.025, ease: 'power2.out' }, t + 0.01);
+    });
+    tl.to({}, { duration: 1 - LINE });
+    placeRef(0);
+
+    return () => {
+      gsap.set([ink, ...filoPhases.flatMap(iconParts), ...filoPhases.flatMap(phaseText), ...$$('.filo__node', filo)], { clearProps: 'all' });
+      ref.removeAttribute('style'); ink.removeAttribute('style');
+    };
+  });
+
+  mm.add('(max-width: 900px)', () => {
+    const vline = $('.filo__vline i', filo);
+    const tls = [];
+    tls.push(gsap.fromTo(vline, { height: '0%' }, { height: '100%', ease: 'none',
+      scrollTrigger: { trigger: '.filo__phases', start: 'top 65%', end: 'bottom 65%', scrub: 0.5 } }));
+    filoPhases.forEach((ph) => {
+      const tl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: ph, start: 'top 80%', end: 'top 45%', scrub: 0.5 } });
+      tl.fromTo(iconParts(ph), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: 0.1 }, 0)
+        .fromTo(phaseText(ph), { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, ease: 'power2.out' }, 0.1);
+      tls.push(tl);
+    });
+    return () => {
+      tls.forEach((tl) => { tl.scrollTrigger.kill(); tl.kill(); });
+      gsap.set([vline, ...filoPhases.flatMap(iconParts), ...filoPhases.flatMap(phaseText)], { clearProps: 'all' });
+    };
   });
 
   /* ------------------------------------------------------------------

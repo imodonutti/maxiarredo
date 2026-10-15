@@ -123,23 +123,68 @@
       </div>
     </div>
 
-    <!-- Fasi: su desktop scorrono in orizzontale mentre la sezione resta ferma -->
-    <div class="phases" id="phases">
-      <div class="phases__intro">
+    <!-- ===== IL FILO — "Un solo team, dalla prima idea alla consegna" =====
+         Una sola linea, come un tratto a matita, attraversa le quattro fasi e si
+         disegna con lo scroll; quando arriva a una fase ne disegna l'icona (schizzo
+         al tratto) e fa entrare il testo. Il segno "Il tuo referente" viaggia sulla
+         punta della linea: è sempre la stessa persona, dall'inizio alla fine.
+         Desktop: linea orizzontale, sezione bloccata. Mobile: linea verticale.
+         Le righe "Cosa ricevi" sono in BOZZA, da verificare. -->
+    <div class="filo" id="filo">
+      <div class="filo__intro">
         <h3 class="title title--h3" data-split>Un solo team, dalla prima idea alla consegna.</h3>
-        <span class="meta" data-fade>4 fasi — nessun passaggio di mano</span>
+        <span class="meta" data-fade>4 fasi — un solo referente, nessun passaggio di mano</span>
       </div>
-      <div class="phases__track">
-        <article class="phase"><span class="phase__num">01</span><h4 class="phase__name">Sopralluogo</h4>
-          <p>Ascoltiamo prima di disegnare: rilievo dello spazio, luce naturale, abitudini di chi lo vivrà.</p></article>
-        <article class="phase"><span class="phase__num">02</span><h4 class="phase__name">Progetto</h4>
-          <p>Dal concept al disegno esecutivo, fino al capitolato di materiali e finiture.</p></article>
-        <article class="phase"><span class="phase__num">03</span><h4 class="phase__name">Cantiere</h4>
-          <p>Opere edili, impianti, luce e domotica coordinati da un'unica regia, con le nostre squadre di posa.</p></article>
-        <article class="phase"><span class="phase__num">04</span><h4 class="phase__name">Consegna</h4>
-          <p>Arredi su misura, ultimi dettagli, collaudo. Poi vi consegniamo le chiavi.</p></article>
+
+      <div class="filo__stage">
+        <div class="filo__wire" aria-hidden="true">
+          <svg class="filo__svg" viewBox="0 0 1000 120" preserveAspectRatio="none">
+            <path class="filo__path filo__path--ghost" d="M0,60 C60,60 85,60 125,60 C180,60 200,22 250,26 C300,30 320,60 375,60 C430,60 452,98 500,94 C548,90 552,52 524,48 C496,44 488,84 532,90 C572,95 592,60 625,60 C680,60 700,24 750,28 C800,32 822,60 875,60 C930,60 965,60 1000,60"/>
+            <path class="filo__path filo__path--ink" pathLength="1" d="M0,60 C60,60 85,60 125,60 C180,60 200,22 250,26 C300,30 320,60 375,60 C430,60 452,98 500,94 C548,90 552,52 524,48 C496,44 488,84 532,90 C572,95 592,60 625,60 C680,60 700,24 750,28 C800,32 822,60 875,60 C930,60 965,60 1000,60"/>
+          </svg>
+          <div class="filo__ref"><i></i><span class="meta">Il tuo referente</span></div>
+        </div>
+
+        <div class="filo__vline" aria-hidden="true"><i></i></div>
+        <ol class="filo__phases">
+          <li class="filo__phase" data-step="0">
+            <span class="filo__node"><svg class="filo__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="9" width="20" height="6" rx="1" pathLength="1"/><rect x="9" y="10.5" width="6" height="3" rx="1.5" pathLength="1"/><path d="M12 10.5v3M5 9v2M19 9v2" pathLength="1"/></svg></span>
+            <div class="filo__body">
+              <span class="meta filo__num">01</span>
+              <h4 class="filo__name">Sopralluogo</h4>
+              <p class="filo__text">Ascoltiamo prima di disegnare: rilievo dello spazio, luce naturale, abitudini di chi lo vivrà.</p>
+              <p class="filo__get"><span class="meta">Cosa ricevi</span>Rilievo dello spazio e prime idee da discutere insieme.</p>
+            </div>
+          </li>
+          <li class="filo__phase" data-step="1">
+            <span class="filo__node"><svg class="filo__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 21V5l16 16z" pathLength="1"/><path d="M7 17v-4.2l4.2 4.2z" pathLength="1"/><path d="M15.5 2.5l3 3-8.5 8.5-3.8.8.8-3.8z" pathLength="1"/></svg></span>
+            <div class="filo__body">
+              <span class="meta filo__num">02</span>
+              <h4 class="filo__name">Progetto</h4>
+              <p class="filo__text">Dal concept al disegno esecutivo, fino al capitolato di materiali e finiture.</p>
+              <p class="filo__get"><span class="meta">Cosa ricevi</span>Progetto esecutivo, render e capitolato con materiali e finiture.</p>
+            </div>
+          </li>
+          <li class="filo__phase" data-step="2">
+            <span class="filo__node"><svg class="filo__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 16a7 7 0 0 1 14 0" pathLength="1"/><path d="M10 9.4V6.5h4v2.9" pathLength="1"/><path d="M3 16h18v2.5H3z" pathLength="1"/></svg></span>
+            <div class="filo__body">
+              <span class="meta filo__num">03</span>
+              <h4 class="filo__name">Cantiere</h4>
+              <p class="filo__text">Opere edili, impianti, luce e domotica coordinati da un'unica regia, con le nostre squadre di posa.</p>
+              <p class="filo__get"><span class="meta">Cosa ricevi</span>Un programma dei lavori e un solo referente per ogni domanda.</p>
+            </div>
+          </li>
+          <li class="filo__phase" data-step="3">
+            <span class="filo__node"><svg class="filo__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="7.5" cy="12" r="4" pathLength="1"/><circle cx="7.5" cy="12" r="1.2" pathLength="1"/><path d="M11.5 12H21.5M19 12v3.2M16 12v2.2" pathLength="1"/></svg></span>
+            <div class="filo__body">
+              <span class="meta filo__num">04</span>
+              <h4 class="filo__name">Consegna</h4>
+              <p class="filo__text">Arredi su misura, ultimi dettagli, collaudo. Poi vi consegniamo le chiavi.</p>
+              <p class="filo__get"><span class="meta">Cosa ricevi</span>Le chiavi di casa, con impianti e arredi collaudati.</p>
+            </div>
+          </li>
+        </ol>
       </div>
-      <div class="phases__progress"><i></i></div>
     </div>
 
     <div class="facts">
