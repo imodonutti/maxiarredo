@@ -279,7 +279,9 @@ html.lenis, html.lenis body { height: auto; }
 }
 /* Numeri: quattro grandi con contatore a rulli + tre piccoli in lettere con disegno */
 .facts { margin-top: var(--section-pad); border-top: 1px solid var(--c-ink); padding-top: 1.4rem; }
-.facts__head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.facts__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 1.6rem; align-items: end; margin-top: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: clamp(3rem, 6vw, 5.5rem); }
+.facts__title { grid-column: 1 / 7; }
+.facts__intro { grid-column: 8 / 13; display: flex; flex-direction: column; align-items: start; gap: 1.1rem; }
 .facts__big { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); }
 .fact { padding-right: 1rem; }
 .fact + .fact { border-left: 1px solid var(--c-line); padding-left: clamp(1rem, 2.5vw, 2.5rem); }
@@ -606,6 +608,7 @@ html.lenis, html.lenis body { height: auto; }
   .metodo__title, .metodo__media, .metodo__body { grid-column: 1 / -1; }
   .metodo__body { margin-top: 2.5rem; padding-bottom: 0; }
   .filo__intro { flex-direction: column; align-items: start; }
+  .facts__title, .facts__intro { grid-column: 1 / -1; }
   .facts__big { grid-template-columns: 1fr 1fr; row-gap: 2.4rem; }
   .fact + .fact { border-left: 0; padding-left: 0; }
   .fact:nth-child(even) { border-left: 1px solid var(--c-line); padding-left: 1rem; }
