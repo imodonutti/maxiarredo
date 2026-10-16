@@ -279,7 +279,7 @@ html.lenis, html.lenis body { height: auto; }
 }
 /* Numeri: quattro grandi con contatore a rulli + tre piccoli in lettere con disegno */
 .facts { margin-top: var(--section-pad); border-top: 1px solid var(--c-ink); padding-top: 1.4rem; }
-.facts__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 1.6rem; align-items: end; margin-top: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: clamp(3rem, 6vw, 5.5rem); }
+.facts__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 1.6rem; align-items: start; margin-top: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: clamp(3rem, 6vw, 5.5rem); }
 .facts__title { grid-column: 1 / 7; }
 .facts__intro { grid-column: 8 / 13; display: flex; flex-direction: column; align-items: start; gap: 1.1rem; }
 .facts__big { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); }
