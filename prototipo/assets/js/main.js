@@ -32,15 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
          si stringe. Il contatore segue il caricamento vero della pagina.
          Poi il marchio vola nella sua posizione nel menu e il fondo si
          alza come un sipario: a quel punto parte l'animazione dell'hero.
-         Solo alla prima visita della sessione; clic, tasto o rotella la
-         saltano.
+         A ogni caricamento della pagina; clic, tasto o rotella la saltano.
      ------------------------------------------------------------------ */
   const root = document.documentElement;
   const introOn = root.classList.contains('intro') && !reduceMotion;
   const whenIntroDone = [];                              // funzioni da eseguire a sipario alzato
   if (!introOn) { root.classList.remove('intro'); const l = $('#loader'); if (l) l.remove(); }
   else {
-    try { sessionStorage.setItem('mx-intro', '1'); } catch (e) {}
     if (lenis) lenis.stop();
     const loader = $('#loader');
     const mark = $('.loader__mark', loader);
@@ -223,12 +221,20 @@ document.addEventListener('DOMContentLoaded', () => {
          - il testo di ogni progetto entra a righe sfalsate.
      ------------------------------------------------------------------ */
   const prClip = { up: 'inset(100% 0% 0% 0%)', left: 'inset(0% 0% 0% 100%)', right: 'inset(0% 100% 0% 0%)' };
+  // fascia d'ingresso: il testo grande scorre verso sinistra mentre si scende
+  gsap.fromTo('.pr-band__track', { xPercent: 8 }, { xPercent: -14, ease: 'none',
+    scrollTrigger: { trigger: '.pr-band', start: 'top bottom', end: 'bottom top', scrub: 0.5 } });
+
   $$('[data-pr-reveal]').forEach((fig) => {
     const box = $('.pr__img', fig), img = $('img', fig);
+    const dir = fig.dataset.prReveal;
+    // la foto si avvicina: parte più piccola e cresce dal lato da cui si apre
+    gsap.set(box, { transformOrigin: dir === 'left' ? '100% 50%' : dir === 'right' ? '0% 50%' : '50% 100%' });
     gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: fig, start: 'top 92%', end: 'top 38%', scrub: 0.6 } })
-      .fromTo(box, { clipPath: prClip[fig.dataset.prReveal] || prClip.up }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut' }, 0)
-      .fromTo(img, { scale: 1.4 }, { scale: 1.12, ease: 'power1.out' }, 0);
+      scrollTrigger: { trigger: fig, start: 'top 98%', end: 'top 25%', scrub: 0.8 } })
+      .fromTo(box, { clipPath: prClip[dir] || prClip.up }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: 0.7 }, 0)
+      .fromTo(box, { scale: 0.82 }, { scale: 1, ease: 'power2.out', duration: 1 }, 0)
+      .fromTo(img, { scale: 1.45 }, { scale: 1.12, ease: 'power1.out', duration: 1 }, 0);
     gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none',
       scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
@@ -237,8 +243,16 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.fromTo(el, { y: () => -v * window.innerHeight }, { y: () => v * window.innerHeight, ease: 'none',
       scrollTrigger: { trigger: el.closest('.pr'), start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
   });
+  // titoli dei progetti: le righe salgono da una maschera, seguendo lo scroll
+  $$('.pr__title').forEach((h) => {
+    SplitText.create(h, { type: 'lines', mask: 'lines', linesClass: 'split-line', autoSplit: true,
+      onSplit(self) {
+        return gsap.fromTo(self.lines, { yPercent: 110 }, { yPercent: 0, ease: 'power3.out', stagger: 0.15,
+          scrollTrigger: { trigger: h, start: 'top 95%', end: 'top 65%', scrub: 0.6 } });
+      } });
+  });
   $$('.pr__info').forEach((info) => {
-    gsap.fromTo([...info.children], { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', stagger: 0.12,
+    gsap.fromTo([...info.children].filter((c) => !c.classList.contains('pr__title')), { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', stagger: 0.12,
       scrollTrigger: { trigger: info, start: 'top 92%', end: 'top 58%', scrub: 0.6 } });
   });
 
@@ -638,6 +652,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initBeforeAfter();
+
+  /* Le sezioni bloccate (il filo, lo showroom) allungano la pagina: i trigger
+     creati prima di loro vanno ricalcolati nell'ordine in cui compaiono,
+     altrimenti scattano troppo presto (es. l'ingresso dei Progetti). */
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
   initForm();
 
   // Ricalcola tutto quando i font sono pronti (cambiano le altezze)

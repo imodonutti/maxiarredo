@@ -306,6 +306,13 @@ html.lenis, html.lenis body { height: auto; }
 /* ==========================================================================
    _03 PROGETTI
    ========================================================================== */
+.pr-band { margin: 0 calc(-1 * var(--gutter)) clamp(3rem, 6vw, 6rem); overflow: hidden; pointer-events: none; }
+.pr-band__track { display: flex; align-items: baseline; gap: .35em; width: max-content; white-space: nowrap; font-family: var(--ff-serif); font-size: clamp(4.5rem, 2rem + 11vw, 15rem); line-height: 1; padding-left: var(--gutter); }
+.pr-band__track span { color: transparent; -webkit-text-stroke: 1px rgba(26, 26, 26, .35); }
+.pr-band__track em { color: var(--c-accent); font-style: italic; }
+.pr-band__track i { font-style: normal; color: rgba(26, 26, 26, .25); }
+.pr__img { transform-origin: 50% 100%; }
+.pr__title .split-line { padding-bottom: .06em; }
 .progetti__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: end; margin-bottom: clamp(4rem, 9vw, 9rem); }
 .progetti__head > div:first-child { grid-column: 1 / 8; }
 .progetti__head .meta { margin-bottom: 1.8rem; }

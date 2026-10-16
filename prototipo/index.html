@@ -15,16 +15,15 @@
        Senza questa classe tutto il contenuto resta visibile. */
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('js-anim');
-      /* Apertura con il marchio: solo la prima volta in questa sessione */
-      try { if (!sessionStorage.getItem('mx-intro')) document.documentElement.classList.add('intro'); }
-      catch (e) { document.documentElement.classList.add('intro'); }
+      /* Apertura con il marchio: a ogni caricamento della pagina */
+      document.documentElement.classList.add('intro');
     }
   </script>
 </head>
 <body>
 
 <!-- ============================== APERTURA (loader) ==============================
-     Solo alla prima visita della sessione (vedi script in <head>). Dalla X due linee
+     A ogni caricamento della pagina (vedi script in <head>). Dalla X due linee
      incrociate; le lettere escono dalla X disegnate a matita e si riempiono; il
      sottotitolo si stringe; poi il marchio vola nel menu e il fondo si alza.
      Clic, tasto o rotella la saltano. Con "riduci movimento" non compare. -->
@@ -247,6 +246,12 @@
        cornice e i numeri grandi viaggiano a una velocità diversa ([data-pr-speed]).
        Titoli e descrizioni sono PROVVISORI (ricavati dalle foto): da confermare. -->
   <section class="section progetti container" id="progetti" aria-labelledby="progetti-title">
+    <!-- Fascia d'ingresso: testo grande che scorre in orizzontale con lo scroll -->
+    <div class="pr-band" aria-hidden="true">
+      <div class="pr-band__track">
+        <span>Progetti selezionati</span><i>—</i><em>case, negozi, uffici</em><i>—</i><span>Progetti selezionati</span><i>—</i><em>case, negozi, uffici</em><i>—</i>
+      </div>
+    </div>
     <div class="progetti__head">
       <div>
         <span class="meta meta--line" data-fade><b>_03</b> Progetti</span>
