@@ -393,18 +393,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
-     9. NUMERI — contatori
+     9. NUMERI — contatore "a rulli" guidato dallo scroll
+        Ogni cifra diventa una colonna 0-9 che scorre come in un vecchio
+        contachilometri: le cifre di destra fanno più giri di quelle di
+        sinistra. I numeri piccoli (in lettere) hanno un disegno al tratto
+        che si disegna con lo scroll, come nel filo.
      ------------------------------------------------------------------ */
-  $$('[data-count]').forEach((el) => {
-    const end = +el.dataset.count;
-    const from = end > 1000 ? end - 60 : 0;
-    const obj = { v: from };
-    el.textContent = from;
-    gsap.to(obj, {
-      v: end, duration: 2.2, ease: 'power3.out',
-      onUpdate: () => (el.textContent = Math.round(obj.v)),
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+  const rolls = $$('.fact__roll');
+  rolls.forEach((el) => {
+    const txt = el.dataset.roll;
+    const digits = [...txt].filter((ch) => /\d/.test(ch)).length;
+    let pos = 0;
+    el.setAttribute('aria-label', txt);
+    el.innerHTML = '';
+    const wrap = document.createElement('span');
+    wrap.className = 'roll'; wrap.setAttribute('aria-hidden', 'true');
+    [...txt].forEach((ch) => {
+      if (!/\d/.test(ch)) { const sp = document.createElement('span'); sp.className = 'roll__sep'; sp.textContent = ch; wrap.appendChild(sp); return; }
+      const turns = 1 + (digits - 1 - pos);           // giri completi prima di fermarsi
+      pos++;
+      const col = document.createElement('span');
+      col.className = 'roll__col';
+      const n = turns * 10 + +ch;
+      for (let k = 0; k <= n; k++) { const d = document.createElement('span'); d.textContent = k % 10; col.appendChild(d); }
+      col.dataset.items = n + 1; col.dataset.stop = n;
+      wrap.appendChild(col);
     });
+    el.appendChild(wrap);
+  });
+  const rollTl = gsap.timeline({ defaults: { ease: 'power2.out' },
+    scrollTrigger: { trigger: '.facts__big', start: 'top 88%', end: 'top 35%', scrub: 0.8 } });
+  $$('.facts__big .fact').forEach((fact, i) => {
+    $$('.roll__col', fact).forEach((col) => {
+      rollTl.fromTo(col, { yPercent: 0 }, { yPercent: -(+col.dataset.stop / +col.dataset.items) * 100, duration: 1 }, i * 0.18);
+    });
+    rollTl.fromTo($('.fact__label', fact), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, i * 0.18 + 0.5);
+  });
+
+  const fsmTl = gsap.timeline({ defaults: { ease: 'none' },
+    scrollTrigger: { trigger: '.facts__small', start: 'top 88%', end: 'top 50%', scrub: 0.6 } });
+  $$('.fsm').forEach((li, i) => {
+    fsmTl.fromTo($$('.fsm__ico *', li), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: 0.12, duration: 0.5 }, i * 0.25)
+      .fromTo($$('.fsm__word, .fsm__label', li), { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.35, ease: 'power2.out' }, i * 0.25 + 0.2);
   });
 
   /* ------------------------------------------------------------------

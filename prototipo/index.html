@@ -187,11 +187,31 @@
       </div>
     </div>
 
+    <!-- ===== NUMERI =====
+         Riga 1: quattro numeri grandi con contatore "a rulli" legato allo scroll
+         (data-roll = valore finale; il testo nel tag è quello che si vede senza JS).
+         Riga 2: i numeri piccoli scritti in lettere, con un disegno al tratto
+         che si disegna con lo scroll (stesso segno del filo).
+         NUMERI PROVVISORI: da confermare con il cliente. -->
     <div class="facts">
-      <div class="fact"><div class="fact__num" data-count="1993">1993</div><div class="meta fact__label">Anno di fondazione</div></div>
-      <div class="fact"><div class="fact__num" data-count="3">3</div><div class="meta fact__label">Piani di showroom</div></div>
-      <div class="fact"><div class="fact__num" data-count="2">2</div><div class="meta fact__label">Squadre interne di posa</div></div>
-      <div class="fact"><div class="fact__num" data-count="2">2</div><div class="meta fact__label">Falegnamerie per il su misura</div></div>
+      <div class="facts__head">
+        <span class="meta">Maxiarredo in numeri</span>
+        <span class="placeholder-note">Bozza — numeri provvisori</span>
+      </div>
+      <div class="facts__big">
+        <div class="fact"><div class="fact__num"><span class="fact__roll" data-roll="33">33</span></div><div class="fact__label"><b>anni</b> di progetti, dal 1993</div></div>
+        <div class="fact"><div class="fact__num"><span class="fact__roll" data-roll="600">600</span><sup class="fact__unit">+</sup></div><div class="fact__label"><b>progetti</b> realizzati</div></div>
+        <div class="fact"><div class="fact__num"><span class="fact__roll" data-roll="1.500">1.500</span><span class="fact__unit fact__unit--m">m²</span></div><div class="fact__label">di <b>showroom</b> su tre piani</div></div>
+        <div class="fact"><div class="fact__num"><span class="fact__roll" data-roll="12">12</span></div><div class="fact__label"><b>persone</b> nel team, dal progetto alla posa</div></div>
+      </div>
+      <ul class="facts__small">
+        <li class="fsm"><svg class="fsm__ico" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M3 32h42" pathLength="1"/><path d="M11 32V8h26v24" pathLength="1"/><path d="M11 20h26" pathLength="1"/><path d="M11 32v11h26V32" pathLength="1"/><path d="M16 13h5M27 13h5M16 25h5M27 25h5M16 37h16" pathLength="1"/></svg>
+          <span class="fsm__word">Tre</span><span class="fsm__label">piani di showroom: −1, 0 e +1</span></li>
+        <li class="fsm"><svg class="fsm__ico" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M5 30a9 9 0 0 1 18 0" pathLength="1"/><path d="M11.5 21.5v-3h5v3" pathLength="1"/><path d="M3 30h22v3H3z" pathLength="1"/><path d="M25 38a9 9 0 0 1 18 0" pathLength="1"/><path d="M31.5 29.5v-3h5v3" pathLength="1"/><path d="M23 38h22v3H23z" pathLength="1"/></svg>
+          <span class="fsm__word">Due</span><span class="fsm__label">squadre interne di posa</span></li>
+        <li class="fsm"><svg class="fsm__ico" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M3 22h19M5 22v14M20 22v14M5 30h15" pathLength="1"/><path d="M8 22l3-7 3 3" pathLength="1"/><path d="M26 30h19M28 30v12M43 30v12M28 37h15" pathLength="1"/><path d="M33 30v-5h7v5" pathLength="1"/></svg>
+          <span class="fsm__word">Due</span><span class="fsm__label">falegnamerie per il su misura</span></li>
+      </ul>
     </div>
   </section>
 
