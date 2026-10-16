@@ -642,3 +642,24 @@ html.lenis, html.lenis body { height: auto; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ==========================================================================
+   APERTURA — il marchio si disegna, poi vola nel menu e il fondo si alza
+   (visibile solo con html.intro, impostata in <head> alla prima visita)
+   ========================================================================== */
+.loader { display: none; }
+html.intro { overflow: hidden; }
+html.intro .loader { display: block; position: fixed; inset: 0; z-index: 200; cursor: pointer; }
+html.intro .header .logo { opacity: 0; }
+.loader__bg { position: absolute; inset: 0; background: var(--c-paper); }
+.loader__mark { position: absolute; left: 50%; top: 50%; width: min(70vw, 760px); transform: translate(-50%, -50%); }
+.loader__svg { display: block; width: 100%; height: auto; overflow: visible; color: var(--c-ink); }
+.ld-g { stroke: var(--c-accent); stroke-width: .5; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ld-l { fill: var(--c-ink); fill-opacity: 0; stroke: var(--c-ink); stroke-width: .55; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ld-s { fill: var(--c-ink); opacity: 0; }
+.loader__foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: var(--gutter); display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.loader__count { font-variant-numeric: tabular-nums; color: var(--c-ink); font-size: .8rem; }
+@media (max-width: 900px) {
+  .loader__mark { width: 84vw; }
+  .loader__foot .meta:first-child { max-width: 60%; }
+}

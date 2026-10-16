@@ -25,6 +25,82 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.ticker.lagSmoothing(0);
   }
 
+  /* ------------------------------------------------------------------
+     1b. APERTURA — il marchio MAXIARREDO
+         Dalla X partono due linee incrociate; le lettere escono dalla X,
+         prima solo il contorno (come a matita) poi piene; il sottotitolo
+         si stringe. Il contatore segue il caricamento vero della pagina.
+         Poi il marchio vola nella sua posizione nel menu e il fondo si
+         alza come un sipario: a quel punto parte l'animazione dell'hero.
+         Solo alla prima visita della sessione; clic, tasto o rotella la
+         saltano.
+     ------------------------------------------------------------------ */
+  const root = document.documentElement;
+  const introOn = root.classList.contains('intro') && !reduceMotion;
+  const whenIntroDone = [];                              // funzioni da eseguire a sipario alzato
+  if (!introOn) { root.classList.remove('intro'); const l = $('#loader'); if (l) l.remove(); }
+  else {
+    try { sessionStorage.setItem('mx-intro', '1'); } catch (e) {}
+    if (lenis) lenis.stop();
+    const loader = $('#loader');
+    const mark = $('.loader__mark', loader);
+    const guides = $$('.ld-g', loader);
+    const letters = $$('.ld-l', loader);
+    const subs = $$('.ld-s', loader);
+    const counter = $('.loader__count', loader);
+    const X_CX = 317, SUB_CX = 412;
+
+    let loaded = document.readyState === 'complete';
+    window.addEventListener('load', () => { loaded = true; }, { once: true });
+    setTimeout(() => { loaded = true; }, 6000);           // non aspettare all'infinito
+
+    const count = { v: 0 };
+    const showCount = () => (counter.textContent = String(Math.round(count.v)).padStart(3, '0'));
+
+    const tl = gsap.timeline({ onComplete: waitAndExit });
+    tl.to(guides, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut', stagger: 0.12 }, 0);
+    letters.forEach((l) => {
+      const dx = X_CX - +l.dataset.cx;                    // le lettere partono dalla X
+      const delay = Math.abs(dx) / 330 * 0.55;
+      tl.fromTo(l, { x: dx * 0.55, opacity: 0 }, { x: 0, opacity: 1, duration: 1.1, ease: 'expo.out' }, 0.35 + delay)
+        .to(l, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.35 + delay);
+    });
+    tl.to(letters, { fillOpacity: 1, strokeOpacity: 0, duration: 0.6, ease: 'power2.out', stagger: 0.02 }, 1.45)
+      .to(guides, { opacity: 0, duration: 0.5 }, 1.55);
+    subs.forEach((sp) => {
+      const dx = +sp.dataset.cx - SUB_CX;                 // il sottotitolo parte largo e si stringe
+      tl.fromTo(sp, { x: dx * 0.7, opacity: 0 }, { x: 0, opacity: 0.55, duration: 1.2, ease: 'expo.out' }, 1.5);
+    });
+    tl.to(count, { v: 96, duration: 2.4, ease: 'power1.inOut', onUpdate: showCount }, 0);
+
+    function waitAndExit() {
+      if (!loaded) { gsap.delayedCall(0.15, waitAndExit); return; }
+      gsap.to(count, { v: 100, duration: 0.3, onUpdate: showCount, onComplete: exit });
+    }
+    function exit() {
+      const logo = $('.header .logo__svg');
+      const from = $('.loader__svg', loader).getBoundingClientRect();
+      const to = logo.getBoundingClientRect();
+      const scale = to.width / from.width;
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+      gsap.timeline({ onComplete: done })
+        .to('.loader__foot', { opacity: 0, y: 10, duration: 0.4, ease: 'power2.in' }, 0)
+        .to(mark, { x: dx, y: dy, scale, duration: 1.15, ease: 'expo.inOut' }, 0.05)
+        .to('.loader__bg', { yPercent: -100, duration: 1.15, ease: 'expo.inOut' }, 0.2)
+        .add(() => whenIntroDone.forEach((fn) => fn()), 0.75);
+    }
+    function done() {
+      root.classList.remove('intro');
+      loader.remove();
+      if (lenis) lenis.start();
+      ScrollTrigger.refresh();
+    }
+    // saltare l'apertura: tutto accelera
+    const skip = () => { tl.timeScale(6); count.v = Math.max(count.v, 90); };
+    ['click', 'keydown', 'wheel', 'touchstart'].forEach((ev) => window.addEventListener(ev, skip, { once: true, passive: true }));
+  }
+
   // Link interni (#ancora) con scorrimento morbido
   $$('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -67,7 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------
      4. HERO — titolo a righe, disegno che si traccia, foto che lo copre
      ------------------------------------------------------------------ */
-  const heroTl = gsap.timeline({ defaults: { ease: EASE }, delay: 0.15 });
+  // con l'apertura attiva l'hero parte quando il sipario si alza
+  const heroTl = gsap.timeline({ defaults: { ease: EASE }, delay: 0.15, paused: introOn });
+  if (introOn) whenIntroDone.push(() => heroTl.play());
   SplitText.create('[data-split="hero"]', {
     type: 'lines', mask: 'lines', linesClass: 'split-line',
     onSplit(self) {
