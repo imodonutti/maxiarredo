@@ -107,8 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function done() {
       root.classList.remove('intro');
       loader.remove();
-      if (lenis) lenis.start();
-      ScrollTrigger.refresh();
+      if (lenis) lenis.start();          // la larghezza non cambia (scrollbar-gutter): nessun ricalcolo
     }
     // saltare l'apertura: tutto accelera
     const skip = () => { tl.timeScale(6); count.v = Math.max(count.v, 90); };
@@ -181,6 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ------------------------------------------------------------------
+     PREPARAZIONE A BLOCCHI — apertura e hero sono pronti subito; le
+     sezioni più in basso vengono preparate una alla volta, lasciando
+     respirare il browser tra un blocco e l'altro (meno "Total Blocking
+     Time"). Mentre gira l'apertura lo scroll è comunque fermo.
+     ------------------------------------------------------------------ */
+  const mm = gsap.matchMedia();
+  const later = [];
+
+  later.push(() => {
+  /* ------------------------------------------------------------------
      5. TITOLI — divisi in righe, salgono dal basso con stagger
      ------------------------------------------------------------------ */
   $$('[data-split]:not([data-split="hero"])').forEach((el) => {
@@ -195,6 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  });
+
+  later.push(() => {
   /* ------------------------------------------------------------------
      6. TESTI E BLOCCHI — fade dal basso
      ------------------------------------------------------------------ */
@@ -225,7 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
     });
   });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      7a. METODO — "Non siamo…": la negazione si vede
          Le righe entrano, poi un tratto a matita barra "negozio di
@@ -267,7 +281,9 @@ document.addEventListener('DOMContentLoaded', () => {
     .fromTo('.mappa figcaption > *', { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, duration: 0.2, ease: 'power2.out' }, 0.75);
   // alone che pulsa attorno a Maxiarredo (solo raggio e trasparenza)
   gsap.fromTo('.mappa__ring', { attr: { r: 5 }, opacity: 0.6 }, { attr: { r: 18 }, opacity: 0, duration: 1.8, ease: 'power1.out', repeat: -1 });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      7b. PROGETTI — tutto guidato dallo scroll
          - [data-pr-reveal="up|left|right"]: la foto si apre a tenda nella
@@ -313,7 +329,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.fromTo([...info.children].filter((c) => !c.classList.contains('pr__title')), { y: 48, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out', stagger: 0.12,
       scrollTrigger: { trigger: info, start: 'top 92%', end: 'top 58%', scrub: 0.6 } });
   });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      8. IL FILO — "Un solo team, dalla prima idea alla consegna"
         Una linea continua si disegna con lo scroll e attraversa le
@@ -322,7 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
         viaggia sulla punta. Desktop: orizzontale con sezione bloccata.
         Mobile: verticale, lungo i nodi.
      ------------------------------------------------------------------ */
-  const mm = gsap.matchMedia();
   const filo = $('#filo');
   const filoPhases = $$('.filo__phase', filo);
   const iconParts = (ph) => $$('.filo__icon *', ph);
@@ -393,6 +410,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   });
 
+  });
+
+  later.push(() => {
   /* ------------------------------------------------------------------
      8a. SHOWROOM — ingresso delle foto, sempre guidato dallo scroll
          Ogni foto si apre come una tenda (clip-path: le verticali salgono
@@ -544,7 +564,9 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.set([...figs, ...$$('.sv__img, .sv img, .sv figcaption, .sv figcaption > span, .showroom__num span', section)], { clearProps: 'all' });
     };
   });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      9. NUMERI — contatore "a rulli" guidato dallo scroll
         Ogni cifra diventa una colonna 0-9 che scorre come in un vecchio
@@ -590,7 +612,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fsmTl.fromTo($$('.fsm__ico *', li), { strokeDashoffset: LEN }, { strokeDashoffset: 0, stagger: 0.12, duration: 0.5 }, i * 0.25)
       .fromTo($$('.fsm__word, .fsm__label', li), { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.35, ease: 'power2.out' }, i * 0.25 + 0.2);
   });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      10. SERVIZI — tre famiglie, tutto guidato dallo scroll
          Desktop: a sinistra un pannello fermo (sticky) con la foto del
@@ -669,7 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return () => tls.forEach((tl) => { tl.scrollTrigger.kill(); tl.kill(); });
   });
+  });
 
+  later.push(() => {
   /* ------------------------------------------------------------------
      11. CURSORE — punto + badge che compare su [data-cursor]
      ------------------------------------------------------------------ */
@@ -714,16 +740,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initBeforeAfter();
+  });
 
-  /* Le sezioni bloccate (il filo, lo showroom) allungano la pagina: i trigger
-     creati prima di loro vanno ricalcolati nell'ordine in cui compaiono,
-     altrimenti scattano troppo presto (es. l'ingresso dei Progetti). */
-  ScrollTrigger.sort();
-  ScrollTrigger.refresh();
+  /* Finiti i blocchi: le sezioni bloccate (il filo, lo showroom) allungano la
+     pagina, quindi i trigger si ordinano come compaiono e si ricalcolano UNA
+     volta sola (anche quando arrivano i caratteri, se arrivano dopo). */
+  let ready = false;
+  const runLater = () => {
+    const fn = later.shift();
+    if (fn) { fn(); setTimeout(runLater, 0); return; }
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
+    ready = true;
+  };
+  setTimeout(runLater, 0);
   initForm();
-
-  // Ricalcola tutto quando i font sono pronti (cambiano le altezze)
-  document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
+  if (document.fonts) document.fonts.ready.then(() => { if (ready) ScrollTrigger.refresh(); });
 
   /* ------------------------------------------------------------------
      12. PRIMA / DOPO — trascinabile con mouse e touch

@@ -731,6 +731,7 @@ html.lenis, html.lenis body { height: auto; }
    (visibile solo con html.intro, impostata in <head> alla prima visita)
    ========================================================================== */
 .loader { display: none; }
+html { scrollbar-gutter: stable; }   /* la larghezza non cambia quando lo scroll si blocca/sblocca */
 html.intro { overflow: hidden; }
 html.intro .loader { display: block; position: fixed; inset: 0; z-index: 200; cursor: pointer; }
 html.intro .header .logo { opacity: 0; }
