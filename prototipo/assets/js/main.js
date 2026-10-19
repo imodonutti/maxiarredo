@@ -754,9 +754,35 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------ */
   function initForm() {
     const form = $('#form'), msg = $('#form-msg');
+    const rules = {
+      'f-nome': (v) => v.trim().length >= 2,
+      'f-tel': (v) => v.replace(/[^\d]/g, '').length >= 6,
+      'f-mail': (v) => !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    };
+    const check = (id) => {
+      const input = $('#' + id), field = input.closest('.field');
+      const ok = rules[id](input.value);
+      field.classList.toggle('is-invalid', !ok);
+      input.setAttribute('aria-invalid', String(!ok));
+      return ok;
+    };
+    Object.keys(rules).forEach((id) => {
+      const input = $('#' + id);
+      input.setAttribute('aria-describedby', 'e-' + id.slice(2));
+      // l'errore si toglie appena il campo è corretto; compare uscendo dal campo
+      input.addEventListener('input', () => { if (input.closest('.field').classList.contains('is-invalid')) check(id); });
+      input.addEventListener('blur', () => { if (input.value) check(id); });
+    });
+    const privacy = $('#f-privacy'), foot = $('.form__foot', form);
+    privacy.addEventListener('change', () => foot.classList.toggle('is-invalid', foot.classList.contains('is-invalid') && !privacy.checked));
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const bad = Object.keys(rules).filter((id) => !check(id));
+      foot.classList.toggle('is-invalid', !privacy.checked);
+      if (!privacy.checked) bad.push('f-privacy');
+      if (bad.length) { $('#' + bad[0]).focus(); msg.textContent = ''; return; }
       msg.textContent = 'Bozza: l\'invio non è attivo. In WordPress il modulo sarà collegato alla posta dello showroom.';
     });
   }
+
 });

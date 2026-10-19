@@ -494,12 +494,32 @@
         </dl>
       </div>
 
+      <!-- Form a scheda: tre passaggi numerati, campi riconoscibili (riquadro, etichetta
+           leggibile, esempio dentro il campo), obbligatori segnati, errori sotto il campo. -->
       <form class="form" id="form" novalidate data-fade>
-        <div class="field"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
-        <div class="field"><label for="f-tel">Telefono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" required></div>
-        <fieldset class="field field--full" style="border:0;padding:0;margin:0">
-          <legend class="meta" style="margin-bottom:.9rem">Tipo di progetto</legend>
-          <div class="chips">
+        <div class="form__head">
+          <h3 class="form__title">Richiedi una consulenza</h3>
+          <p class="form__sub">Bastano due minuti. Ti richiamiamo noi per fissare un incontro in showroom. <span class="form__req">* campi obbligatori</span></p>
+        </div>
+
+        <fieldset class="step">
+          <legend class="step__head"><span class="step__n">1</span>I tuoi dati</legend>
+          <div class="step__grid">
+            <div class="field"><label for="f-nome">Nome e cognome <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-nome" name="nome" autocomplete="name" placeholder="Es. Maria Rossi" required>
+              <span class="field__err" id="e-nome">Inserisci il tuo nome</span></div>
+            <div class="field"><label for="f-tel">Telefono <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" placeholder="Es. 333 123 4567" required>
+              <span class="field__err" id="e-tel">Inserisci un numero di telefono valido</span></div>
+            <div class="field field--full"><label for="f-mail">Email <span class="opt">(facoltativa)</span></label>
+              <input id="f-mail" name="email" type="email" autocomplete="email" placeholder="Es. maria.rossi@email.it">
+              <span class="field__err" id="e-mail">Controlla l'indirizzo email</span></div>
+          </div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend class="step__head"><span class="step__n">2</span>Che progetto hai in mente?</legend>
+          <div class="chips" role="radiogroup">
             <label class="chip"><input type="radio" name="tipo" value="prima-casa"><span>Prima casa</span></label>
             <label class="chip"><input type="radio" name="tipo" value="stanza"><span>Un singolo ambiente</span></label>
             <label class="chip"><input type="radio" name="tipo" value="ristrutturazione"><span>Ristrutturazione completa</span></label>
@@ -507,10 +527,19 @@
             <label class="chip"><input type="radio" name="tipo" value="altro"><span>Altro</span></label>
           </div>
         </fieldset>
-        <div class="field field--full"><label for="f-msg">Raccontateci il vostro spazio</label><textarea id="f-msg" name="messaggio" rows="3"></textarea></div>
+
+        <fieldset class="step">
+          <legend class="step__head"><span class="step__n">3</span>Raccontaci lo spazio <span class="opt">(facoltativo)</span></legend>
+          <div class="field"><label for="f-msg" class="sr-only">Descrizione dello spazio</label>
+            <textarea id="f-msg" name="messaggio" rows="4" placeholder="Es. appartamento di 90 m² a Piacenza da ristrutturare: vorremmo aprire cucina e soggiorno…"></textarea></div>
+        </fieldset>
+
         <div class="form__foot">
-          <label class="check"><input type="checkbox" required> Ho letto l'informativa privacy e acconsento a essere ricontattato.</label>
-          <button type="submit" class="btn js-magnetic"><span class="btn__dot"></span>Prenota una consulenza</button>
+          <label class="check"><input type="checkbox" id="f-privacy" required><span class="check__box" aria-hidden="true"></span>
+            <span>Ho letto l'<a href="#">informativa privacy</a> e acconsento a essere ricontattato. <span class="req" aria-hidden="true">*</span></span></label>
+          <span class="field__err" id="e-privacy">Serve il consenso per poterti ricontattare</span>
+          <button type="submit" class="btn btn--wide js-magnetic"><span class="btn__dot"></span>Invia la richiesta</button>
+          <p class="form__note">Nessun impegno: la prima consulenza serve a conoscerci.</p>
         </div>
         <p class="form__msg" id="form-msg" role="status"></p>
       </form>
