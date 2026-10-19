@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+  /* Linee che "si disegnano": si misura la lunghezza reale di ogni tratto SVG
+     (niente pathLength, che Safari su iPhone non applica ai tratteggi).
+     prepDraw imposta il tratteggio; LEN(el) è la lunghezza da usare come offset. */
+  const prepDraw = (els) => [].concat(els).forEach((el) => {
+    const L = el.getTotalLength ? el.getTotalLength() : 0;
+    el._len = L || 1;
+    el.style.strokeDasharray = el._len + ' ' + el._len;
+  });
+  const LEN = (i, el) => el._len;
+
   /* ------------------------------------------------------------------
      1. SMOOTH SCROLL — Lenis sincronizzato con il ticker di GSAP
      ------------------------------------------------------------------ */
@@ -56,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const showCount = () => (counter.textContent = String(Math.round(count.v)).padStart(3, '0'));
 
     const tl = gsap.timeline({ onComplete: waitAndExit });
+    prepDraw([...guides, ...letters]);
+    gsap.set([...guides, ...letters], { strokeDashoffset: LEN });
     tl.to(guides, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut', stagger: 0.12 }, 0);
     letters.forEach((l) => {
       const dx = X_CX - +l.dataset.cx;                    // le lettere partono dalla X
@@ -234,8 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // in modo diverso): la strada usa la sua lunghezza reale, città e punti
   // crescono cambiando il raggio dei cerchi.
   const road = $('.mappa__road');
-  const roadLen = road.getTotalLength();
-  road.style.strokeDasharray = roadLen;
+  prepDraw(road);
+  const roadLen = road._len;
   const mapTl = gsap.timeline({ defaults: { ease: 'none' },
     scrollTrigger: { trigger: '.mappa', start: 'top 88%', end: 'top 40%', scrub: 0.6 } });
   mapTl.fromTo(road, { strokeDashoffset: roadLen }, { strokeDashoffset: 0, duration: 0.9 }, 0);
@@ -329,9 +341,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ref.style.setProperty('--shift', gsap.utils.clamp(0, 1, f * 1.25 - 0.1));   // etichetta sempre dentro lo schermo
     };
 
-    gsap.set(ink, { strokeDashoffset: 1 });
+    prepDraw(ink);
+    gsap.set(ink, { strokeDashoffset: ink._len });
     filoPhases.forEach((ph) => {
-      gsap.set(iconParts(ph), { strokeDashoffset: 1 });
+      prepDraw(iconParts(ph));
+      gsap.set(iconParts(ph), { strokeDashoffset: LEN });
       gsap.set(phaseText(ph), { y: 26, opacity: 0 });
       gsap.set($('.filo__node', ph), { scale: 0.7, borderColor: 'rgba(26,26,26,.14)' });
     });
@@ -340,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const draw = { f: 0 };
     const tl = gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: filo, start: 'center center', end: '+=230%', pin: true, scrub: 0.7, invalidateOnRefresh: true } });
-    tl.to(draw, { f: 1, duration: LINE, onUpdate: () => { ink.style.strokeDashoffset = 1 - draw.f; placeRef(draw.f); } }, 0);
+    tl.to(draw, { f: 1, duration: LINE, onUpdate: () => { ink.style.strokeDashoffset = ink._len * (1 - draw.f); placeRef(draw.f); } }, 0);
     filoPhases.forEach((ph, i) => {
       const t = nodeAt[i] * LINE;
       tl.to($('.filo__node', ph), { scale: 1, borderColor: 'rgba(26,26,26,.9)', duration: 0.05, ease: 'back.out(2)' }, Math.max(0, t - 0.02))
@@ -364,7 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
     filoPhases.forEach((ph) => {
       const tl = gsap.timeline({ defaults: { ease: 'none' },
         scrollTrigger: { trigger: ph, start: 'top 80%', end: 'top 45%', scrub: 0.5 } });
-      tl.fromTo(iconParts(ph), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: 0.1 }, 0)
+      prepDraw(iconParts(ph));
+      tl.fromTo(iconParts(ph), { strokeDashoffset: LEN }, { strokeDashoffset: 0, stagger: 0.1 }, 0)
         .fromTo(phaseText(ph), { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, ease: 'power2.out' }, 0.1);
       tls.push(tl);
     });
@@ -567,7 +582,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const fsmTl = gsap.timeline({ defaults: { ease: 'none' },
     scrollTrigger: { trigger: '.facts__small', start: 'top 88%', end: 'top 50%', scrub: 0.6 } });
   $$('.fsm').forEach((li, i) => {
-    fsmTl.fromTo($$('.fsm__ico *', li), { strokeDashoffset: 1 }, { strokeDashoffset: 0, stagger: 0.12, duration: 0.5 }, i * 0.25)
+    prepDraw($$('.fsm__ico *', li));
+    fsmTl.fromTo($$('.fsm__ico *', li), { strokeDashoffset: LEN }, { strokeDashoffset: 0, stagger: 0.12, duration: 0.5 }, i * 0.25)
       .fromTo($$('.fsm__word, .fsm__label', li), { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.35, ease: 'power2.out' }, i * 0.25 + 0.2);
   });
 
