@@ -254,7 +254,7 @@ html.lenis, html.lenis body { height: auto; }
 /* "Dove siamo": mappa schematica al tratto */
 .mappa { margin: .4rem 0 0; display: grid; gap: 1rem; border-top: 1px solid var(--c-line); padding-top: 1.4rem; }
 .mappa__svg { width: 100%; max-width: 420px; height: auto; overflow: visible; }
-.mappa__road { stroke: var(--c-ink); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mappa__road { stroke: var(--c-ink); stroke-width: 1; stroke-linecap: round; }
 .mappa__city circle { fill: var(--c-paper); stroke: var(--c-ink); stroke-width: 1; }
 .mappa svg text { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .08em; fill: var(--c-muted); text-transform: uppercase; }
 .mappa__via { font-style: italic; fill: rgba(26, 26, 26, .35) !important; }

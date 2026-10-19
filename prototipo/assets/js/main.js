@@ -230,16 +230,27 @@ document.addEventListener('DOMContentLoaded', () => {
     .to(strikes[1], { color: 'rgba(26,26,26,.38)', duration: 0.1 }, 0.7)
     .fromTo('.mq__yes', { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, ease: 'power2.out' }, 0.78);
 
+  // Mappa: niente pathLength e niente scale su gruppi SVG (Safari iOS li gestisce
+  // in modo diverso): la strada usa la sua lunghezza reale, città e punti
+  // crescono cambiando il raggio dei cerchi.
   const road = $('.mappa__road');
+  const roadLen = road.getTotalLength();
+  road.style.strokeDasharray = roadLen;
   const mapTl = gsap.timeline({ defaults: { ease: 'none' },
     scrollTrigger: { trigger: '.mappa', start: 'top 88%', end: 'top 40%', scrub: 0.6 } });
-  mapTl.fromTo(road, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9 }, 0);
+  mapTl.fromTo(road, { strokeDashoffset: roadLen }, { strokeDashoffset: 0, duration: 0.9 }, 0);
   $$('.mappa__city, .mappa__home').forEach((g) => {
-    mapTl.fromTo(g, { scale: 0, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: 0.12, ease: 'back.out(2.5)' }, +g.dataset.at * 0.9);
+    const at = +g.dataset.at * 0.9;
+    const dot = $('circle:not(.mappa__ring)', g);
+    const r = +dot.getAttribute('r');
+    mapTl.fromTo(dot, { attr: { r: 0 } }, { attr: { r }, duration: 0.12, ease: 'back.out(2.5)' }, at)
+      .fromTo($('text', g), { opacity: 0 }, { opacity: 1, duration: 0.12 }, at + 0.03);
+    if (g.classList.contains('mappa__home')) mapTl.fromTo(g, { opacity: 0 }, { opacity: 1, duration: 0.05 }, at);   // l'alone compare con il punto
   });
   mapTl.fromTo('.mappa__via', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.7)
     .fromTo('.mappa figcaption > *', { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, duration: 0.2, ease: 'power2.out' }, 0.75);
-  gsap.fromTo('.mappa__ring', { scale: 0.6, opacity: 0.6, svgOrigin: '189 139' }, { scale: 1.9, opacity: 0, duration: 1.8, ease: 'power1.out', repeat: -1 });
+  // alone che pulsa attorno a Maxiarredo (solo raggio e trasparenza)
+  gsap.fromTo('.mappa__ring', { attr: { r: 5 }, opacity: 0.6 }, { attr: { r: 18 }, opacity: 0, duration: 1.8, ease: 'power1.out', repeat: -1 });
 
   /* ------------------------------------------------------------------
      7b. PROGETTI — tutto guidato dallo scroll
