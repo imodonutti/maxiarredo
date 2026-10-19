@@ -237,6 +237,32 @@ html.lenis, html.lenis body { height: auto; }
 .metodo__quote {
   font-family: var(--ff-serif); font-size: var(--fs-h3); line-height: 1.12; color: var(--c-ink);
 }
+/* "Non siamo…": le due definizioni vengono barrate da un tratto a matita */
+.mq__l { display: block; }
+.strike { position: relative; white-space: nowrap; transition: color .3s; }
+.strike::after {
+  content: ""; position: absolute; left: -3%; right: -3%; top: 54%; height: 2px; border-radius: 2px;
+  background: var(--c-accent); transform-origin: left center;
+  transform: rotate(-1.6deg) scaleX(var(--s, 1));
+}
+.strike + .strike::after { transform-origin: left center; }
+.mq__l:nth-child(2) .strike::after { transform: rotate(1.1deg) scaleX(var(--s, 1)); }
+.strike.is-struck { color: var(--c-muted); }
+.mq__yes { font-family: var(--ff-serif); font-size: clamp(1.3rem, 1rem + .9vw, 1.75rem); line-height: 1.25; color: var(--c-ink); max-width: 30ch; }
+.mq__yes em { color: var(--c-accent); }
+
+/* "Dove siamo": mappa schematica al tratto */
+.mappa { margin: .4rem 0 0; display: grid; gap: 1rem; border-top: 1px solid var(--c-line); padding-top: 1.4rem; }
+.mappa__svg { width: 100%; max-width: 420px; height: auto; overflow: visible; }
+.mappa__road { stroke: var(--c-ink); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mappa__city circle { fill: var(--c-paper); stroke: var(--c-ink); stroke-width: 1; }
+.mappa svg text { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .08em; fill: var(--c-muted); text-transform: uppercase; }
+.mappa__via { font-style: italic; fill: rgba(26, 26, 26, .35) !important; }
+.mappa__dot { fill: var(--c-accent); }
+.mappa__ring { fill: none; stroke: var(--c-accent); stroke-width: 1; opacity: .5; }
+.mappa__home text { fill: var(--c-accent); }
+.mappa figcaption { display: grid; gap: .45rem; }
+.mappa__text { color: var(--c-ink-soft); max-width: 40ch; }
 
 /* Fasi — scorrimento orizzontale "pinnato" */
 /* — IL FILO: una linea continua attraversa le quattro fasi — */

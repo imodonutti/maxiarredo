@@ -136,10 +136,36 @@
       <figure class="media metodo__media" data-reveal data-cursor="Il metodo" style="margin:0">
         <div class="media__inner" data-parallax="8"><img src="assets/img/metodo.jpg" alt="Tavolo di lavoro con campionari di materiali e finiture" loading="lazy"></div>
       </figure>
+      <!-- Corpo del metodo: la negazione si vede (un tratto a matita barra le due
+           definizioni), poi l'affermazione; "dove siamo" è una piccola mappa al tratto.
+           Tutto segue lo scroll. -->
       <div class="metodo__body">
-        <p class="metodo__quote" data-split>Non siamo un negozio di arredamento, né uno studio di architettura in senso stretto.</p>
-        <p class="text" data-fade>Siamo un team che segue il progetto dall'idea alla sua realizzazione: dal primo sopralluogo alla consegna delle chiavi, con un solo interlocutore e una sola responsabilità.</p>
-        <p class="text" data-fade>Dal 1993 progettiamo, ristrutturiamo e arrediamo case, negozi e uffici tra Parma e Piacenza, a meno di un'ora da Milano.</p>
+        <p class="metodo__quote mq">
+          <span class="mq__l">Non siamo un <span class="strike">negozio di arredamento</span>,</span>
+          <span class="mq__l">né uno <span class="strike">studio di architettura</span></span>
+          <span class="mq__l">in senso stretto.</span>
+        </p>
+        <p class="mq__yes">Siamo <em>un team</em> che segue il progetto dall'idea alla sua realizzazione, con un solo interlocutore e una sola responsabilità.</p>
+
+        <figure class="mappa" aria-labelledby="mappa-cap">
+          <svg class="mappa__svg" viewBox="0 0 330 200" fill="none" aria-hidden="true">
+            <path class="mappa__road" pathLength="1" d="M42,31 C78,58 118,100 152,121 L189,139 C228,154 258,165 293,176"/>
+            <g class="mappa__city" data-at="0"><circle cx="42" cy="31" r="3.2"/><text x="52" y="27">Milano</text></g>
+            <g class="mappa__city" data-at="0.52"><circle cx="152" cy="121" r="3.2"/><text x="98" y="138">Piacenza</text></g>
+            <g class="mappa__city" data-at="1"><circle cx="293" cy="176" r="3.2"/><text x="262" y="163">Parma</text></g>
+            <text class="mappa__via" x="208" y="188">Via Emilia</text>
+            <g class="mappa__home" data-at="0.66">
+              <circle class="mappa__ring" cx="189" cy="139" r="10"/>
+              <circle class="mappa__dot" cx="189" cy="139" r="4.6"/>
+              <text x="200" y="128">Maxiarredo</text>
+            </g>
+          </svg>
+          <figcaption id="mappa-cap">
+            <span class="meta">Roveleto di Cadeo (PC) — dal 1993</span>
+            <span class="mappa__text">Progettiamo, ristrutturiamo e arrediamo case, negozi e uffici tra Parma e Piacenza, a meno di un'ora da Milano.</span>
+          </figcaption>
+        </figure>
+
         <a href="#" class="link-arrow" data-fade>Scopri il metodo
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5h13M9 1l4 4-4 4" stroke="currentColor"/></svg></a>
       </div>
