@@ -8,8 +8,12 @@
   <meta name="description" content="Dal 1993, progettazione su misura, dalla prima matita alla chiave in mano. Progettazione d'interni, ristrutturazione e general contracting a Piacenza.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <!-- Caratteri caricati senza bloccare la prima visualizzazione -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap"></noscript>
+  <link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/hero-sketch-800.webp 800w, assets/img/hero-sketch-1400.webp 1400w, assets/img/hero-sketch-2000.webp 2000w" imagesizes="(min-width: 901px) 58vw, 100vw" fetchpriority="high">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261019">
   <script>
     /* Le animazioni partono solo se JS è attivo e l'utente non ha chiesto movimento ridotto.
        Senza questa classe tutto il contenuto resta visibile. */
@@ -113,8 +117,8 @@
 
       <!-- Il disegno si traccia, poi la foto reale lo copre: "dalla matita alla chiave" -->
       <div class="hero__media" data-cursor="Showroom">
-        <div class="hero__layer hero__layer--sketch"><img src="assets/img/hero-sketch.jpg" alt="" width="2000" height="1254"></div>
-        <div class="hero__layer hero__layer--photo"><img src="assets/img/hero.jpg" alt="Zona living allestita nello showroom Maxiarredo" width="2000" height="1254"></div>
+        <div class="hero__layer hero__layer--sketch"><picture><source type="image/webp" srcset="assets/img/hero-sketch-800.webp 800w, assets/img/hero-sketch-1400.webp 1400w, assets/img/hero-sketch-2000.webp 2000w" sizes="(min-width: 901px) 58vw, 100vw"><img src="assets/img/hero-sketch.jpg" alt="" width="2000" height="1254" decoding="async" fetchpriority="high"></picture></div>
+        <div class="hero__layer hero__layer--photo"><picture><source type="image/webp" srcset="assets/img/hero-800.webp 800w, assets/img/hero-1400.webp 1400w, assets/img/hero-2000.webp 2000w" sizes="(min-width: 901px) 58vw, 100vw"><img src="assets/img/hero.jpg" alt="Zona living allestita nello showroom Maxiarredo" width="2000" height="1254" decoding="async" fetchpriority="high"></picture></div>
         <div class="hero__tag meta"><span class="hero__tag-inner"><span>_ Progetto</span><span>_ Realizzato</span></span></div>
       </div>
     </div>
@@ -601,10 +605,10 @@
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="cursor__badge" id="cursor-badge" aria-hidden="true"></div>
 
-<script src="assets/js/vendor/gsap.min.js"></script>
-<script src="assets/js/vendor/ScrollTrigger.min.js"></script>
-<script src="assets/js/vendor/SplitText.min.js"></script>
-<script src="assets/js/vendor/lenis.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/vendor/gsap.min.js?v=20261019"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js?v=20261019"></script>
+<script src="assets/js/vendor/SplitText.min.js?v=20261019"></script>
+<script src="assets/js/vendor/lenis.min.js?v=20261019"></script>
+<script src="assets/js/main.js?v=20261019"></script>
 </body>
 </html>

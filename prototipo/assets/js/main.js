@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
      1b. APERTURA — il marchio MAXIARREDO
          Dalla X partono due linee incrociate; le lettere escono dalla X,
          prima solo il contorno (come a matita) poi piene; il sottotitolo
-         si stringe. Il contatore segue il caricamento vero della pagina.
+         si stringe. Il contatore segue il caricamento delle immagini dell'apertura.
          Poi il marchio vola nella sua posizione nel menu e il fondo si
          alza come un sipario: a quel punto parte l'animazione dell'hero.
          A ogni caricamento della pagina; clic, tasto o rotella la saltano.
@@ -58,9 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const counter = $('.loader__count', loader);
     const X_CX = 317, SUB_CX = 412;
 
-    let loaded = document.readyState === 'complete';
-    window.addEventListener('load', () => { loaded = true; }, { once: true });
-    setTimeout(() => { loaded = true; }, 6000);           // non aspettare all'infinito
+    // si aspettano solo le due immagini dell'apertura (non tutta la pagina),
+    // e comunque non più di 3 secondi: su rete lenta il sito compare prima
+    let loaded = false;
+    const heroImgs = $$('.hero__layer img');
+    Promise.all(heroImgs.map((im) => (im.complete ? Promise.resolve() : new Promise((r) => { im.addEventListener('load', r, { once: true }); im.addEventListener('error', r, { once: true }); }))))
+      .then(() => { loaded = true; });
+    setTimeout(() => { loaded = true; }, 3000);
 
     const count = { v: 0 };
     const showCount = () => (counter.textContent = String(Math.round(count.v)).padStart(3, '0'));

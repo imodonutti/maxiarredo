@@ -208,6 +208,7 @@ html.lenis, html.lenis body { height: auto; }
   .hero__media { aspect-ratio: auto; height: auto; align-self: stretch; min-height: 260px; }
 }
 .hero__layer { position: absolute; inset: 0; overflow: hidden; }
+.hero__layer picture { display: contents; }
 .hero__layer img { width: 100%; height: 100%; object-fit: cover; }
 .hero__layer--photo img { transform-origin: 50% 60%; }
 .hero__tag {
