@@ -216,6 +216,23 @@ html.lenis, html.lenis body { height: auto; }
   background: var(--c-paper); padding: .45rem .7rem; overflow: hidden; height: 1.95rem;
 }
 .hero__tag span { display: block; line-height: 1.1rem; }
+/* Confronto disegno / realizzato (attivo con .is-ba, aggiunta da main.js) */
+.hero__ba { position: absolute; top: 0; bottom: 0; left: var(--ba, 0%); width: 0; z-index: 4; opacity: 0; visibility: hidden; outline: none; }
+.hero__ba-line { position: absolute; top: 0; bottom: 0; left: -.5px; width: 1px; background: var(--c-paper); box-shadow: 0 0 0 .5px rgba(26, 26, 26, .12); transform-origin: 50% 50%; }
+.hero__ba-knob {
+  position: absolute; left: 0; top: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px; border-radius: 50%;
+  background: var(--c-paper); color: var(--c-ink); display: grid; place-items: center;
+  box-shadow: 0 10px 30px -12px rgba(26, 26, 26, .45); transition: transform .5s var(--ease), background-color .3s, color .3s;
+}
+.hero__ba-knob svg { width: 22px; height: 10px; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .5s var(--ease); }
+.hero__tag--r { left: auto; right: 1rem; }
+.hero__media.is-ba { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.hero__media.is-ba .hero__ba { visibility: visible; }
+.hero__media.is-dragging { cursor: grabbing; }
+.hero__media.is-dragging .hero__ba-knob, .hero__ba:focus-visible .hero__ba-knob { transform: scale(.86); background: var(--c-accent); color: var(--c-paper); }
+.hero__media.is-dragging .hero__ba-knob svg { transform: scaleX(1.25); }
+.hero__ba:focus-visible .hero__ba-line { background: var(--c-accent); }
+.hero__media.is-ba img { -webkit-user-drag: none; pointer-events: none; }
 .js-anim .hero__layer--sketch { clip-path: inset(0 100% 0 0); }
 .js-anim .hero__layer--photo { clip-path: inset(100% 0 0 0); }
 .js-anim .hero__layer--photo img { transform: scale(1.15); }

@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onToggle: (self) => booking.classList.toggle('is-visible', self.isActive),
   });
 
-  if (reduceMotion) { initBeforeAfter(); initForm(); return; }
+  if (reduceMotion) { initHeroBA(false); initBeforeAfter(); initForm(); return; }
 
   /* ------------------------------------------------------------------
      4. HERO — titolo a righe, disegno che si traccia, foto che lo copre
@@ -172,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .to('.hero__layer--photo img', { scale: 1, duration: 2.2 }, 1.9)
     .to('.hero__tag-inner', { yPercent: -50, duration: 1, ease: 'expo.inOut' }, 2.1)
     .from('.hero [data-fade], .hero__top .meta', { y: 24, opacity: 0, duration: 1.2, stagger: 0.08 }, 0.6);
+  // finita l'animazione, il disegno resta a portata di mano: si trascina per rivederlo
+  heroTl.eventCallback('onComplete', () => initHeroBA(true));
 
   // Leggero parallasse dell'hero quando si scende
   gsap.to('.hero__media', {
@@ -701,29 +703,48 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------ */
   if (finePointer) {
     const dot = $('#cursor'), badge = $('#cursor-badge');
-    const dx = gsap.quickTo(dot, 'x', { duration: 0.25, ease: 'power3' });
-    const dy = gsap.quickTo(dot, 'y', { duration: 0.25, ease: 'power3' });
+    /* La X e' una lettera del marchio: resta sempre dritta (niente rotazioni o
+       deformazioni). Cambia solo la scala: in movimento si alleggerisce, quando il
+       mouse si ferma torna piena e leggibile; sui link si ingrandisce; al clic
+       affonda appena. Sulle aree con badge ([data-cursor]) lascia il posto al badge. */
+    gsap.set(dot, { rotation: 0, skewX: 0, skewY: 0 });
+    const dx = gsap.quickTo(dot, 'x', { duration: 0.22, ease: 'power3' });
+    const dy = gsap.quickTo(dot, 'y', { duration: 0.22, ease: 'power3' });
     const bx = gsap.quickTo(badge, 'x', { duration: 0.6, ease: 'power3' });
     const by = gsap.quickTo(badge, 'y', { duration: 0.6, ease: 'power3' });
+    const cur = { base: 1, press: 1, speed: 0, s: 1 };
+    let px = null, py = null, lx = null, ly = null;
     window.addEventListener('pointermove', (e) => {
-      dx(e.clientX); dy(e.clientY); bx(e.clientX); by(e.clientY);
+      px = e.clientX; py = e.clientY;
+      dx(px); dy(py); bx(px); by(py);
       gsap.to(dot, { opacity: 1, duration: 0.3, overwrite: 'auto' });
     }, { passive: true });
+    gsap.ticker.add(() => {
+      if (px === null) return;
+      const v = lx === null ? 0 : Math.hypot(px - lx, py - ly);
+      lx = px; ly = py;
+      cur.speed += (gsap.utils.clamp(0, 1, v / 45) - cur.speed) * 0.12;   // velocita' smorzata
+      cur.s += (cur.base * cur.press * (1 - 0.32 * cur.speed) - cur.s) * 0.18;   // scala morbida
+      gsap.set(dot, { scale: cur.s });
+    });
+    const setBase = (b) => gsap.to(cur, { base: b, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+    window.addEventListener('pointerdown', () => { cur.press = 0.82; });
+    window.addEventListener('pointerup', () => { cur.press = 1; });
     $$('[data-cursor]').forEach((el) => {
       el.addEventListener('pointerenter', () => {
         badge.textContent = el.dataset.cursor;
         gsap.to(badge, { scale: 1, duration: 0.6, ease: EASE, overwrite: 'auto' });
-        gsap.to(dot, { scale: 0, duration: 0.3, overwrite: 'auto' });
+        setBase(0);
       });
       el.addEventListener('pointerleave', () => {
         gsap.to(badge, { scale: 0, duration: 0.5, ease: EASE, overwrite: 'auto' });
-        gsap.to(dot, { scale: 1, duration: 0.3, overwrite: 'auto' });
+        setBase(1);
       });
     });
     $$('a, button, input, select, textarea, label').forEach((el) => {
       if (el.closest('[data-cursor]')) return;
-      el.addEventListener('pointerenter', () => gsap.to(dot, { scale: 1.6, rotation: 90, duration: 0.4, overwrite: 'auto' }));
-      el.addEventListener('pointerleave', () => gsap.to(dot, { scale: 1, rotation: 0, duration: 0.4, overwrite: 'auto' }));
+      el.addEventListener('pointerenter', () => setBase(1.8));
+      el.addEventListener('pointerleave', () => setBase(1));
     });
 
     /* Pulsanti magnetici: si spostano leggermente verso il mouse */
@@ -756,6 +777,103 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(runLater, 0);
   initForm();
   if (document.fonts) document.fonts.ready.then(() => { if (ready) ScrollTrigger.refresh(); });
+
+  /* ------------------------------------------------------------------
+     4b. HERO — confronto disegno / realizzato
+         A fine animazione compare una linea con una maniglia: trascinando
+         (in tutta la foto, non solo sulla maniglia) la foto si ritira verso
+         destra e torna il disegno a matita. Ingresso: la linea si disegna,
+         fa un passaggio fino a meta' per mostrare il gesto e si ferma vicino
+         al bordo, lasciando una striscia di disegno come invito. Funziona con
+         mouse, dito (lo scroll verticale resta libero) e frecce della tastiera.
+     ------------------------------------------------------------------ */
+  function initHeroBA(animate) {
+    const media = $('.hero__media'), ba = $('#hero-ba');
+    if (!media || !ba || media.classList.contains('is-ba')) return;
+    const photo = $('.hero__layer--photo', media), sketch = $('.hero__layer--sketch', media);
+    const badge = $('#cursor-badge');
+    const REST = 9;                                      // striscia di disegno lasciata a riposo (%)
+    const st = { pos: 0 };
+    gsap.set(sketch, { clipPath: 'inset(0% 0% 0% 0%)' });
+    gsap.set($('img', photo), { scale: 1 });
+    const apply = () => {
+      const p = st.pos;
+      photo.style.clipPath = `inset(0% 0% 0% ${p}%)`;
+      media.style.setProperty('--ba', p + '%');
+      ba.setAttribute('aria-valuenow', Math.round(p));
+      ba.setAttribute('aria-valuetext', p > 50 ? 'Disegno a matita' : 'Progetto realizzato');
+    };
+    // due etichette, ciascuna dentro il suo livello: si scoprono e si coprono con la linea
+    const tagR = $('.hero__tag', media);
+    const tagRi = $('.hero__tag-inner', tagR);
+    gsap.killTweensOf(tagRi); gsap.set(tagRi, { clearProps: 'transform' });
+    tagRi.innerHTML = '<span>_ Realizzato</span>';
+    tagR.classList.add('hero__tag--r'); photo.appendChild(tagR);
+    const tagL = document.createElement('div');
+    tagL.className = 'hero__tag meta'; tagL.setAttribute('aria-hidden', 'true');
+    tagL.innerHTML = '<span class="hero__tag-inner"><span>_ Progetto</span></span>';
+    sketch.appendChild(tagL);
+    const to = gsap.quickTo(st, 'pos', { duration: 0.55, ease: 'power3', onUpdate: apply });
+    media.classList.add('is-ba');
+    media.dataset.cursor = 'Trascina';
+    ba.removeAttribute('aria-hidden'); ba.tabIndex = 0;
+    apply();
+
+    let intro = null;
+    if (animate) {
+      intro = gsap.timeline({ delay: 0.3 })
+        .set(ba, { opacity: 1 })
+        .fromTo($('.hero__ba-line', ba), { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: 'expo.inOut' }, 0)
+        .fromTo($('.hero__ba-knob', ba), { scale: 0 }, { scale: 1, duration: 0.8, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.45)
+        .to(st, { pos: 52, duration: 1.3, ease: 'power3.inOut', onUpdate: apply }, 0.6)
+        .to(st, { pos: REST, duration: 1.2, ease: 'power3.inOut', onUpdate: apply }, 2.0);
+    } else {
+      gsap.set(ba, { opacity: 1 }); st.pos = REST; apply();
+    }
+
+    const posFrom = (x) => { const r = media.getBoundingClientRect(); return gsap.utils.clamp(0, 100, ((x - r.left) / r.width) * 100); };
+    let drag = null;
+    media.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, on: e.pointerType === 'mouse' };
+      if (drag.on) start(e);
+    });
+    const start = (e) => {
+      drag.on = true;
+      media.setPointerCapture(drag.id);
+      media.classList.add('is-dragging');
+      if (intro) { intro.kill(); intro = null; gsap.set(ba, { opacity: 1 }); gsap.set($$('.hero__ba-line, .hero__ba-knob', ba), { clearProps: 'transform' }); }
+      if (badge) gsap.to(badge, { scale: 0, duration: 0.3, overwrite: 'auto' });
+      to(posFrom(e.clientX));
+    };
+    media.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.on) {                                    // dito: parte solo se il gesto e' orizzontale
+        const ddx = Math.abs(e.clientX - drag.x0), ddy = Math.abs(e.clientY - drag.y0);
+        if (ddy > 10 && ddy > ddx) { drag = null; return; }
+        if (ddx > 8) start(e); else return;
+      }
+      to(posFrom(e.clientX));
+    });
+    const end = (e) => {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      const was = drag.on; drag = null;
+      media.classList.remove('is-dragging');
+      if (was && badge && media.matches(':hover')) gsap.to(badge, { scale: 1, duration: 0.5, ease: EASE, overwrite: 'auto' });
+    };
+    media.addEventListener('pointerup', end);
+    media.addEventListener('pointercancel', end);
+    media.addEventListener('dragstart', (e) => e.preventDefault());
+    ba.addEventListener('keydown', (e) => {
+      const k = e.key, step = e.shiftKey ? 20 : 5;
+      let v = null;
+      if (k === 'ArrowLeft' || k === 'ArrowDown') v = st.pos - step;
+      else if (k === 'ArrowRight' || k === 'ArrowUp') v = st.pos + step;
+      else if (k === 'Home') v = 0; else if (k === 'End') v = 100;
+      if (v === null) return;
+      e.preventDefault(); if (intro) { intro.progress(1); intro = null; } to(gsap.utils.clamp(0, 100, v));
+    });
+  }
 
   /* ------------------------------------------------------------------
      12. PRIMA / DOPO — trascinabile con mouse e touch
@@ -792,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = $('#form'), msg = $('#form-msg');
     const rules = {
       'f-nome': (v) => v.trim().length >= 2,
-      'f-tel': (v) => v.replace(/[^\d]/g, '').length >= 6,
+      'f-tel': (v) => !v.trim() || v.replace(/[^\d]/g, '').length >= 6,   // facoltativo, ma se c'e' deve essere valido
       'f-mail': (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
       'f-citta': (v) => v.trim().length >= 2,
     };
