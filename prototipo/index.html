@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap"></noscript>
   <link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/hero-sketch-800.webp 800w, assets/img/hero-sketch-1400.webp 1400w, assets/img/hero-sketch-2000.webp 2000w" imagesizes="(min-width: 901px) 58vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261023a">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261023b">
   <script>
     /* Le animazioni partono solo se JS è attivo e l'utente non ha chiesto movimento ridotto.
        Senza questa classe tutto il contenuto resta visibile. */
@@ -511,7 +511,7 @@
       <form class="form" id="form" novalidate data-fade>
         <div class="form__head">
           <h3 class="form__title">Richiedi una consulenza</h3>
-          <p class="form__sub">Bastano due minuti. Ti richiamiamo noi per fissare un incontro in showroom. <span class="form__req">* campi obbligatori</span></p>
+          <p class="form__sub">Bastano due minuti. Ti ricontattiamo noi per fissare un incontro in showroom. <span class="form__req">* campi obbligatori</span></p>
         </div>
 
         <fieldset class="step">
@@ -520,9 +520,9 @@
             <div class="field"><label for="f-nome">Nome e cognome <span class="req" aria-hidden="true">*</span></label>
               <input id="f-nome" name="nome" autocomplete="name" placeholder="Es. Maria Rossi" required>
               <span class="field__err" id="e-nome">Inserisci il tuo nome</span></div>
-            <div class="field"><label for="f-tel">Telefono <span class="req" aria-hidden="true">*</span></label>
-              <input id="f-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" placeholder="Es. 333 123 4567" required>
-              <span class="field__err" id="e-tel">Inserisci un numero di telefono valido</span></div>
+            <div class="field"><label for="f-tel">Telefono <span class="opt">(facoltativo)</span></label>
+              <input id="f-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" placeholder="Es. 333 123 4567">
+              <span class="field__err" id="e-tel">Controlla il numero di telefono</span></div>
             <div class="field"><label for="f-mail">Email <span class="req" aria-hidden="true">*</span></label>
               <input id="f-mail" name="email" type="email" autocomplete="email" placeholder="Es. maria.rossi@email.it" required>
               <span class="field__err" id="e-mail">Inserisci un indirizzo email valido</span></div>
@@ -616,10 +616,10 @@
 <div class="cursor" id="cursor" aria-hidden="true"><svg viewBox="292 130 50 62"><path fill="currentColor" d="M 318.18 158.32 L 336.16 132.70 L 329.92 132.70 L 314.95 153.78 L 300.47 132.70 L 294.16 132.70 L 311.79 158.32 L 298.77 177.09 L 295.10 182.35 L 297.58 187.89 L 303.92 178.79 L 314.95 162.92 L 333.28 188.89 L 339.60 188.89 Z"/></svg></div>
 <div class="cursor__badge" id="cursor-badge" aria-hidden="true"></div>
 
-<script src="assets/js/vendor/gsap.min.js?v=20261023a"></script>
-<script src="assets/js/vendor/ScrollTrigger.min.js?v=20261023a"></script>
-<script src="assets/js/vendor/SplitText.min.js?v=20261023a"></script>
-<script src="assets/js/vendor/lenis.min.js?v=20261023a"></script>
-<script src="assets/js/main.js?v=20261023a"></script>
+<script src="assets/js/vendor/gsap.min.js?v=20261023b"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js?v=20261023b"></script>
+<script src="assets/js/vendor/SplitText.min.js?v=20261023b"></script>
+<script src="assets/js/vendor/lenis.min.js?v=20261023b"></script>
+<script src="assets/js/main.js?v=20261023b"></script>
 </body>
 </html>

@@ -701,29 +701,48 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------ */
   if (finePointer) {
     const dot = $('#cursor'), badge = $('#cursor-badge');
-    const dx = gsap.quickTo(dot, 'x', { duration: 0.25, ease: 'power3' });
-    const dy = gsap.quickTo(dot, 'y', { duration: 0.25, ease: 'power3' });
+    /* La X e' una lettera del marchio: resta sempre dritta (niente rotazioni o
+       deformazioni). Cambia solo la scala: in movimento si alleggerisce, quando il
+       mouse si ferma torna piena e leggibile; sui link si ingrandisce; al clic
+       affonda appena. Sulle aree con badge ([data-cursor]) lascia il posto al badge. */
+    gsap.set(dot, { rotation: 0, skewX: 0, skewY: 0 });
+    const dx = gsap.quickTo(dot, 'x', { duration: 0.22, ease: 'power3' });
+    const dy = gsap.quickTo(dot, 'y', { duration: 0.22, ease: 'power3' });
     const bx = gsap.quickTo(badge, 'x', { duration: 0.6, ease: 'power3' });
     const by = gsap.quickTo(badge, 'y', { duration: 0.6, ease: 'power3' });
+    const cur = { base: 1, press: 1, speed: 0, s: 1 };
+    let px = null, py = null, lx = null, ly = null;
     window.addEventListener('pointermove', (e) => {
-      dx(e.clientX); dy(e.clientY); bx(e.clientX); by(e.clientY);
+      px = e.clientX; py = e.clientY;
+      dx(px); dy(py); bx(px); by(py);
       gsap.to(dot, { opacity: 1, duration: 0.3, overwrite: 'auto' });
     }, { passive: true });
+    gsap.ticker.add(() => {
+      if (px === null) return;
+      const v = lx === null ? 0 : Math.hypot(px - lx, py - ly);
+      lx = px; ly = py;
+      cur.speed += (gsap.utils.clamp(0, 1, v / 45) - cur.speed) * 0.12;   // velocita' smorzata
+      cur.s += (cur.base * cur.press * (1 - 0.32 * cur.speed) - cur.s) * 0.18;   // scala morbida
+      gsap.set(dot, { scale: cur.s });
+    });
+    const setBase = (b) => gsap.to(cur, { base: b, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+    window.addEventListener('pointerdown', () => { cur.press = 0.82; });
+    window.addEventListener('pointerup', () => { cur.press = 1; });
     $$('[data-cursor]').forEach((el) => {
       el.addEventListener('pointerenter', () => {
         badge.textContent = el.dataset.cursor;
         gsap.to(badge, { scale: 1, duration: 0.6, ease: EASE, overwrite: 'auto' });
-        gsap.to(dot, { scale: 0, duration: 0.3, overwrite: 'auto' });
+        setBase(0);
       });
       el.addEventListener('pointerleave', () => {
         gsap.to(badge, { scale: 0, duration: 0.5, ease: EASE, overwrite: 'auto' });
-        gsap.to(dot, { scale: 1, duration: 0.3, overwrite: 'auto' });
+        setBase(1);
       });
     });
     $$('a, button, input, select, textarea, label').forEach((el) => {
       if (el.closest('[data-cursor]')) return;
-      el.addEventListener('pointerenter', () => gsap.to(dot, { scale: 1.6, rotation: 90, duration: 0.4, overwrite: 'auto' }));
-      el.addEventListener('pointerleave', () => gsap.to(dot, { scale: 1, rotation: 0, duration: 0.4, overwrite: 'auto' }));
+      el.addEventListener('pointerenter', () => setBase(1.8));
+      el.addEventListener('pointerleave', () => setBase(1));
     });
 
     /* Pulsanti magnetici: si spostano leggermente verso il mouse */
@@ -792,7 +811,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = $('#form'), msg = $('#form-msg');
     const rules = {
       'f-nome': (v) => v.trim().length >= 2,
-      'f-tel': (v) => v.replace(/[^\d]/g, '').length >= 6,
+      'f-tel': (v) => !v.trim() || v.replace(/[^\d]/g, '').length >= 6,   // facoltativo, ma se c'e' deve essere valido
       'f-mail': (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
       'f-citta': (v) => v.trim().length >= 2,
     };
