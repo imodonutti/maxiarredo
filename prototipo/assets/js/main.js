@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------
      8. IL FILO — "Un solo team, dalla prima idea alla consegna"
         Una linea continua si disegna con lo scroll e attraversa le
-        quattro fasi. Quando la punta raggiunge una fase, l'icona si
+        cinque fasi. Quando la punta raggiunge una fase, l'icona si
         disegna al tratto e il testo entra; il segno "Il tuo referente"
         viaggia sulla punta. Desktop: orizzontale con sezione bloccata.
         Mobile: verticale, lungo i nodi.
@@ -349,8 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const ink = $('.filo__path--ink', filo);
     const ref = $('.filo__ref', filo);
     const total = ink.getTotalLength();
-    // a che frazione della linea si trova ciascun nodo (centri delle 4 colonne)
-    const nodeAt = [125, 375, 625, 875].map((nx) => {
+    // a che frazione della linea si trova ciascun nodo (centri delle colonne, una per fase)
+    const nodeAt = filoPhases.map((_, i) => (i + 0.5) * 1000 / filoPhases.length).map((nx) => {
       let lo = 0, hi = total;
       for (let k = 0; k < 30; k++) { const mid = (lo + hi) / 2; if (ink.getPointAtLength(mid).x < nx) lo = mid; else hi = mid; }
       return lo / total;
@@ -374,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const LINE = 0.9;                                  // la linea occupa il 90% della timeline, poi pausa
     const draw = { f: 0 };
     const tl = gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: filo, start: 'center center', end: '+=230%', pin: true, scrub: 0.7, invalidateOnRefresh: true } });
+      scrollTrigger: { trigger: filo, start: 'center center', end: '+=280%', pin: true, scrub: 0.7, invalidateOnRefresh: true } });
     tl.to(draw, { f: 1, duration: LINE, onUpdate: () => { ink.style.strokeDashoffset = ink._len * (1 - draw.f); placeRef(draw.f); } }, 0);
     filoPhases.forEach((ph, i) => {
       const t = nodeAt[i] * LINE;
@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   later.push(() => {
   /* ------------------------------------------------------------------
-     11. CURSORE — punto + badge che compare su [data-cursor]
+     11. CURSORE — X del marchio + badge che compare su [data-cursor]
      ------------------------------------------------------------------ */
   if (finePointer) {
     const dot = $('#cursor'), badge = $('#cursor-badge');
@@ -722,8 +722,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     $$('a, button, input, select, textarea, label').forEach((el) => {
       if (el.closest('[data-cursor]')) return;
-      el.addEventListener('pointerenter', () => gsap.to(dot, { scale: 3.2, opacity: 0.35, duration: 0.4, overwrite: 'auto' }));
-      el.addEventListener('pointerleave', () => gsap.to(dot, { scale: 1, opacity: 1, duration: 0.4, overwrite: 'auto' }));
+      el.addEventListener('pointerenter', () => gsap.to(dot, { scale: 1.6, rotation: 90, duration: 0.4, overwrite: 'auto' }));
+      el.addEventListener('pointerleave', () => gsap.to(dot, { scale: 1, rotation: 0, duration: 0.4, overwrite: 'auto' }));
     });
 
     /* Pulsanti magnetici: si spostano leggermente verso il mouse */
@@ -793,7 +793,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rules = {
       'f-nome': (v) => v.trim().length >= 2,
       'f-tel': (v) => v.replace(/[^\d]/g, '').length >= 6,
-      'f-mail': (v) => !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+      'f-mail': (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+      'f-citta': (v) => v.trim().length >= 2,
     };
     const check = (id) => {
       const input = $('#' + id), field = input.closest('.field');
