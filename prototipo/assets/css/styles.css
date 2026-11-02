@@ -537,8 +537,13 @@ html.lenis, html.lenis body { height: auto; }
 .is-pinned .showroom__inner { height: 100%; align-items: center; position: relative; z-index: 2; pointer-events: none; }
 .is-pinned .showroom__copy { grid-column: 1 / 6; gap: 1.5rem; pointer-events: auto; }
 .is-pinned .showroom__copy .title { font-size: clamp(2.2rem, 1rem + 3vw, 4.4rem); }
-.is-pinned .floor-index li { opacity: .38; }
+.is-pinned .floor-index li { opacity: .38; padding-block: .85rem; transition: opacity .6s var(--ease); }
 .is-pinned .floor-index li.is-active { opacity: 1; }
+/* nella versione bloccata si apre solo la descrizione del piano attivo */
+.is-pinned .floor-index p { max-height: 0; margin-top: 0; opacity: 0; overflow: hidden;
+  transition: max-height .7s var(--ease), margin-top .7s var(--ease), opacity .5s var(--ease); }
+.is-pinned .floor-index li.is-active p { max-height: 7em; margin-top: .55rem; opacity: 1; }
+.is-pinned .showroom__copy { padding-top: calc(var(--header-h) * .6); }
 .is-pinned .showroom__visuals {
   position: absolute; top: 0; bottom: 0; left: 42%; right: var(--gutter); margin: 0; z-index: 1; pointer-events: auto;
 }
@@ -576,6 +581,7 @@ html.lenis, html.lenis body { height: auto; }
 .orari__per { display: block; color: var(--c-ink); margin-top: .7rem; }
 .orari__per:first-child { margin-top: 0; }
 .orari__per small { color: var(--c-muted); font-size: .85em; }
+.orari__note { display: block; margin-top: .3rem; color: var(--c-muted); font-size: .85em; }
 /* — Form a scheda: riconoscibile come modulo, sempre leggero — */
 .form {
   grid-column: 6 / 13; display: grid; gap: 2rem;
@@ -771,4 +777,12 @@ html.intro .header .logo { opacity: 0; }
 @media (max-width: 900px) {
   .loader__mark { width: 84vw; }
   .loader__foot .meta:first-child { max-width: 60%; }
+}
+
+/* Showroom bloccato su schermi bassi: titolo e spazi più compatti, tutto resta visibile */
+@media (min-width: 901px) and (max-height: 820px) {
+  .is-pinned .showroom__copy { gap: 1rem; padding-top: calc(var(--header-h) * .45); }
+  .is-pinned .showroom__copy .title { font-size: clamp(2rem, .8rem + 2.4vw, 3.4rem); }
+  .is-pinned .floor-index { margin-top: .4rem; }
+  .is-pinned .floor-index li { padding-block: .6rem; }
 }
