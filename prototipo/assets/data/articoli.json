@@ -1,0 +1,434 @@
+{
+ "nota": "Contenuti SIMULATI per la bozza: da sostituire con i dati del CMS.",
+ "articoli": [
+  {
+   "slug": "temperatura-della-luce",
+   "titolo": "La temperatura della luce, stanza per stanza",
+   "titolo_html": "La temperatura della <em>luce</em>, stanza per stanza",
+   "categoria": "Luce",
+   "data": "2026-10-21",
+   "lettura": 6,
+   "in_evidenza": true,
+   "estratto": "Calda, neutra o fredda? La stessa stanza cambia carattere con pochi gradi Kelvin. Una guida pratica per scegliere bene, ambiente per ambiente.",
+   "copertina": {
+    "src": "assets/img/servizio-02-illuminotecnica.webp",
+    "alt": "Ambiente con lampada a sospensione rossa e poltrona davanti a una vetrata",
+    "w": 800,
+    "h": 1000
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "Quando parliamo di luce con i clienti, la prima domanda è quasi sempre «quanta ne serve?». La seconda, che arriva molto più tardi e spesso a lavori finiti, è «perché questa stanza non mi sembra accogliente?». La risposta, molte volte, è nella temperatura di colore."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Che cosa sono i Kelvin"
+    },
+    {
+     "tipo": "p",
+     "testo": "La temperatura di colore si misura in gradi Kelvin (K) e descrive la tonalità della luce bianca: più il numero è basso, più la luce è calda e tendente al giallo; più è alto, più è fredda e tendente all'azzurro. Una candela è intorno ai 1.900 K, una lampadina a incandescenza tradizionale intorno ai 2.700 K, la luce di mezzogiorno supera i 5.000 K."
+    },
+    {
+     "tipo": "lista",
+     "voci": [
+      "2.700 K — calda: rilassante, avvolgente, ideale per la sera.",
+      "3.000 K — calda-neutra: il compromesso più versatile per la casa.",
+      "4.000 K — neutra: precisa, adatta al lavoro e ai piani operativi.",
+      "5.000 K e oltre — fredda: da usare con molta cautela in casa."
+     ]
+    },
+    {
+     "tipo": "h2",
+     "testo": "Soggiorno e camera: verso il caldo"
+    },
+    {
+     "tipo": "p",
+     "testo": "Negli ambienti in cui si sta, si legge e si riposa consigliamo luci tra 2.700 e 3.000 K. I materiali naturali — legno, pietra, tessuti — ne escono valorizzati, e la stanza la sera diventa davvero un rifugio."
+    },
+    {
+     "tipo": "citazione",
+     "testo": "La luce è l'unico materiale che cambia tutti gli altri."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Cucina e bagno: due luci diverse"
+    },
+    {
+     "tipo": "p",
+     "testo": "In cucina servono due livelli: una luce operativa più neutra, intorno ai 3.500–4.000 K, sui piani di lavoro, e una luce d'ambiente calda per quando la cucina diventa il luogo in cui si sta insieme. Nel bagno vale lo stesso: luce neutra e ben distribuita allo specchio, luce calda per tutto il resto."
+    },
+    {
+     "tipo": "immagine",
+     "img": {
+      "src": "assets/img/luce.jpg",
+      "alt": "Zona pranzo con lampada a sospensione e luce calda sul tavolo",
+      "w": 1100,
+      "h": 688,
+      "didascalia": "Una sola sospensione calda definisce il pranzo più di qualsiasi parete."
+     }
+    },
+    {
+     "tipo": "h2",
+     "testo": "Non solo Kelvin: la resa dei colori"
+    },
+    {
+     "tipo": "p",
+     "testo": "Due lampade con la stessa temperatura possono rendere i colori in modo molto diverso. L'indice da guardare è il CRI (o Ra): sopra 90 i colori di legni, tessuti e pelle appaiono naturali. Sotto 80, anche la luce più calda rende gli ambienti spenti."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "In sintesi",
+     "testo": "Luce calda (2.700–3.000 K) dove si sta, neutra (3.500–4.000 K) dove si lavora, CRI sempre superiore a 90. E, quando possibile, un sistema regolabile: la stessa stanza alle otto di mattina e alle dieci di sera chiede luci diverse."
+    }
+   ],
+   "progetti_correlati": [
+    "casa-tra-pietra-e-luce",
+    "un-tavolo-una-luce"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "ristrutturare-sette-domande",
+   "titolo": "Ristrutturare casa: sette domande prima di aprire il cantiere",
+   "titolo_html": "Ristrutturare casa: <em>sette domande</em> prima di aprire il cantiere",
+   "categoria": "Ristrutturare",
+   "data": "2026-10-06",
+   "lettura": 5,
+   "in_evidenza": false,
+   "estratto": "Tempi, costi, permessi, imprevisti: le domande che conviene farsi (e farci) prima di demolire anche solo un muro.",
+   "copertina": {
+    "src": "assets/img/servizio-04.jpg",
+    "alt": "Posa di un pavimento in grandi lastre scure in un cantiere",
+    "w": 880,
+    "h": 1216
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "Ogni ristrutturazione comincia con un entusiasmo che conosciamo bene. Il nostro lavoro, nelle prime settimane, è trasformarlo in decisioni chiare. Queste sono le domande che facciamo sempre, prima di aprire il cantiere."
+    },
+    {
+     "tipo": "h2",
+     "testo": "1. Come vivete la casa, davvero?"
+    },
+    {
+     "tipo": "p",
+     "testo": "Non come la immaginate: come la vivete oggi. Chi cucina, chi lavora da casa, dove si appoggiano le chiavi la sera. Il progetto parte da qui, non dalle riviste."
+    },
+    {
+     "tipo": "h2",
+     "testo": "2. Quali vincoli ci sono?"
+    },
+    {
+     "tipo": "p",
+     "testo": "Muri portanti, impianti condominiali, vincoli paesaggistici o storici. Conoscerli subito evita di innamorarsi di soluzioni impossibili."
+    },
+    {
+     "tipo": "h2",
+     "testo": "3. Quale budget, e con quale margine?"
+    },
+    {
+     "tipo": "p",
+     "testo": "Un budget realistico prevede sempre una riserva per gli imprevisti, soprattutto negli edifici storici. Un capitolato dettagliato prima dei lavori è la migliore garanzia contro le sorprese."
+    },
+    {
+     "tipo": "h2",
+     "testo": "4–7. Tempi, permessi, trasloco, arredi"
+    },
+    {
+     "tipo": "lista",
+     "voci": [
+      "Quanto potete restare fuori casa, e in quali mesi?",
+      "Servono pratiche edilizie? Chi le segue?",
+      "Dove vanno mobili e oggetti durante i lavori?",
+      "Gli arredi si progettano insieme alla casa, o dopo?"
+     ]
+    },
+    {
+     "tipo": "citazione",
+     "testo": "Il mobile arriva dopo lo spazio, mai prima."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "Il nostro consiglio",
+     "testo": "Rispondere a queste domande richiede un paio di incontri. È il tempo meglio speso di tutto il progetto."
+    }
+   ],
+   "progetti_correlati": [
+    "open-space-contemporaneo",
+    "appartamento-in-oltretorrente"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "impianti-prima-dei-mobili",
+   "titolo": "Gli impianti si progettano prima dei mobili",
+   "titolo_html": "Gli impianti si progettano <em>prima</em> dei mobili",
+   "categoria": "Ristrutturare",
+   "data": "2026-09-18",
+   "lettura": 4,
+   "in_evidenza": false,
+   "estratto": "Prese, punti luce, scarichi: decidono dove andranno i mobili molto più di quanto si pensi. Ecco perché li disegniamo per primi.",
+   "copertina": {
+    "src": "assets/img/servizio-05.jpg",
+    "alt": "Parete di cantiere con impianti in vista ordinati ed etichettati",
+    "w": 896,
+    "h": 1200
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "Una presa nel posto sbagliato può costringere a spostare un divano, una cucina, un intero progetto. Per questo, nei nostri cantieri, gli impianti si disegnano dopo aver deciso l'arredo, ma prima di aprire i muri."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Il disegno degli impianti"
+    },
+    {
+     "tipo": "p",
+     "testo": "Ogni punto luce, presa, scarico e passaggio dati viene posizionato sulla pianta d'arredo definitiva. Le squadre in cantiere lavorano su quel disegno, non su indicazioni a voce."
+    },
+    {
+     "tipo": "citazione",
+     "testo": "Un impianto ordinato oggi è un'emergenza in meno tra dieci anni."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Pensare al futuro"
+    },
+    {
+     "tipo": "p",
+     "testo": "Predisporre oggi qualche tubo in più — per la domotica, per una futura ricarica, per un cambio di destinazione di una stanza — costa poco e risparmia molto."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "In sintesi",
+     "testo": "Prima la pianta d'arredo, poi il disegno degli impianti, poi il cantiere. Mai il contrario."
+    }
+   ],
+   "progetti_correlati": [
+    "studio-professionale-in-centro",
+    "open-space-contemporaneo"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "legno-su-misura",
+   "titolo": "Il legno su misura, dal disegno al banco",
+   "titolo_html": "Il legno su misura, dal disegno al <em>banco</em>",
+   "categoria": "Su misura",
+   "data": "2026-08-28",
+   "lettura": 5,
+   "in_evidenza": false,
+   "estratto": "Come nasce un mobile su misura nelle nostre falegnamerie: rilievo, esecutivo, campionature, montaggio.",
+   "copertina": {
+    "src": "assets/img/servizio-07.jpg",
+    "alt": "Banco da falegname con ante in legno, pialla e scalpelli",
+    "w": 896,
+    "h": 1200
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "Il su misura non è un lusso: è la risposta più semplice a uno spazio che un mobile di serie non sa occupare. Ecco come lavoriamo, dal primo rilievo all'ultima anta."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Rilievo e disegno esecutivo"
+    },
+    {
+     "tipo": "p",
+     "testo": "Misuriamo due volte: prima del cantiere e a cantiere finito, quando muri e pavimenti sono definitivi. Il disegno esecutivo che arriva in falegnameria è quotato al millimetro."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Campionature"
+    },
+    {
+     "tipo": "p",
+     "testo": "Essenze, finiture e ferramenta si scelgono su campioni veri, in showroom, con la luce della stanza in cui andranno."
+    },
+    {
+     "tipo": "immagine",
+     "img": {
+      "src": "assets/img/serv-falegnameria.jpg",
+      "alt": "Cabina armadio in legno con pouf in velluto",
+      "w": 1100,
+      "h": 689,
+      "didascalia": "Una cabina armadio costruita attorno ai vestiti, non il contrario."
+     }
+    },
+    {
+     "tipo": "citazione",
+     "testo": "Ogni anta deve aprirsi dove la mano se lo aspetta."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "Tempi",
+     "testo": "Per una cucina o una parete attrezzata servono in media dalle quattro alle sei settimane di produzione, più pochi giorni di montaggio."
+    }
+   ],
+   "progetti_correlati": [
+    "casa-in-noce-e-acciaio",
+    "living-che-nasce-dal-disegno"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "domotica-senza-complicazioni",
+   "titolo": "Domotica senza complicazioni: tre scenari che usiamo davvero",
+   "titolo_html": "Domotica senza <em>complicazioni</em>",
+   "categoria": "Tecnologia",
+   "data": "2026-07-30",
+   "lettura": 4,
+   "in_evidenza": false,
+   "estratto": "Luci, clima, tende e sicurezza: la domotica utile è quella che non si nota. Tre scenari semplici che proponiamo in quasi ogni casa.",
+   "copertina": {
+    "src": "assets/img/servizio-03.jpg",
+    "alt": "Pannello domotico a parete su un pilastro in cemento",
+    "w": 896,
+    "h": 1200
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "La domotica fa paura quando sembra un telecomando in più. Funziona quando sparisce: un solo gesto, e la casa fa quello che deve."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Scenario «Esco»"
+    },
+    {
+     "tipo": "p",
+     "testo": "Un pulsante vicino alla porta spegne le luci, abbassa il riscaldamento e attiva l'allarme."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Scenario «Sera»"
+    },
+    {
+     "tipo": "p",
+     "testo": "Luci calde e soffuse in soggiorno, tende abbassate, temperatura regolata per la notte."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Scenario «Vacanza»"
+    },
+    {
+     "tipo": "p",
+     "testo": "La casa simula la presenza accendendo e spegnendo le luci, e avvisa sul telefono in caso di anomalie."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "Il nostro approccio",
+     "testo": "Pochi scenari, pensati con chi abita la casa, e sempre la possibilità di usare un normale interruttore."
+    }
+   ],
+   "progetti_correlati": [
+    "il-nostro-showroom",
+    "studio-professionale-in-centro"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "tessuti-per-il-divano",
+   "titolo": "Velluto, bouclé, lino: come scegliere il tessuto del divano",
+   "titolo_html": "Velluto, bouclé, lino: il <em>tessuto</em> del divano",
+   "categoria": "Materiali",
+   "data": "2026-07-09",
+   "lettura": 5,
+   "in_evidenza": false,
+   "estratto": "Bambini, animali, luce diretta: il tessuto giusto dipende da come si vive il divano, non solo da come appare.",
+   "copertina": {
+    "src": "assets/img/servizio-06.jpg",
+    "alt": "Soggiorno con divano in velluto verde e tavolino in marmo",
+    "w": 768,
+    "h": 1376
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "Il divano è il mobile che si tocca di più. Scegliere il tessuto solo con gli occhi è l'errore più comune: in showroom chiediamo sempre di sedersi, toccare, e raccontarci come lo si userà."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Velluto"
+    },
+    {
+     "tipo": "p",
+     "testo": "Profondo e luminoso, cambia colore con la luce. I velluti tecnici moderni resistono bene all'uso quotidiano."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Bouclé"
+    },
+    {
+     "tipo": "p",
+     "testo": "Materico e morbido, nasconde bene l'usura. Meno adatto con animali che usano le unghie."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Lino"
+    },
+    {
+     "tipo": "p",
+     "testo": "Fresco e naturale, si stropiccia con eleganza. Ideale sfoderabile, nelle case luminose e in estate."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "Un consiglio",
+     "testo": "Portate a casa un campione e guardatelo con la luce della vostra stanza, di giorno e di sera."
+    }
+   ],
+   "progetti_correlati": [
+    "appartamento-in-oltretorrente",
+    "il-nostro-showroom"
+   ],
+   "autore": "Redazione Maxiarredo"
+  },
+  {
+   "slug": "una-giornata-in-atelier",
+   "titolo": "Una giornata nell'Atelier, dove si prendono le decisioni",
+   "titolo_html": "Una giornata nell'<em>Atelier</em>",
+   "categoria": "Showroom",
+   "data": "2026-06-17",
+   "lettura": 3,
+   "in_evidenza": false,
+   "estratto": "Al piano −1 dello showroom c'è l'area tecnica: campionari, cataloghi e il tavolo dove si scelgono i materiali di ogni progetto.",
+   "copertina": {
+    "src": "assets/img/area-tecnica.jpg",
+    "alt": "Area tecnica con tavolo di lavoro, cataloghi e campionari",
+    "w": 1280,
+    "h": 1600
+   },
+   "corpo": [
+    {
+     "tipo": "p",
+     "testo": "L'Atelier è il piano meno fotografato dello showroom, ed è quello in cui passiamo più tempo con i clienti. È qui che i disegni diventano scelte."
+    },
+    {
+     "tipo": "h2",
+     "testo": "Il tavolo dei campioni"
+    },
+    {
+     "tipo": "p",
+     "testo": "Legni, pietre, tessuti e metalli si confrontano uno accanto all'altro, con la stessa luce che avranno a casa."
+    },
+    {
+     "tipo": "citazione",
+     "testo": "Le scelte più impegnative si fanno con calma, e con i materiali in mano."
+    },
+    {
+     "tipo": "nota",
+     "titolo": "Su appuntamento",
+     "testo": "Per lavorare in Atelier vi chiediamo di prenotare: così il tavolo e il progettista sono tutti per voi."
+    }
+   ],
+   "progetti_correlati": [
+    "il-nostro-showroom"
+   ],
+   "autore": "Redazione Maxiarredo"
+  }
+ ]
+}

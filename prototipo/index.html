@@ -13,18 +13,24 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap"></noscript>
   <link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/hero-sketch-800.webp 800w, assets/img/hero-sketch-1400.webp 1400w, assets/img/hero-sketch-2000.webp 2000w" imagesizes="(min-width: 901px) 58vw, 100vw" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261102">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261102b">
   <script>
     /* Le animazioni partono solo se JS è attivo e l'utente non ha chiesto movimento ridotto.
        Senza questa classe tutto il contenuto resta visibile. */
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('js-anim');
-      /* Apertura con il marchio: a ogni caricamento della pagina */
-      document.documentElement.classList.add('intro');
+      /* Apertura con il marchio: a ogni caricamento o ricarica della pagina.
+         Arrivando da un'altra pagina del sito (o tornando indietro) basta il velo. */
+      var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+      var interna = false;
+      try { interna = sessionStorage.getItem('mx-nav') === '1'; sessionStorage.removeItem('mx-nav'); } catch (e) {}
+      if (nav.type === 'reload' || (!interna && nav.type !== 'back_forward')) document.documentElement.classList.add('intro');
+      else document.documentElement.classList.add('pt-enter');
     }
   </script>
 </head>
 <body>
+<div class="pt" aria-hidden="true"><div class="pt__x"><svg viewBox="292 130 50 62" aria-hidden="true"><path fill="currentColor" d="M 318.18 158.32 L 336.16 132.70 L 329.92 132.70 L 314.95 153.78 L 300.47 132.70 L 294.16 132.70 L 311.79 158.32 L 298.77 177.09 L 295.10 182.35 L 297.58 187.89 L 303.92 178.79 L 314.95 162.92 L 333.28 188.89 L 339.60 188.89 Z"/></svg></div></div>
 
 <!-- ============================== APERTURA (loader) ==============================
      A ogni caricamento della pagina (vedi script in <head>). Dalla X due linee
@@ -85,7 +91,7 @@
     <a href="#servizi">Servizi</a>
     <a href="#progetti">Progetti</a>
     <a href="#showroom">Showroom</a>
-    <a href="#">Approfondimenti</a>
+    <a href="approfondimenti.html">Approfondimenti</a>
     <a href="#contatti">Contatti</a>
   </nav>
   <a href="#contatti" class="btn header__cta js-magnetic"><span class="btn__dot"></span>Prenota una consulenza</a>
@@ -308,7 +314,7 @@
     </div>
 
     <!-- 01 — progetto con due foto: orizzontale grande + verticale più veloce -->
-    <a href="#" class="pr pr--1" data-cursor="Scopri">
+    <a href="progetto.html?p=casa-tra-pietra-e-luce" class="pr pr--1" data-cursor="Scopri">
       <span class="pr__num" aria-hidden="true" data-pr-speed="-18">01</span>
       <figure class="pr__media pr__media--main" data-pr-reveal="up"><div class="pr__img"><img src="assets/img/progetto-1a-cucina.jpg" alt="Cucina bianca con isola e sgabelli, colonne con forni integrati, travi in legno a vista e muratura in pietra illuminata dal basso" width="2576" height="1159" loading="lazy" decoding="async"></div></figure>
       <figure class="pr__media pr__media--side" data-pr-reveal="up" data-pr-speed="-14"><div class="pr__img"><img src="assets/img/progetto-1b-pranzo.jpg" alt="Tavolo rotondo scuro su base a cono sotto un lampadario di fili metallici con lampadine a vista, accanto a una parete in pietra" width="1159" height="2576" loading="lazy" decoding="async"></div></figure>
@@ -321,7 +327,7 @@
     </a>
 
     <!-- 02 — testo a sinistra, foto grande a destra -->
-    <a href="#" class="pr pr--2" data-cursor="Scopri">
+    <a href="progetto.html?p=cucina-sotto-gli-affreschi" class="pr pr--2" data-cursor="Scopri">
       <span class="pr__num" aria-hidden="true" data-pr-speed="-24">02</span>
       <div class="pr__info">
         <span class="meta">02 — Residenziale</span>
@@ -333,7 +339,7 @@
     </a>
 
     <!-- 03 — foto grande a sinistra, testo a destra -->
-    <a href="#" class="pr pr--3" data-cursor="Scopri">
+    <a href="progetto.html?p=open-space-contemporaneo" class="pr pr--3" data-cursor="Scopri">
       <span class="pr__num" aria-hidden="true" data-pr-speed="-18">03</span>
       <figure class="pr__media pr__media--main" data-pr-reveal="right"><div class="pr__img"><img src="assets/img/progetto-3.jpg" alt="Open space con tavolo da pranzo, isola bianca, cucina scura a colonne e libreria divisoria" width="2000" height="1500" loading="lazy" decoding="async"></div></figure>
       <div class="pr__info">
@@ -345,7 +351,7 @@
     </a>
 
     <div style="margin-top: clamp(3rem,6vw,6rem); display:flex; justify-content:center">
-      <a href="#" class="btn btn--ghost js-magnetic">Tutti i progetti</a>
+      <a href="progetti.html" class="btn btn--ghost js-magnetic">Tutti i progetti</a>
     </div>
   </section>
 
@@ -573,7 +579,7 @@
 <footer class="footer">
   <div class="footer__cols">
     <p class="footer__claim">Progettiamo case senza data di scadenza.</p>
-    <div><h4 class="meta">Navigazione</h4><ul><li><a href="#metodo">Il metodo</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#progetti">Progetti</a></li><li><a href="#showroom">Showroom</a></li><li><a href="#">Team</a></li><li><a href="#">Approfondimenti</a></li></ul></div>
+    <div><h4 class="meta">Navigazione</h4><ul><li><a href="#metodo">Il metodo</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#progetti">Progetti</a></li><li><a href="#showroom">Showroom</a></li><li><a href="#">Team</a></li><li><a href="approfondimenti.html">Approfondimenti</a></li></ul></div>
     <div><h4 class="meta">Contatti</h4><ul><li>Via Emilia Parmense, 27</li><li>Roveleto di Cadeo (PC)</li><li><a href="tel:+390523500596">+39 0523 500596</a></li><li><a href="tel:+393205798500">+39 320 57 98 500</a></li></ul></div>
     <div><h4 class="meta">Social</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Pinterest</a></li></ul></div>
   </div>
@@ -623,10 +629,11 @@
 <div class="cursor" id="cursor" aria-hidden="true"><svg viewBox="292 130 50 62"><path fill="currentColor" d="M 318.18 158.32 L 336.16 132.70 L 329.92 132.70 L 314.95 153.78 L 300.47 132.70 L 294.16 132.70 L 311.79 158.32 L 298.77 177.09 L 295.10 182.35 L 297.58 187.89 L 303.92 178.79 L 314.95 162.92 L 333.28 188.89 L 339.60 188.89 Z"/></svg></div>
 <div class="cursor__badge" id="cursor-badge" aria-hidden="true"></div>
 
-<script src="assets/js/vendor/gsap.min.js?v=20261102"></script>
-<script src="assets/js/vendor/ScrollTrigger.min.js?v=20261102"></script>
-<script src="assets/js/vendor/SplitText.min.js?v=20261102"></script>
-<script src="assets/js/vendor/lenis.min.js?v=20261102"></script>
-<script src="assets/js/main.js?v=20261102"></script>
+<script src="assets/js/vendor/gsap.min.js?v=20261102b"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js?v=20261102b"></script>
+<script src="assets/js/vendor/SplitText.min.js?v=20261102b"></script>
+<script src="assets/js/vendor/lenis.min.js?v=20261102b"></script>
+<script src="assets/js/sito.js?v=20261102b"></script>
+<script src="assets/js/main.js?v=20261102b"></script>
 </body>
 </html>

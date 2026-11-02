@@ -1,0 +1,720 @@
+{
+ "nota": "Contenuti SIMULATI per la bozza: da sostituire con i dati del CMS.",
+ "servizi": {
+  "progettazione": "Progettazione d'interni",
+  "illuminotecnica": "Illuminotecnica",
+  "domotica": "Domotica",
+  "ristrutturazione": "Ristrutturazione",
+  "general-contractor": "General contractor",
+  "arredamento": "Arredamento",
+  "falegnameria": "Falegnameria su misura"
+ },
+ "progetti": [
+  {
+   "slug": "casa-tra-pietra-e-luce",
+   "titolo": "Casa tra pietra e luce",
+   "titolo_html": "Casa tra <em>pietra</em> e luce",
+   "estratto": "Muratura in pietra, travi a vista e resina continua: una cucina bianca e monolitica dove la luce radente scolpisce la materia.",
+   "tipologia": "Residenziale",
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Castell'Arquato (PC)",
+   "anno": 2026,
+   "superficie": 180,
+   "durata": 9,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    },
+    {
+     "slug": "ristrutturazione",
+     "nome": "Ristrutturazione"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetto-1a-cucina.jpg",
+    "alt": "Cucina bianca con isola, colonne con forni integrati, travi in legno e muratura in pietra",
+    "w": 2576,
+    "h": 1159
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetto-1b-pranzo.jpg",
+     "alt": "Tavolo rotondo su base a cono sotto un lampadario di fili",
+     "w": 1159,
+     "h": 2576,
+     "didascalia": "Il pranzo: un unico segno scuro sotto la luce"
+    },
+    {
+     "src": "assets/img/progetti/pietra-dettaglio-1.jpg",
+     "alt": "Dettaglio della muratura in pietra illuminata",
+     "w": 978,
+     "h": 1159,
+     "didascalia": "La pietra recuperata, lavata dalla luce radente"
+    },
+    {
+     "src": "assets/img/progetti/pietra-dettaglio-2.jpg",
+     "alt": "Dettaglio delle colonne con forni integrati",
+     "w": 1031,
+     "h": 1044,
+     "didascalia": "Colonne a filo muro: gli elettrodomestici scompaiono"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Una casa di famiglia nel borgo, chiusa da anni. I proprietari volevano viverla tutto l'anno senza cancellarne il carattere: muri in pietra, travi, il rumore della piazza.",
+    "progetto": "Abbiamo tolto invece di aggiungere: via controsoffitti e tramezzi, una sola grande stanza per cucinare e stare. Il bianco della cucina è un volume unico che lascia parlare la pietra.",
+    "cantiere": "Consolidamento dei solai, impianti nuovi passati nel pavimento in resina, recupero delle travi. Nove mesi con un solo referente e i proprietari aggiornati ogni settimana.",
+    "consegna": "La luce è stata tarata sera per sera: radente sulla pietra, morbida sul tavolo. Le chiavi sono arrivate a primavera, insieme al manuale della casa."
+   },
+   "citazione": {
+    "testo": "Pensavamo di dover scegliere tra una casa antica e una casa comoda. Ci hanno mostrato che si possono avere entrambe.",
+    "autore": "M. e L., Castell'Arquato"
+   },
+   "numero": "01",
+   "prima_dopo": null
+  },
+  {
+   "slug": "cucina-sotto-gli-affreschi",
+   "titolo": "Cucina sotto gli affreschi",
+   "titolo_html": "Cucina sotto gli <em>affreschi</em>",
+   "estratto": "Isola in marmo e colonne bianche dentro un palazzo storico: il contemporaneo dialoga con il soffitto decorato.",
+   "tipologia": "Residenziale",
+   "intervento": "Singolo ambiente",
+   "luogo": "Piacenza, centro storico",
+   "anno": 2025,
+   "superficie": 45,
+   "durata": 4,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetto-2.jpg",
+    "alt": "Cucina con isola in marmo grigio, colonne bianche e nere e sgabelli blu sotto un soffitto affrescato",
+    "w": 2000,
+    "h": 1500
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetti/affreschi-dettaglio-1.jpg",
+     "alt": "Il soffitto affrescato sopra le colonne della cucina",
+     "w": 900,
+     "h": 900,
+     "didascalia": "Il soffitto vincolato resta protagonista"
+    },
+    {
+     "src": "assets/img/progetti/affreschi-dettaglio-2.jpg",
+     "alt": "Dettaglio dell'isola in marmo con gli sgabelli blu",
+     "w": 1200,
+     "h": 825,
+     "didascalia": "Un monolite in marmo, appoggiato e non murato"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Una cucina in una sala nobile, con un soffitto affrescato vincolato dalla Soprintendenza: niente fori, niente tracce, niente pensili.",
+    "progetto": "Tutto è appoggiato: colonne autoportanti a tutta altezza e un'isola in marmo che contiene impianti e piano cottura. Nessun elemento tocca il soffitto.",
+    "cantiere": "Impianti passati a pavimento, posa a secco e protezione degli affreschi per tutta la durata dei lavori.",
+    "consegna": "La luce è indiretta e rimbalza sul decoro: di sera il soffitto torna a essere il centro della stanza."
+   },
+   "citazione": {
+    "testo": "Il soffitto è tornato a essere la cosa più bella della casa, e la cucina non si nota quasi.",
+    "autore": "F., Piacenza"
+   },
+   "numero": "02",
+   "prima_dopo": null
+  },
+  {
+   "slug": "open-space-contemporaneo",
+   "titolo": "Open space contemporaneo",
+   "titolo_html": "Open space <em>contemporaneo</em>",
+   "estratto": "Cucina, pranzo e living in un unico ambiente, scandito da una libreria divisoria.",
+   "tipologia": "Residenziale",
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Fiorenzuola d'Arda (PC)",
+   "anno": 2025,
+   "superficie": 120,
+   "durata": 6,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "ristrutturazione",
+     "nome": "Ristrutturazione"
+    },
+    {
+     "slug": "general-contractor",
+     "nome": "General contractor"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetto-3.jpg",
+    "alt": "Open space con tavolo da pranzo, isola bianca, cucina scura a colonne e libreria divisoria",
+    "w": 2000,
+    "h": 1500
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetti/open-dettaglio-1.jpg",
+     "alt": "La libreria divisoria tra cucina e living",
+     "w": 900,
+     "h": 1125,
+     "didascalia": "La libreria filtra, non separa"
+    },
+    {
+     "src": "assets/img/progetti/open-dettaglio-2.jpg",
+     "alt": "Il tavolo da pranzo con le sedie in cuoio",
+     "w": 1000,
+     "h": 1050,
+     "didascalia": "Il tavolo come centro della casa"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Un appartamento anni '80 diviso in stanze piccole e buie. Una coppia con due figli voleva più luce e un posto dove stare tutti insieme.",
+    "progetto": "Abbiamo aperto la zona giorno e usato una libreria su misura come quinta: separa senza chiudere e porta la luce fino all'ingresso.",
+    "cantiere": "Demolizioni, nuovi impianti e pavimenti in sei mesi, coordinando quattro imprese con un unico cronoprogramma.",
+    "consegna": "Arredi e libreria sono stati montati in una settimana dalle nostre squadre. Il primo giorno la famiglia ha cenato a casa."
+   },
+   "citazione": {
+    "testo": "Abbiamo smesso di chiederci dove mettere le cose: ogni cosa ha già il suo posto.",
+    "autore": "G. e A., Fiorenzuola d'Arda"
+   },
+   "numero": "03",
+   "prima_dopo": null
+  },
+  {
+   "slug": "casa-in-noce-e-acciaio",
+   "titolo": "Casa in noce e acciaio",
+   "titolo_html": "Casa in <em>noce</em> e acciaio",
+   "estratto": "Colonne in noce, isola in acciaio e un lampadario scultoreo sopra il pranzo.",
+   "tipologia": "Residenziale",
+   "intervento": "Arredamento su misura",
+   "luogo": "Parma",
+   "anno": 2024,
+   "superficie": 140,
+   "durata": 5,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetto-1a.jpg",
+    "alt": "Cucina con isola in acciaio, cappa sospesa e colonne in noce",
+    "w": 2000,
+    "h": 1500
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetto-1b.jpg",
+     "alt": "Zona pranzo con tavolo in vetro e lampadario a bracci luminosi",
+     "w": 1200,
+     "h": 1600,
+     "didascalia": "Il pranzo, sotto un lampadario di luce"
+    },
+    {
+     "src": "assets/img/progetti/noce-dettaglio-1.jpg",
+     "alt": "Dettaglio della cappa sospesa sopra l'isola",
+     "w": 1100,
+     "h": 750,
+     "didascalia": "Acciaio e noce: due materiali, un solo disegno"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Una casa appena acquistata, già in buono stato: andava solo resa propria, con arredi pensati per chi la abita.",
+    "progetto": "Una parete di colonne in noce contiene tutto, dalla dispensa ai forni. L'isola in acciaio è il piano di lavoro e il punto d'incontro.",
+    "cantiere": "Nessuna opera muraria: rilievo millimetrico, produzione nelle nostre falegnamerie e montaggio in dieci giorni.",
+    "consegna": "L'ultimo pezzo è stato il lampadario, scelto in showroom insieme ai proprietari."
+   },
+   "citazione": {
+    "testo": "Ogni anta si apre dove ti aspetti che si apra. Sembra una cosa da poco, ma non lo è.",
+    "autore": "S., Parma"
+   },
+   "numero": "04",
+   "prima_dopo": null
+  },
+  {
+   "slug": "living-che-nasce-dal-disegno",
+   "titolo": "Il living che nasce dal disegno",
+   "titolo_html": "Il living che <em>nasce</em> dal disegno",
+   "estratto": "Una parete attrezzata disegnata a matita e realizzata al millimetro.",
+   "tipologia": "Residenziale",
+   "intervento": "Singolo ambiente",
+   "luogo": "Piacenza",
+   "anno": 2024,
+   "superficie": 60,
+   "durata": 3,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetti/living-realizzato.jpg",
+    "alt": "Soggiorno con parete attrezzata, mobile TV sospeso e divano grigio",
+    "w": 1600,
+    "h": 1002
+   },
+   "prima_dopo": {
+    "prima": {
+     "src": "assets/img/progetti/living-disegno.jpg",
+     "alt": "Disegno a matita del soggiorno",
+     "w": 1600,
+     "h": 1002
+    },
+    "dopo": {
+     "src": "assets/img/progetti/living-realizzato.jpg",
+     "alt": "Il soggiorno realizzato",
+     "w": 1600,
+     "h": 1002
+    },
+    "etichette": [
+     "Disegno",
+     "Realizzato"
+    ]
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetti/living-dettaglio-1.jpg",
+     "alt": "Dettaglio della parete attrezzata",
+     "w": 880,
+     "h": 651,
+     "didascalia": "Mensole e vani tagliati sulla collezione dei proprietari"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Un soggiorno con troppe cose in vista: libri, dischi, ricordi di viaggio. Serviva ordine senza perdere la personalità.",
+    "progetto": "Abbiamo censito oggetto per oggetto e disegnato una parete che li contiene tutti: vani chiusi per il disordine, nicchie illuminate per ciò che si vuole mostrare.",
+    "cantiere": "Tre settimane di produzione in falegnameria e due giorni di montaggio.",
+    "consegna": "Il disegno a matita e la parete finita coincidono: è la prova del metodo."
+   },
+   "citazione": {
+    "testo": "Il disegno che ci avevano mostrato era identico al risultato. Fino all'ultima mensola.",
+    "autore": "R., Piacenza"
+   },
+   "numero": "05"
+  },
+  {
+   "slug": "un-tavolo-una-luce",
+   "titolo": "Un tavolo, una luce",
+   "titolo_html": "Un tavolo, una <em>luce</em>",
+   "estratto": "La zona pranzo di una casa di campagna, costruita attorno a una lampada ad arco.",
+   "tipologia": "Residenziale",
+   "intervento": "Arredamento su misura",
+   "luogo": "Salsomaggiore Terme (PR)",
+   "anno": 2023,
+   "superficie": 35,
+   "durata": 2,
+   "servizi": [
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetti/pranzo-realizzato.jpg",
+    "alt": "Zona pranzo con tavolo, sedie imbottite, parete scura attrezzata e lampada ad arco",
+    "w": 1600,
+    "h": 1001
+   },
+   "prima_dopo": {
+    "prima": {
+     "src": "assets/img/progetti/pranzo-disegno.jpg",
+     "alt": "Disegno a matita della zona pranzo",
+     "w": 1600,
+     "h": 1001
+    },
+    "dopo": {
+     "src": "assets/img/progetti/pranzo-realizzato.jpg",
+     "alt": "La zona pranzo realizzata",
+     "w": 1600,
+     "h": 1001
+    },
+    "etichette": [
+     "Disegno",
+     "Realizzato"
+    ]
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetti/pranzo-dettaglio-1.jpg",
+     "alt": "Dettaglio della lampada ad arco sopra il tavolo",
+     "w": 880,
+     "h": 700,
+     "didascalia": "Una sola fonte di luce, al posto giusto"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Una zona pranzo senza punti luce a soffitto, in una casa di campagna con muri spessi.",
+    "progetto": "Invece di aprire tracce abbiamo scelto una lampada ad arco e disegnato attorno a lei tavolo, sedute e parete attrezzata.",
+    "cantiere": "Nessun cantiere: solo arredi e una posa di due giorni.",
+    "consegna": "La luce cade esattamente al centro del tavolo, come nel disegno."
+   },
+   "citazione": {
+    "testo": "Ci siamo innamorati della lampada in showroom e loro hanno costruito la stanza attorno.",
+    "autore": "C. e P., Salsomaggiore Terme"
+   },
+   "numero": "06"
+  },
+  {
+   "slug": "cucina-a-giorno-in-bronzo",
+   "titolo": "Cucina a giorno in bronzo",
+   "titolo_html": "Cucina a giorno in <em>bronzo</em>",
+   "estratto": "Mensole sospese, colonne scure e una vetrina in bronzo che fa da dispensa.",
+   "tipologia": "Residenziale",
+   "intervento": "Singolo ambiente",
+   "luogo": "Lodi",
+   "anno": 2023,
+   "superficie": 28,
+   "durata": 3,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/progetti/cucina-giorno-realizzato.jpg",
+    "alt": "Cucina con mensole sospese, colonne scure e vetrina in bronzo illuminata",
+    "w": 1600,
+    "h": 1002
+   },
+   "prima_dopo": {
+    "prima": {
+     "src": "assets/img/progetti/cucina-giorno-disegno.jpg",
+     "alt": "Disegno a matita della cucina",
+     "w": 1600,
+     "h": 1002
+    },
+    "dopo": {
+     "src": "assets/img/progetti/cucina-giorno-realizzato.jpg",
+     "alt": "La cucina realizzata",
+     "w": 1600,
+     "h": 1002
+    },
+    "etichette": [
+     "Disegno",
+     "Realizzato"
+    ]
+   },
+   "galleria": [
+    {
+     "src": "assets/img/progetti/cucina-giorno-dettaglio-1.jpg",
+     "alt": "Dettaglio della vetrina in bronzo illuminata",
+     "w": 880,
+     "h": 801,
+     "didascalia": "Il bronzo cambia colore con la luce del giorno"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Una cucina stretta e lunga, aperta sul soggiorno: doveva sembrare un arredo, non una cucina.",
+    "progetto": "Niente pensili: mensole sospese e una vetrina in bronzo che contiene dispensa e cristalleria, illuminata dall'interno.",
+    "cantiere": "Tre mesi tra disegno esecutivo, campionature del bronzo e montaggio.",
+    "consegna": "Dal soggiorno si vede una libreria, non una cucina."
+   },
+   "citazione": {
+    "testo": "Gli ospiti ci chiedono dove sia la cucina. Ed è proprio lì.",
+    "autore": "E., Lodi"
+   },
+   "numero": "07"
+  },
+  {
+   "slug": "appartamento-in-oltretorrente",
+   "titolo": "Appartamento in Oltretorrente",
+   "titolo_html": "Appartamento in <em>Oltretorrente</em>",
+   "estratto": "Boiserie, cornici d'epoca e una cabina armadio a doghe: un appartamento storico rimesso in vita.",
+   "tipologia": "Residenziale",
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Parma",
+   "anno": 2022,
+   "superficie": 110,
+   "durata": 7,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "ristrutturazione",
+     "nome": "Ristrutturazione"
+    },
+    {
+     "slug": "general-contractor",
+     "nome": "General contractor"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/show-proposte-4.jpg",
+    "alt": "Soggiorno con divano angolare grigio e parete TV con luce indiretta",
+    "w": 1400,
+    "h": 1400
+   },
+   "galleria": [
+    {
+     "src": "assets/img/show-proposte-1.jpg",
+     "alt": "Camera da letto con boiserie e cornici dorate",
+     "w": 1200,
+     "h": 1500,
+     "didascalia": "La camera: boiserie e cornici d'epoca"
+    },
+    {
+     "src": "assets/img/show-proposte-2.jpg",
+     "alt": "Cabina armadio con quinte in doghe di legno",
+     "w": 1200,
+     "h": 1500,
+     "didascalia": "La cabina armadio a doghe"
+    },
+    {
+     "src": "assets/img/show-proposte-3.jpg",
+     "alt": "Parete living con vetrine fumé retroilluminate",
+     "w": 1400,
+     "h": 1400,
+     "didascalia": "Vetrine fumé nella parete del living"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Un appartamento al secondo piano di un palazzo dell'Ottocento, con impianti fermi agli anni '60.",
+    "progetto": "Abbiamo conservato boiserie e cornici e inserito tra loro elementi contemporanei: una cabina armadio a doghe, una parete living con vetrine.",
+    "cantiere": "Sette mesi, impianti completamente rifatti e cinque imprese coordinate da un unico referente.",
+    "consegna": "Una casa d'epoca che funziona come una casa nuova."
+   },
+   "citazione": {
+    "testo": "Avevamo paura di perdere il fascino della casa. È ancora tutto lì, solo che adesso ci si vive bene.",
+    "autore": "D. e M., Parma"
+   },
+   "numero": "08",
+   "prima_dopo": null
+  },
+  {
+   "slug": "il-nostro-showroom",
+   "titolo": "Il nostro showroom",
+   "titolo_html": "Il nostro <em>showroom</em>",
+   "estratto": "Tre piani lungo la Via Emilia: il progetto con cui raccontiamo il nostro modo di lavorare.",
+   "tipologia": "Commerciale",
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Roveleto di Cadeo (PC)",
+   "anno": 2021,
+   "superficie": 1500,
+   "durata": 12,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "illuminotecnica",
+     "nome": "Illuminotecnica"
+    },
+    {
+     "slug": "domotica",
+     "nome": "Domotica"
+    },
+    {
+     "slug": "ristrutturazione",
+     "nome": "Ristrutturazione"
+    },
+    {
+     "slug": "general-contractor",
+     "nome": "General contractor"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/show-esposizione-1.jpg",
+    "alt": "Living con divano curvo, applique a disco dorato e lampada ad arco",
+    "w": 1200,
+    "h": 1500
+   },
+   "galleria": [
+    {
+     "src": "assets/img/show-esposizione-2.jpg",
+     "alt": "Cucina a colonne e zona pranzo",
+     "w": 1200,
+     "h": 1500,
+     "didascalia": "Piano 0: la cucina a colonne"
+    },
+    {
+     "src": "assets/img/show-esposizione-3.jpg",
+     "alt": "Tavolo in vetro e libreria sospesa",
+     "w": 1400,
+     "h": 1400,
+     "didascalia": "Piano 0: il pranzo"
+    },
+    {
+     "src": "assets/img/show-loft-1.jpg",
+     "alt": "Isola in acciaio e dispensa a scomparsa",
+     "w": 1200,
+     "h": 1500,
+     "didascalia": "Piano −1: l'Atelier"
+    },
+    {
+     "src": "assets/img/area-tecnica.jpg",
+     "alt": "Area tecnica con campionari e materiali",
+     "w": 1280,
+     "h": 1600,
+     "didascalia": "Piano −1: l'area tecnica"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Volevamo uno spazio in cui i clienti potessero toccare i materiali e vivere gli ambienti, non guardare mobili in fila.",
+    "progetto": "Tre piani con tre ruoli: lo Showroom racconta, la Home fa abitare, l'Atelier è dove si decide.",
+    "cantiere": "Dodici mesi di lavori, a showroom aperto, un piano alla volta.",
+    "consegna": "Lo spazio cambia ogni stagione: è un progetto che non finisce mai."
+   },
+   "citazione": {
+    "testo": "È il progetto in cui siamo stati, per una volta, il cliente di noi stessi.",
+    "autore": "Maxiarredo"
+   },
+   "numero": "09",
+   "prima_dopo": null
+  },
+  {
+   "slug": "studio-professionale-in-centro",
+   "titolo": "Studio professionale in centro",
+   "titolo_html": "Studio professionale <em>in centro</em>",
+   "estratto": "Ristrutturazione per fasi, senza fermare l'attività dello studio.",
+   "tipologia": "Uffici",
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Cremona",
+   "anno": 2020,
+   "superficie": 210,
+   "durata": 5,
+   "servizi": [
+    {
+     "slug": "progettazione",
+     "nome": "Progettazione d'interni"
+    },
+    {
+     "slug": "ristrutturazione",
+     "nome": "Ristrutturazione"
+    },
+    {
+     "slug": "general-contractor",
+     "nome": "General contractor"
+    },
+    {
+     "slug": "domotica",
+     "nome": "Domotica"
+    },
+    {
+     "slug": "arredamento",
+     "nome": "Arredamento"
+    }
+   ],
+   "copertina": {
+    "src": "assets/img/serv-gc.jpg",
+    "alt": "Studio con tavolo riunioni in legno, seduta arancione e libreria",
+    "w": 1100,
+    "h": 689
+   },
+   "galleria": [
+    {
+     "src": "assets/img/serv-ristrutturazione.jpg",
+     "alt": "Ingresso con scala in legno e sala riunioni sullo sfondo",
+     "w": 1100,
+     "h": 689,
+     "didascalia": "Il passaggio tra accoglienza e sale"
+    },
+    {
+     "src": "assets/img/progetti/studio-dettaglio-1.jpg",
+     "alt": "Dettaglio del tavolo riunioni",
+     "w": 660,
+     "h": 552,
+     "didascalia": "Il tavolo riunioni su misura"
+    }
+   ],
+   "racconto": {
+    "richiesta": "Uno studio di dodici persone che non poteva chiudere nemmeno un giorno.",
+    "progetto": "Abbiamo diviso il cantiere in quattro fasi e progettato ogni stanza perché potesse essere consegnata da sola.",
+    "cantiere": "Lavori rumorosi la sera e il sabato, traslochi interni nel fine settimana, un referente sempre presente.",
+    "consegna": "Lo studio non ha perso un appuntamento."
+   },
+   "citazione": {
+    "testo": "Il lunedì mattina trovavamo ogni volta una stanza nuova, pulita e pronta.",
+    "autore": "Studio associato, Cremona"
+   },
+   "numero": "10",
+   "prima_dopo": null
+  }
+ ]
+}
