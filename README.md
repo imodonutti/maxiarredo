@@ -49,5 +49,8 @@ La X del marchio (la stessa del cursore), bronzo #8A6E3B su carta #F4F4F0:
 1. Togliere `X-Robots-Tag` da `nginx/sicurezza.conf` e cambiare il robots.txt in `nginx/default.conf` (testo pronto nel commento).
 2. Togliere `<meta name="robots" content="noindex, nofollow">` da tutte le pagine.
 3. Togliere le variabili BASIC_AUTH_* in Coolify.
-4. Aggiungere a `sitemap.xml` gli articoli approvati e inviarla a Google Search Console.
+4. Inviare `sitemap.xml` a Google Search Console.
 5. Se il modulo Dinamoweb usa servizi esterni (reCAPTCHA, invio a un altro dominio), aggiungerli alla CSP e all'informativa privacy.
+
+## Approfondimenti: rinviati
+Sezione tolta dal sito (18/11/2026), verrà sviluppata in seguito: pagine e dati in `bozze/approfondimenti/` (vedi LEGGIMI.md). La cartella `bozze/` non viene pubblicata (il Dockerfile copia solo `prototipo/`).
