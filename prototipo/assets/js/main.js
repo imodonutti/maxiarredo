@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     type: 'lines', mask: 'lines', linesClass: 'split-line',
     onSplit(self) {
       // eseguito anche quando le righe si ricalcolano (resize / font caricati)
-      heroTl.from(self.lines, { yPercent: 110, opacity: 0, duration: 1.5, stagger: 0.12 }, 0);
+      heroTl.from(self.lines, { yPercent: 110, duration: 1.5, stagger: 0.12 }, 0);
     },
   });
   heroTl

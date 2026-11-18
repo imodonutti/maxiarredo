@@ -40,7 +40,7 @@ La X del marchio (la stessa del cursore), bronzo #8A6E3B su carta #F4F4F0:
 
 ## Sicurezza, SEO e privacy (18/11/2026)
 - Header di sicurezza in `nginx/sicurezza.conf` (CSP, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options), incluso in ogni location.
-  Il sito non carica nulla da domini esterni: caratteri in `prototipo/assets/fonts/`, script del `<head>` in `assets/js/head-*.js`.
+  Il sito non carica nulla da domini esterni: caratteri in `prototipo/assets/fonts/` (dichiarati in testa a `styles.css`), script del `<head>` in `assets/js/head-*.js`.
 - Dati strutturati JSON-LD (FurnitureStore + HomeAndConstructionBusiness, WebSite) in `index.html`; Open Graph e canonical su tutte le pagine
   (progetto e articolo li aggiornano da JS). Dominio previsto: https://www.maxiarredo.com/.
 - `privacy.html`: informativa privacy e cookie (nessun cookie, solo sessionStorage `mx-nav` e localStorage `mx-pj-view`).
@@ -54,3 +54,9 @@ La X del marchio (la stessa del cursore), bronzo #8A6E3B su carta #F4F4F0:
 
 ## Approfondimenti: rinviati
 Sezione tolta dal sito (18/11/2026), verrà sviluppata in seguito: pagine e dati in `bozze/approfondimenti/` (vedi LEGGIMI.md). La cartella `bozze/` non viene pubblicata (il Dockerfile copia solo `prototipo/`).
+
+## Prestazioni (PageSpeed, 18/11/2026)
+- Ogni foto ha varianti WebP `nome-640.webp`, `-1280`, `-1920` (solo se più piccole dell'originale) e `-<larghezza piena, max 2560>`;
+  `pages.js` (imgTag) e `index.html` le usano con `srcset`. **Foto nuova = generare le varianti** con la stessa regola (Pillow, qualità 78).
+- `progetti.json` precaricato; il footer resta sotto la piega finché i contenuti arrivano (niente salti di layout).
+- Lighthouse mobile in locale: home ~90, Progetti 96, Progetto ~91, Privacy 96. Il limite della home è l'apertura animata: il testo compare a sipario alzato.

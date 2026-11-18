@@ -29,11 +29,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* ---------- Utilità ---------- */
   const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const imgTag = (o, extra = '') => o ? `<img src="${esc(o.src)}" alt="${esc(o.alt)}" width="${o.w}" height="${o.h}" decoding="async" ${extra}>` : '';
+  // Varianti WebP generate per ogni foto: 640/1280/1920 px (solo se più piccole dell'originale) + larghezza piena (max 2560)
+  const srcset = (o) => {
+    const base = o.src.replace(/\.(jpe?g|png)$/i, '');
+    if (base === o.src) return '';
+    const ws = [640, 1280, 1920].filter((x) => x < o.w).concat(Math.min(o.w, 2560));
+    return ws.map((x) => `${esc(base)}-${x}.webp ${x}w`).join(', ');
+  };
+  const imgTag = (o, extra = '') => {
+    if (!o) return '';
+    const ss = srcset(o);
+    const sizes = /sizes=/.test(extra) ? '' : ' sizes="(min-width: 901px) 50vw, 100vw"';
+    return `<img src="${esc(o.src)}"${ss ? ` srcset="${ss}"${sizes}` : ''} alt="${esc(o.alt)}" width="${o.w}" height="${o.h}" decoding="async" ${extra}>`;
+  };
   const fmtDate = (iso, opt = { day: 'numeric', month: 'long', year: 'numeric' }) => new Intl.DateTimeFormat('it-IT', opt).format(new Date(iso));
   const fmtNum = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1200 -> 1.200 (Intl it-IT non raggruppa le 4 cifre)
   const arrow = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg>';
-  const getJSON = async (url) => { const r = await fetch(url, { cache: 'no-cache' }); if (!r.ok) throw new Error(url); return r.json(); };
+  const getJSON = async (url) => { const r = await fetch(url); if (!r.ok) throw new Error(url); return r.json(); };
   const param = (k) => new URLSearchParams(location.search).get(k);
   const projUrl = (p) => `progetto.html?p=${encodeURIComponent(p.slug)}`;
   const artUrl = (a) => `articolo.html?a=${encodeURIComponent(a.slug)}`;
@@ -99,9 +111,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const wrap = $('#pj-wrap'), list = $('.pj-list', wrap);
     $('#pj-total').textContent = String(progetti.length).padStart(2, '0');
 
-    list.innerHTML = progetti.map((p) => `
+    list.innerHTML = progetti.map((p, k) => `
       <a href="${projUrl(p)}" class="pj" role="listitem" data-cursor="Scopri" data-tip="${esc(p.tipologia)}" data-int="${esc(p.intervento)}" data-slug="${esc(p.slug)}">
-          <figure class="pj__media"><div class="pj__img">${imgTag(p.copertina, 'loading="lazy" sizes="(min-width: 901px) 50vw, 100vw"')}</div></figure>
+          <figure class="pj__media"><div class="pj__img">${imgTag(p.copertina, (k === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' sizes="(min-width: 901px) 50vw, 100vw"')}</div></figure>
           <span class="pj__num">${p.numero}</span>
           <h2 class="pj__title">${p.titolo_html}</h2>
           <span class="pj__place">${esc(p.luogo)}</span>
