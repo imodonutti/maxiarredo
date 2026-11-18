@@ -1,5 +1,5 @@
 {
- "nota": "Contenuti SIMULATI per la bozza: da sostituire con i dati del CMS.",
+ "nota": "Progetti 01-03: testi e dati forniti dal cliente (novembre 2026). Gli altri progetti sono ancora SIMULATI.",
  "servizi": {
   "progettazione": "Progettazione d'interni",
   "illuminotecnica": "Illuminotecnica",
@@ -14,29 +14,25 @@
    "slug": "casa-tra-pietra-e-luce",
    "titolo": "Casa tra pietra e luce",
    "titolo_html": "Casa tra <em>pietra</em> e luce",
-   "estratto": "Muratura in pietra, travi a vista e resina continua: una cucina bianca e monolitica dove la luce radente scolpisce la materia.",
+   "estratto": "Un rustico ai piedi dell'Appennino rimesso a nuovo: interni moderni in dialogo con il paesaggio e arredi disegnati e realizzati nella nostra falegnameria.",
    "tipologia": "Residenziale",
    "intervento": "Ristrutturazione completa",
-   "luogo": "Castell'Arquato (PC)",
-   "anno": 2026,
-   "superficie": 180,
-   "durata": 9,
+   "luogo": "Provincia di Parma",
+   "anno": 2020,
+   "superficie": 1200,
+   "durata": 24,
    "servizi": [
     {
      "slug": "progettazione",
      "nome": "Progettazione d'interni"
     },
     {
-     "slug": "illuminotecnica",
-     "nome": "Illuminotecnica"
-    },
-    {
-     "slug": "ristrutturazione",
-     "nome": "Ristrutturazione"
-    },
-    {
      "slug": "arredamento",
      "nome": "Arredamento"
+    },
+    {
+     "slug": "falegnameria",
+     "nome": "Falegnameria su misura"
     }
    ],
    "copertina": {
@@ -68,46 +64,51 @@
      "didascalia": "Colonne a filo muro: gli elettrodomestici scompaiono"
     }
    ],
-   "racconto": {
-    "richiesta": "Una casa di famiglia nel borgo, chiusa da anni. I proprietari volevano viverla tutto l'anno senza cancellarne il carattere: muri in pietra, travi, il rumore della piazza.",
-    "progetto": "Abbiamo tolto invece di aggiungere: via controsoffitti e tramezzi, una sola grande stanza per cucinare e stare. Il bianco della cucina è un volume unico che lascia parlare la pietra.",
-    "cantiere": "Consolidamento dei solai, impianti nuovi passati nel pavimento in resina, recupero delle travi. Nove mesi con un solo referente e i proprietari aggiornati ogni settimana.",
-    "consegna": "La luce è stata tarata sera per sera: radente sulla pietra, morbida sul tavolo. Le chiavi sono arrivate a primavera, insieme al manuale della casa."
-   },
-   "citazione": {
-    "testo": "Pensavamo di dover scegliere tra una casa antica e una casa comoda. Ci hanno mostrato che si possono avere entrambe.",
-    "autore": "M. e L., Castell'Arquato"
-   },
+   "racconto": [
+    {
+     "titolo": "La richiesta",
+     "testo": "Un rustico da rimettere a nuovo, migliorandone la struttura e la classe energetica. Ogni intervento doveva restare coerente con il paesaggio intorno, con un tocco di modernità soprattutto negli interni."
+    },
+    {
+     "titolo": "Il progetto",
+     "testo": "Abbiamo curato il progetto d'arredo partendo dai desideri dei proprietari, in un confronto continuo per tutta la durata dei lavori. Materiali, finiture e colori seguono una sola visione d'insieme: un filo conduttore che rende ogni ambiente completo e lascia ritrovare ovunque elementi che riconducono all'intero progetto."
+    },
+    {
+     "titolo": "Su misura",
+     "testo": "La maggior parte degli arredi è stata disegnata su progetto e realizzata nella falegnameria Maxiarredo. Questo ci ha permesso dettagli raffinati, irraggiungibili con la produzione di serie."
+    },
+    {
+     "titolo": "La tenuta",
+     "testo": "Oltre al corpo principale, la proprietà comprende una seconda residenza per gli ospiti, una cantina da ristorante stellato e una piscina coperta con area palestra."
+    }
+   ],
    "numero": "01",
-   "prima_dopo": null
+   "prima_dopo": null,
+   "occhiello": "Ai piedi dell'Appennino Parmense"
   },
   {
    "slug": "cucina-sotto-gli-affreschi",
    "titolo": "Cucina sotto gli affreschi",
    "titolo_html": "Cucina sotto gli <em>affreschi</em>",
-   "estratto": "Isola in marmo e colonne bianche dentro un palazzo storico: il contemporaneo dialoga con il soffitto decorato.",
+   "estratto": "Una dimora storica a Piacenza con gli affreschi appena restaurati: un arredo che entra in punta di piedi, in gran parte realizzato nella nostra falegnameria.",
    "tipologia": "Residenziale",
-   "intervento": "Singolo ambiente",
-   "luogo": "Piacenza, centro storico",
-   "anno": 2025,
-   "superficie": 45,
-   "durata": 4,
+   "intervento": "Ristrutturazione completa",
+   "luogo": "Piacenza",
+   "anno": 2022,
+   "superficie": 200,
+   "durata": 24,
    "servizi": [
     {
      "slug": "progettazione",
      "nome": "Progettazione d'interni"
     },
     {
-     "slug": "illuminotecnica",
-     "nome": "Illuminotecnica"
+     "slug": "arredamento",
+     "nome": "Arredamento"
     },
     {
      "slug": "falegnameria",
      "nome": "Falegnameria su misura"
-    },
-    {
-     "slug": "arredamento",
-     "nome": "Arredamento"
     }
    ],
    "copertina": {
@@ -122,60 +123,57 @@
      "alt": "Il soffitto affrescato sopra le colonne della cucina",
      "w": 900,
      "h": 900,
-     "didascalia": "Il soffitto vincolato resta protagonista"
+     "didascalia": "Il soffitto affrescato resta protagonista"
     },
     {
      "src": "assets/img/progetti/affreschi-dettaglio-2.jpg",
      "alt": "Dettaglio dell'isola in marmo con gli sgabelli blu",
      "w": 1200,
      "h": 825,
-     "didascalia": "Un monolite in marmo, appoggiato e non murato"
+     "didascalia": "L'isola in marmo, sotto il decoro restaurato"
     }
    ],
-   "racconto": {
-    "richiesta": "Una cucina in una sala nobile, con un soffitto affrescato vincolato dalla Soprintendenza: niente fori, niente tracce, niente pensili.",
-    "progetto": "Tutto è appoggiato: colonne autoportanti a tutta altezza e un'isola in marmo che contiene impianti e piano cottura. Nessun elemento tocca il soffitto.",
-    "cantiere": "Impianti passati a pavimento, posa a secco e protezione degli affreschi per tutta la durata dei lavori.",
-    "consegna": "La luce è indiretta e rimbalza sul decoro: di sera il soffitto torna a essere il centro della stanza."
-   },
-   "citazione": {
-    "testo": "Il soffitto è tornato a essere la cosa più bella della casa, e la cucina non si nota quasi.",
-    "autore": "F., Piacenza"
-   },
+   "racconto": [
+    {
+     "titolo": "La richiesta",
+     "testo": "Come in tutti i nostri progetti, al centro delle scelte c'è chi abita la casa: un manager di una multinazionale, appassionato di letteratura, arte e cinema, che voleva dare spazio prima di tutto allo studio e alla zona tv e relax."
+    },
+    {
+     "titolo": "Il progetto",
+     "testo": "Il restauro degli affreschi, durato circa un anno, ha guidato tutte le scelte d'arredo. Abbiamo evitato di sovrapporci al decoro: l'arredo entra in punta di piedi in stanze che trasudano bellezza e storia."
+    },
+    {
+     "titolo": "Su misura",
+     "testo": "Anche in questo caso gran parte degli arredi è stata progettata e realizzata nella falegnameria Maxiarredo."
+    },
+    {
+     "titolo": "Studio e relax",
+     "testo": "Nella zona tv e relax, al posto della solita (gigantesca) tv, c'è un grande schermo con proiettore: un piccolo cinema privato per chi il cinema lo ama davvero."
+    }
+   ],
    "numero": "02",
-   "prima_dopo": null
+   "prima_dopo": null,
+   "occhiello": "Il fascino di una dimora storica"
   },
   {
    "slug": "open-space-contemporaneo",
    "titolo": "Open space contemporaneo",
    "titolo_html": "Open space <em>contemporaneo</em>",
-   "estratto": "Cucina, pranzo e living in un unico ambiente, scandito da una libreria divisoria.",
+   "estratto": "Due livelli nella campagna piacentina per una famiglia che ama cucinare e ricevere: la cucina al centro della zona giorno e una libreria in ferro come segno di partenza.",
    "tipologia": "Residenziale",
-   "intervento": "Ristrutturazione completa",
-   "luogo": "Fiorenzuola d'Arda (PC)",
-   "anno": 2025,
-   "superficie": 120,
-   "durata": 6,
+   "intervento": "Nuova costruzione",
+   "luogo": "Provincia di Piacenza",
+   "anno": 2020,
+   "superficie": 180,
+   "durata": 18,
    "servizi": [
     {
      "slug": "progettazione",
      "nome": "Progettazione d'interni"
     },
     {
-     "slug": "ristrutturazione",
-     "nome": "Ristrutturazione"
-    },
-    {
-     "slug": "general-contractor",
-     "nome": "General contractor"
-    },
-    {
      "slug": "arredamento",
      "nome": "Arredamento"
-    },
-    {
-     "slug": "falegnameria",
-     "nome": "Falegnameria su misura"
     }
    ],
    "copertina": {
@@ -187,31 +185,40 @@
    "galleria": [
     {
      "src": "assets/img/progetti/open-dettaglio-1.jpg",
-     "alt": "La libreria divisoria tra cucina e living",
+     "alt": "La libreria in lamiera di ferro tra ingresso e cucina",
      "w": 900,
      "h": 1125,
-     "didascalia": "La libreria filtra, non separa"
+     "didascalia": "La libreria in ferro: il segno da cui è partito il progetto"
     },
     {
      "src": "assets/img/progetti/open-dettaglio-2.jpg",
      "alt": "Il tavolo da pranzo con le sedie in cuoio",
      "w": 1000,
      "h": 1050,
-     "didascalia": "Il tavolo come centro della casa"
+     "didascalia": "Il pranzo, nello stesso ambiente della cucina"
     }
    ],
-   "racconto": {
-    "richiesta": "Un appartamento anni '80 diviso in stanze piccole e buie. Una coppia con due figli voleva più luce e un posto dove stare tutti insieme.",
-    "progetto": "Abbiamo aperto la zona giorno e usato una libreria su misura come quinta: separa senza chiudere e porta la luce fino all'ingresso.",
-    "cantiere": "Demolizioni, nuovi impianti e pavimenti in sei mesi, coordinando quattro imprese con un unico cronoprogramma.",
-    "consegna": "Arredi e libreria sono stati montati in una settimana dalle nostre squadre. Il primo giorno la famiglia ha cenato a casa."
-   },
-   "citazione": {
-    "testo": "Abbiamo smesso di chiederci dove mettere le cose: ogni cosa ha già il suo posto.",
-    "autore": "G. e A., Fiorenzuola d'Arda"
-   },
+   "racconto": [
+    {
+     "titolo": "La richiesta",
+     "testo": "Un appartamento su due livelli nella campagna piacentina, per una famiglia di quattro persone. I proprietari amano cucinare e ricevere gli amici: la cucina doveva essere il cuore della zona giorno."
+    },
+    {
+     "titolo": "Il progetto",
+     "testo": "La cucina condivide un unico ambiente con la zona relax e tv, e ha preso l'ampio spazio che il progetto iniziale riservava alla parete di fronte all'ingresso. Tutto è partito da una libreria in lamiera di ferro: un oggetto forte, che separa l'ingresso dalla zona cottura."
+    },
+    {
+     "titolo": "All'aperto",
+     "testo": "Accanto alla cucina abbiamo sviluppato un'ampia pergola bioclimatica, con una cucina da esterno e una seconda zona pranzo per i mesi più adatti a vivere fuori."
+    },
+    {
+     "titolo": "La zona notte",
+     "testo": "Un disegno di porte scorrevoli, che all'occorrenza si nascondono dietro un gioco di quinte, rende intima la zona notte. Oltre ai due bagni ci sono le camere delle ragazze, uno studio e due mini suite: una per i padroni di casa, una per gli ospiti."
+    }
+   ],
    "numero": "03",
-   "prima_dopo": null
+   "prima_dopo": null,
+   "occhiello": "Appartamento in villa"
   },
   {
    "slug": "casa-in-noce-e-acciaio",

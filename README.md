@@ -28,6 +28,12 @@ restituisca gli stessi campi (stesso JSON, altra URL) oppure che generi l'HTML c
 - Progetto: slug, numero, titolo, titolo_html (con <em> per la parola in corsivo), estratto, tipologia,
   intervento, luogo, anno, superficie (m²), durata (mesi), servizi[{slug,nome}], copertina{src,alt,w,h},
   galleria[{src,alt,w,h,didascalia}], prima_dopo{prima,dopo,etichette} (facoltativo),
-  racconto{richiesta,progetto,cantiere,consegna}, citazione{testo,autore}.
+  racconto: elenco di capitoli [{titolo,testo}] (oppure, vecchio formato, {richiesta,progetto,cantiere,consegna}),
+  occhiello (facoltativo, sopra il titolo), citazione{testo,autore} (facoltativa).
+  Progetti 01-03 hanno testi e dati reali forniti dal cliente (18/11/2026); gli altri sono ancora simulati.
 - Articolo: slug, titolo, titolo_html, categoria, data (AAAA-MM-GG), lettura (min), in_evidenza, estratto,
   autore, copertina, corpo[blocchi: p | h2 | lista | citazione | immagine | nota], progetti_correlati[slug].
+
+## Favicon
+La X del marchio (la stessa del cursore), bronzo #8A6E3B su carta #F4F4F0:
+`favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `site.webmanifest`.

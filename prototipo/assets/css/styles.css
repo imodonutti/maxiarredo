@@ -835,3 +835,6 @@ html.pt-enter .pt { transition: none; }
   .mmenu__t { font-family: var(--ff-serif); font-size: clamp(2.2rem, 1rem + 6vw, 3.6rem); line-height: 1.05; }
   .mmenu__foot { display: grid; gap: .3rem; font-family: var(--ff-mono); font-size: .72rem; letter-spacing: .06em; color: var(--c-ink-soft); }
 }
+
+/* Occhiello sopra il titolo del singolo progetto */
+.pp-kicker { display: block; margin-bottom: 1.4rem; color: var(--c-accent); }

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const imgTag = (o, extra = '') => o ? `<img src="${esc(o.src)}" alt="${esc(o.alt)}" width="${o.w}" height="${o.h}" decoding="async" ${extra}>` : '';
   const fmtDate = (iso, opt = { day: 'numeric', month: 'long', year: 'numeric' }) => new Intl.DateTimeFormat('it-IT', opt).format(new Date(iso));
-  const fmtNum = (n) => new Intl.NumberFormat('it-IT').format(n);
+  const fmtNum = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1200 -> 1.200 (Intl it-IT non raggruppa le 4 cifre)
   const arrow = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg>';
   const getJSON = async (url) => { const r = await fetch(url, { cache: 'no-cache' }); if (!r.ok) throw new Error(url); return r.json(); };
   const param = (k) => new URLSearchParams(location.search).get(k);
@@ -210,7 +210,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const i = Math.max(0, progetti.findIndex((p) => p.slug === param('p')));
     const p = progetti[i], next = progetti[(i + 1) % progetti.length];
     document.title = `${p.titolo} — Progetti · Maxiarredo`;
-    const chapters = [['La richiesta', p.racconto.richiesta], ['Il progetto', p.racconto.progetto], ['Il cantiere', p.racconto.cantiere], ['La consegna', p.racconto.consegna]];
+    // racconto: elenco di capitoli {titolo, testo} oppure le quattro fasi standard
+    const chapters = Array.isArray(p.racconto)
+      ? p.racconto.map((c) => [c.titolo, c.testo])
+      : [['La richiesta', p.racconto.richiesta], ['Il progetto', p.racconto.progetto], ['Il cantiere', p.racconto.cantiere], ['La consegna', p.racconto.consegna]];
+    // durata in mesi -> "18 mesi", "2 anni", "1 anno e mezzo"
+    const fmtDurata = (m) => {
+      if (m >= 12 && m % 12 === 0) return m === 12 ? '1 anno' : `${m / 12} anni`;
+      if (m >= 12 && m % 12 === 6) { const a = (m - 6) / 12; return `${a} ann${a === 1 ? 'o' : 'i'} e mezzo`; }
+      return `${m} ${m === 1 ? 'mese' : 'mesi'}`;
+    };
     const pd = p.prima_dopo;
     const gal = p.galleria || [];
     const galMode = gal.length >= 3 ? 'h' : 'g';
@@ -221,6 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <a href="progetti.html" class="meta back-link"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M16 5H1M5 1L1 5l4 4" stroke="currentColor"/></svg>Tutti i progetti</a>
           <span class="meta">Progetto <b>${p.numero}</b> / ${String(progetti.length).padStart(2, '0')}</span>
         </div>
+        ${p.occhiello ? `<p class="pp-kicker meta" data-fade>${esc(p.occhiello)}</p>` : ''}
         <h1 class="pp-title" id="pp-title" data-split="hero">${p.titolo_html}</h1>
         <div class="pp-hero__grid">
           <p class="pp-hero__lead" data-fade>${esc(p.estratto)}</p>
@@ -230,7 +240,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div><dt>Superficie</dt><dd>${fmtNum(p.superficie)} m²</dd></div>
             <div><dt>Tipologia</dt><dd>${esc(p.tipologia)}</dd></div>
             <div><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
-            <div><dt>Durata</dt><dd>${p.durata} ${p.durata === 1 ? 'mese' : 'mesi'}</dd></div>
+            <div><dt>Durata</dt><dd>${fmtDurata(p.durata)}</dd></div>
           </dl>
         </div>
       </section>
@@ -251,7 +261,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="pp-line" aria-hidden="true"><i></i></div>
           ${chapters.map(([t, txt], k) => `
             <article class="ch">
-              <span class="ch__n">0${k + 1}</span>
+              <span class="ch__n">${String(k + 1).padStart(2, '0')}</span>
               <h2 class="ch__t" data-split>${t}</h2>
               <p class="ch__p" data-fade>${esc(txt)}</p>
             </article>`).join('')}
