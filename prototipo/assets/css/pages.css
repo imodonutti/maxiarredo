@@ -360,3 +360,8 @@ html:has(.header:not(.is-hidden)) .filters { top: var(--header-h); }
   .art-hero__top { flex-direction: column; align-items: start; gap: .7rem; }
   .filters__label { display: none; }
 }
+
+/* ---------- Privacy: niente capolettera, link evidenti ---------- */
+.legal .prose > p:first-child::first-letter { float: none; font: inherit; padding: 0; color: inherit; }
+.legal .prose a { color: var(--c-ink); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: .2em; }
+.legal .prose strong { color: var(--c-ink); font-weight: 500; }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pronta per il lancio: gli articoli si aggiungono quando i testi sono approvati -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.maxiarredo.com/</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/progetti.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/approfondimenti.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/privacy.html</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/progetto.html?p=casa-tra-pietra-e-luce</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/progetto.html?p=cucina-sotto-gli-affreschi</loc><lastmod>2026-11-18</lastmod></url>
+  <url><loc>https://www.maxiarredo.com/progetto.html?p=open-space-contemporaneo</loc><lastmod>2026-11-18</lastmod></url>
+</urlset>

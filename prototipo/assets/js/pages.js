@@ -13,6 +13,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const page = document.body.dataset.page;
+  // Meta per motori di ricerca e condivisione sulle pagine generate (progetto, articolo)
+  const SITE = 'https://www.maxiarredo.com/';
+  const setMeta = (title, desc, path) => {
+    document.title = title;
+    const put = (sel, attr, val) => { const el = document.head.querySelector(sel); if (el) el.setAttribute(attr, val); };
+    put('meta[name="description"]', 'content', desc);
+    put('meta[property="og:title"]', 'content', title);
+    put('meta[property="og:description"]', 'content', desc);
+    let c = document.head.querySelector('link[rel="canonical"]');
+    if (!c) { c = document.createElement('link'); c.rel = 'canonical'; document.head.appendChild(c); }
+    c.href = SITE + path;
+  };
   const mm = gsap.matchMedia();
 
   /* ---------- Utilità ---------- */
@@ -61,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (page === 'progetto') await renderProgetto();
     if (page === 'approfondimenti') await renderApprofondimenti();
     if (page === 'articolo') await renderArticolo();
+    if (page === 'privacy') initIndice();
   } catch (err) {
     console.error(err);
     main.insertAdjacentHTML('beforeend', '<p class="empty container">Contenuti non disponibili. Apri la pagina dal sito (i dati arrivano da assets/data/).</p>');
@@ -103,7 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const values = (k) => [...new Set(progetti.map((p) => (k === 'tip' ? p.tipologia : p.intervento)))];
     const state = { tip: 'all', int: 'all' };
     const fwrap = $('#pj-filters');
-    fwrap.innerHTML = Object.entries(groups).map(([k, label]) => `
+    // un gruppo con un solo valore (es. tutti Residenziale) non serve: lo nascondo
+    fwrap.innerHTML = Object.entries(groups).filter(([k]) => values(k).length > 1).map(([k, label]) => `
       <div class="filters__group" role="group" aria-label="${label}">
         <span class="filters__label">${label}</span>
         <button class="fbtn is-active" data-k="${k}" data-v="all" aria-pressed="true">Tutti</button>
@@ -209,7 +223,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { progetti } = await getJSON('assets/data/progetti.json');
     const i = Math.max(0, progetti.findIndex((p) => p.slug === param('p')));
     const p = progetti[i], next = progetti[(i + 1) % progetti.length];
-    document.title = `${p.titolo} — Progetti · Maxiarredo`;
+    setMeta(`${p.titolo} — Progetti · Maxiarredo`, p.estratto, `progetto.html?p=${encodeURIComponent(p.slug)}`);
     // racconto: elenco di capitoli {titolo, testo} oppure le quattro fasi standard
     const chapters = Array.isArray(p.racconto)
       ? p.racconto.map((c) => [c.titolo, c.testo])
@@ -410,7 +424,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function renderArticolo() {
     const [{ articoli }, { progetti }] = await Promise.all([getJSON('assets/data/articoli.json'), getJSON('assets/data/progetti.json')]);
     const a = articoli.find((x) => x.slug === param('a')) || articoli[0];
-    document.title = `${a.titolo} — Approfondimenti · Maxiarredo`;
+    setMeta(`${a.titolo} — Approfondimenti · Maxiarredo`, a.estratto, `articolo.html?a=${encodeURIComponent(a.slug)}`);
     let h = 0;
     const toc = [];
     const body = a.corpo.map((b) => {
@@ -477,6 +491,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           </a>`).join('')}</div>
       </section>`;
 
+    initIndice();
+    // Copia link
+    $('#share').addEventListener('click', async (e) => {
+      try { await navigator.clipboard.writeText(location.href); e.currentTarget.textContent = 'Link copiato'; }
+      catch (err) { e.currentTarget.textContent = location.href; }
+    });
+  }
+
+  /* Indice laterale (articoli, privacy): voce attiva, salto morbido, barra di lettura */
+  function initIndice() {
     // Indice: voce attiva + salto morbido
     const links = $$('.toc a');
     $$('.prose h2').forEach((h2, k) => ScrollTrigger.create({
@@ -490,11 +514,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }));
     // Barra di lettura
     gsap.to('.rp', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.prose', start: 'top 70%', end: 'bottom 60%', scrub: 0.3 } });
-    // Copia link
-    $('#share').addEventListener('click', async (e) => {
-      try { await navigator.clipboard.writeText(location.href); e.currentTarget.textContent = 'Link copiato'; }
-      catch (err) { e.currentTarget.textContent = location.href; }
-    });
   }
 
   /* ======================================================================

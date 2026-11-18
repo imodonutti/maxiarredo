@@ -37,3 +37,17 @@ restituisca gli stessi campi (stesso JSON, altra URL) oppure che generi l'HTML c
 ## Favicon
 La X del marchio (la stessa del cursore), bronzo #8A6E3B su carta #F4F4F0:
 `favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `site.webmanifest`.
+
+## Sicurezza, SEO e privacy (18/11/2026)
+- Header di sicurezza in `nginx/sicurezza.conf` (CSP, HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options), incluso in ogni location.
+  Il sito non carica nulla da domini esterni: caratteri in `prototipo/assets/fonts/`, script del `<head>` in `assets/js/head-*.js`.
+- Dati strutturati JSON-LD (FurnitureStore + HomeAndConstructionBusiness, WebSite) in `index.html`; Open Graph e canonical su tutte le pagine
+  (progetto e articolo li aggiornano da JS). Dominio previsto: https://www.maxiarredo.com/.
+- `privacy.html`: informativa privacy e cookie (nessun cookie, solo sessionStorage `mx-nav` e localStorage `mx-pj-view`).
+
+### Checklist al lancio
+1. Togliere `X-Robots-Tag` da `nginx/sicurezza.conf` e cambiare il robots.txt in `nginx/default.conf` (testo pronto nel commento).
+2. Togliere `<meta name="robots" content="noindex, nofollow">` da tutte le pagine.
+3. Togliere le variabili BASIC_AUTH_* in Coolify.
+4. Aggiungere a `sitemap.xml` gli articoli approvati e inviarla a Google Search Console.
+5. Se il modulo Dinamoweb usa servizi esterni (reCAPTCHA, invio a un altro dominio), aggiungerli alla CSP e all'informativa privacy.
