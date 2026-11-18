@@ -28,28 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const mm = gsap.matchMedia();
 
   /* ---------- Utilità ---------- */
-  const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  // Varianti WebP generate per ogni foto: 640/1280/1920 px (solo se più piccole dell'originale) + larghezza piena (max 2560)
-  const srcset = (o) => {
-    const base = o.src.replace(/\.(jpe?g|png)$/i, '');
-    if (base === o.src) return '';
-    const ws = [640, 1280, 1920].filter((x) => x < o.w).concat(Math.min(o.w, 2560));
-    return ws.map((x) => `${esc(base)}-${x}.webp ${x}w`).join(', ');
-  };
-  const imgTag = (o, extra = '') => {
-    if (!o) return '';
-    const ss = srcset(o);
-    const sizes = /sizes=/.test(extra) ? '' : ' sizes="(min-width: 901px) 50vw, 100vw"';
-    return `<img src="${esc(o.src)}"${ss ? ` srcset="${ss}"${sizes}` : ''} alt="${esc(o.alt)}" width="${o.w}" height="${o.h}" decoding="async" ${extra}>`;
-  };
+  // Modelli e utilità condivise con lo script di generazione (assets/js/modelli.js)
+  const { esc, imgTag, fmtNum, arrow, projUrl, servUrl } = MX;
   const fmtDate = (iso, opt = { day: 'numeric', month: 'long', year: 'numeric' }) => new Intl.DateTimeFormat('it-IT', opt).format(new Date(iso));
-  const fmtNum = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // 1200 -> 1.200 (Intl it-IT non raggruppa le 4 cifre)
-  const arrow = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 9h16M10 2l7 7-7 7" stroke="currentColor"/></svg>';
   const getJSON = async (url) => { const r = await fetch(url); if (!r.ok) throw new Error(url); return r.json(); };
   const param = (k) => new URLSearchParams(location.search).get(k);
-  const projUrl = (p) => `progetto.html?p=${encodeURIComponent(p.slug)}`;
   const artUrl = (a) => `articolo.html?a=${encodeURIComponent(a.slug)}`;
-  const servUrl = () => 'index.html#servizi';
 
   /* ---------- Scorrimento morbido ---------- */
   let lenis = null;
@@ -107,35 +91,19 @@ document.addEventListener('DOMContentLoaded', async () => {
      PROGETTI — elenco con filtri e due viste
      ====================================================================== */
   async function renderProgetti() {
-    const { progetti } = await getJSON('assets/data/progetti.json');
     const wrap = $('#pj-wrap'), list = $('.pj-list', wrap);
-    $('#pj-total').textContent = String(progetti.length).padStart(2, '0');
-
-    list.innerHTML = progetti.map((p, k) => `
-      <a href="${projUrl(p)}" class="pj" role="listitem" data-cursor="Scopri" data-tip="${esc(p.tipologia)}" data-int="${esc(p.intervento)}" data-slug="${esc(p.slug)}">
-          <figure class="pj__media"><div class="pj__img">${imgTag(p.copertina, (k === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' sizes="(min-width: 901px) 50vw, 100vw"')}</div></figure>
-          <span class="pj__num">${p.numero}</span>
-          <h2 class="pj__title">${p.titolo_html}</h2>
-          <span class="pj__place">${esc(p.luogo)}</span>
-          <span class="pj__year">${p.anno}</span>
-          <span class="pj__type">${esc(p.tipologia)}</span>
-          <span class="pj__arrow">${arrow}</span>
-      </a>`).join('');
+    const fwrap = $('#pj-filters');
+    // Pagina generata (strumenti/genera.js): schede e filtri sono già nell'HTML
+    if (!$('.pj', list)) {
+      const { progetti } = await getJSON('/assets/data/progetti.json');
+      $('#pj-total').textContent = String(progetti.length).padStart(2, '0');
+      list.innerHTML = MX.cards(progetti);
+      fwrap.innerHTML = MX.filtri(progetti);
+    }
+    const covers = $$('.pj', list).map((el) => ({ slug: el.dataset.slug, src: $('img', el).getAttribute('src') }));
 
     // Filtri: tipologia e intervento (si combinano)
-    const groups = { tip: 'Tipologia', int: 'Intervento' };
-    const SHORT = { 'Ristrutturazione completa': 'Ristrutturazione', 'Arredamento su misura': 'Su misura' };   // etichette brevi nei filtri
-    const values = (k) => [...new Set(progetti.map((p) => (k === 'tip' ? p.tipologia : p.intervento)))];
     const state = { tip: 'all', int: 'all' };
-    const fwrap = $('#pj-filters');
-    // un gruppo con un solo valore (es. tutti Residenziale) non serve: lo nascondo
-    fwrap.innerHTML = Object.entries(groups).filter(([k]) => values(k).length > 1).map(([k, label]) => `
-      <div class="filters__group" role="group" aria-label="${label}">
-        <span class="filters__label">${label}</span>
-        <button class="fbtn is-active" data-k="${k}" data-v="all" aria-pressed="true">Tutti</button>
-        ${values(k).map((v) => `<button class="fbtn" data-k="${k}" data-v="${esc(v)}" aria-pressed="false">${esc(SHORT[v] || v)}<sup></sup></button>`).join('')}
-      </div>`).join('');
-
     const items = $$('.pj', list);
     const match = (el, s = state) => (s.tip === 'all' || el.dataset.tip === s.tip) && (s.int === 'all' || el.dataset.int === s.int);
     const updateCounts = () => {
@@ -206,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const peek = document.createElement('div');
       peek.className = 'pj-peek';
       peek.setAttribute('aria-hidden', 'true');
-      peek.innerHTML = progetti.map((p) => `<img data-slug="${esc(p.slug)}" src="${esc(p.copertina.src)}" alt="" loading="lazy">`).join('');
+      peek.innerHTML = covers.map((c) => `<img data-slug="${esc(c.slug)}" src="${esc(c.src)}" alt="" loading="lazy">`).join('');
       document.body.appendChild(peek);
       const px = gsap.quickTo(peek, 'x', { duration: 0.7, ease: 'power3' });
       const py = gsap.quickTo(peek, 'y', { duration: 0.7, ease: 'power3' });
@@ -232,113 +200,13 @@ document.addEventListener('DOMContentLoaded', async () => {
      PROGETTO — pagina singola
      ====================================================================== */
   async function renderProgetto() {
-    const { progetti } = await getJSON('assets/data/progetti.json');
-    const i = Math.max(0, progetti.findIndex((p) => p.slug === param('p')));
-    const p = progetti[i], next = progetti[(i + 1) % progetti.length];
-    setMeta(`${p.titolo} — Progetti · Maxiarredo`, p.estratto, `progetto.html?p=${encodeURIComponent(p.slug)}`);
-    // racconto: elenco di capitoli {titolo, testo} oppure le quattro fasi standard
-    const chapters = Array.isArray(p.racconto)
-      ? p.racconto.map((c) => [c.titolo, c.testo])
-      : [['La richiesta', p.racconto.richiesta], ['Il progetto', p.racconto.progetto], ['Il cantiere', p.racconto.cantiere], ['La consegna', p.racconto.consegna]];
-    // durata in mesi -> "18 mesi", "2 anni", "1 anno e mezzo"
-    const fmtDurata = (m) => {
-      if (m >= 12 && m % 12 === 0) return m === 12 ? '1 anno' : `${m / 12} anni`;
-      if (m >= 12 && m % 12 === 6) { const a = (m - 6) / 12; return `${a} ann${a === 1 ? 'o' : 'i'} e mezzo`; }
-      return `${m} ${m === 1 ? 'mese' : 'mesi'}`;
-    };
-    const pd = p.prima_dopo;
-    const gal = p.galleria || [];
-    const galMode = gal.length >= 3 ? 'h' : 'g';
-
-    main.innerHTML = `
-      <section class="pg-hero container" aria-labelledby="pp-title">
-        <div class="pp-hero__top">
-          <a href="progetti.html" class="meta back-link"><svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true"><path d="M16 5H1M5 1L1 5l4 4" stroke="currentColor"/></svg>Tutti i progetti</a>
-          <span class="meta">Progetto <b>${p.numero}</b> / ${String(progetti.length).padStart(2, '0')}</span>
-        </div>
-        ${p.occhiello ? `<p class="pp-kicker meta" data-fade>${esc(p.occhiello)}</p>` : ''}
-        <h1 class="pp-title" id="pp-title" data-split="hero">${p.titolo_html}</h1>
-        <div class="pp-hero__grid">
-          <p class="pp-hero__lead" data-fade>${esc(p.estratto)}</p>
-          <dl class="spec" data-fade>
-            <div><dt>Luogo</dt><dd>${esc(p.luogo)}</dd></div>
-            <div><dt>Anno</dt><dd>${p.anno}</dd></div>
-            <div><dt>Superficie</dt><dd>${fmtNum(p.superficie)} m²</dd></div>
-            <div><dt>Tipologia</dt><dd>${esc(p.tipologia)}</dd></div>
-            <div><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
-            <div><dt>Durata</dt><dd>${fmtDurata(p.durata)}</dd></div>
-          </dl>
-        </div>
-      </section>
-
-      <figure class="pp-cover" data-cursor="${esc(p.luogo)}">${imgTag(p.copertina, 'fetchpriority="high" sizes="100vw"')}
-        <figcaption class="pp-cover__cap meta">${esc(p.luogo)} — ${p.anno}</figcaption></figure>
-
-      <section class="pp-story container" aria-label="Il racconto del progetto">
-        <aside class="pp-aside">
-          <p class="pp-aside__title">Il progetto<br>in breve</p>
-          <div>
-            <span class="meta" style="display:block;margin-bottom:.8rem">Servizi coinvolti</span>
-            <ul class="pp-services">${p.servizi.map((s) => `<li><a href="${servUrl(s)}">${esc(s.nome)}${arrow}</a></li>`).join('')}</ul>
-          </div>
-          <a href="index.html#contatti" class="btn js-magnetic"><span class="btn__dot"></span>Parliamo del tuo progetto</a>
-        </aside>
-        <div class="pp-chapters">
-          <div class="pp-line" aria-hidden="true"><i></i></div>
-          ${chapters.map(([t, txt], k) => `
-            <article class="ch">
-              <span class="ch__n">${String(k + 1).padStart(2, '0')}</span>
-              <h2 class="ch__t" data-split>${t}</h2>
-              <p class="ch__p" data-fade>${esc(txt)}</p>
-            </article>`).join('')}
-        </div>
-      </section>
-
-      ${p.citazione ? `
-      <figure class="pp-quote container">
-        <blockquote class="js-words">${esc(p.citazione.testo)}</blockquote>
-        <figcaption class="meta">— ${esc(p.citazione.autore)}</figcaption>
-      </figure>` : ''}
-
-      ${pd ? `
-      <section class="pp-ba container" aria-labelledby="ba-title">
-        <div class="pp-ba__head">
-          <h2 class="title title--h2" id="ba-title" data-split>Dal disegno<br>al <em>realizzato</em>.</h2>
-          <p class="text" data-fade style="max-width:34ch">Trascina per confrontare la tavola di progetto con lo spazio finito.</p>
-        </div>
-        <div class="cmp" id="cmp" role="slider" tabindex="0" aria-label="Confronta disegno e realizzato" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" data-cursor="Trascina">
-          ${imgTag(pd.dopo, 'loading="lazy"')}
-          <div class="cmp__top">${imgTag(pd.prima, 'loading="lazy"')}</div>
-          <span class="cmp__lab cmp__lab--l meta">${esc(pd.etichette[0])}</span>
-          <span class="cmp__lab cmp__lab--r meta">${esc(pd.etichette[1])}</span>
-          <span class="cmp__bar"></span>
-          <span class="cmp__knob"><svg width="26" height="10" viewBox="0 0 26 10" fill="none"><path d="M5 1L1 5l4 4M21 1l4 4-4 4M1 5h24" stroke="currentColor"/></svg></span>
-        </div>
-      </section>` : ''}
-
-      ${gal.length ? `
-      <section class="pp-gal pp-gal--${galMode}" aria-label="Galleria">
-        <div class="pp-gal__stage">
-          <div class="pp-gal__head container">
-            <h2 class="title title--h3" data-split>Galleria</h2>
-            <span class="pp-gal__count"><b class="js-gal-n">01</b> / ${String(gal.length).padStart(2, '0')}</span>
-          </div>
-          <div class="pp-gal__track ${galMode === 'g' ? 'container' : ''}">
-            ${gal.map((g) => `<figure class="pp-gal__item"><div class="gimg">${imgTag(g, 'loading="lazy"')}</div>${g.didascalia ? `<figcaption class="meta">${esc(g.didascalia)}</figcaption>` : ''}</figure>`).join('')}
-          </div>
-        </div>
-      </section>` : ''}
-
-      <a href="${projUrl(next)}" class="pp-next" data-cursor="Avanti">
-        <div class="pp-next__img">${imgTag(next.copertina, 'loading="lazy"')}</div>
-        <div class="pp-next__in">
-          <span class="meta">Progetto successivo — ${next.numero}</span>
-          <div>
-            <p class="pp-next__t">${next.titolo_html}</p>
-            <span class="pp-next__go" style="margin-top:2rem"><i>${arrow}</i>${esc(next.luogo)} · ${next.anno}</span>
-          </div>
-        </div>
-      </a>`;
+    // Pagina generata (strumenti/genera.js): il contenuto è già nell'HTML
+    if (!$('[data-statico]', main)) {
+      const { progetti } = await getJSON('/assets/data/progetti.json');
+      const p = progetti.find((x) => x.slug === (param('p') || document.body.dataset.slug)) || progetti[0];
+      setMeta(`${p.titolo} — Progetti · Maxiarredo`, p.estratto, `progetti/${encodeURIComponent(p.slug)}/`);
+      main.innerHTML = MX.progetto(p, progetti);
+    }
 
     // Confronto disegno / realizzato
     const cmp = $('#cmp');
@@ -367,7 +235,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      APPROFONDIMENTI — elenco
      ====================================================================== */
   async function renderApprofondimenti() {
-    const { articoli } = await getJSON('assets/data/articoli.json');
+    const { articoli } = await getJSON('/assets/data/articoli.json');
     articoli.sort((a, b) => b.data.localeCompare(a.data));
     const feat = articoli.find((a) => a.in_evidenza) || articoli[0];
     $('#ar-total').textContent = String(articoli.length).padStart(2, '0');
@@ -434,7 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      ARTICOLO
      ====================================================================== */
   async function renderArticolo() {
-    const [{ articoli }, { progetti }] = await Promise.all([getJSON('assets/data/articoli.json'), getJSON('assets/data/progetti.json')]);
+    const [{ articoli }, { progetti }] = await Promise.all([getJSON('/assets/data/articoli.json'), getJSON('/assets/data/progetti.json')]);
     const a = articoli.find((x) => x.slug === param('a')) || articoli[0];
     setMeta(`${a.titolo} — Approfondimenti · Maxiarredo`, a.estratto, `articolo.html?a=${encodeURIComponent(a.slug)}`);
     let h = 0;

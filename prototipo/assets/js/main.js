@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const txt = el.dataset.roll;
     const digits = [...txt].filter((ch) => /\d/.test(ch)).length;
     let pos = 0;
-    el.setAttribute('aria-label', txt);
+    el.setAttribute('role', 'img'); el.setAttribute('aria-label', txt);   // il numero letto come uno solo
     el.innerHTML = '';
     const wrap = document.createElement('span');
     wrap.className = 'roll'; wrap.setAttribute('aria-hidden', 'true');

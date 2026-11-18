@@ -60,3 +60,15 @@ Sezione tolta dal sito (18/11/2026), verrà sviluppata in seguito: pagine e dati
   `pages.js` (imgTag) e `index.html` le usano con `srcset`. **Foto nuova = generare le varianti** con la stessa regola (Pillow, qualità 78).
 - `progetti.json` precaricato; il footer resta sotto la piega finché i contenuti arrivano (niente salti di layout).
 - Lighthouse mobile in locale: home ~90, Progetti 96, Progetto ~91, Privacy 96. Il limite della home è l'apertura animata: il testo compare a sipario alzato.
+
+## Pagine generate, SEO e agenti AI (18/11/2026)
+- Le pagine dei progetti sono **generate complete** da `prototipo/assets/data/progetti.json` con `node strumenti/genera.js`:
+  `prototipo/progetti/index.html` (archivio) e `prototipo/progetti/<slug>/index.html`, più `sitemap.xml` e `llms.txt`.
+  Il Dockerfile le rigenera a ogni deploy: per aggiornare un progetto basta modificare il JSON e pubblicare.
+  I modelli delle pagine sono in `strumenti/modelli/` (header/footer) e `prototipo/assets/js/modelli.js` (contenuto, condiviso con il browser).
+- Indirizzi puliti: `/progetti/` e `/progetti/<slug>/`; `progetti.html` e `progetto.html?p=<slug>` fanno redirect 301.
+  Tutti i link interni partono dalla radice (`/assets/...`, `/#contatti`).
+- Ogni progetto ha titolo, descrizione, canonical, Open Graph con la sua copertina e JSON-LD (CreativeWork + BreadcrumbList).
+- `llms.txt`: scheda del sito per assistenti e agenti AI. Al lancio robots.txt ammette tutti i bot, AI comprese (scelta del cliente).
+- Accessibilità (utile anche agli agenti): contrasti AA (`--c-muted` più scuro, `--c-accent-ink` per i testi piccoli in bronzo),
+  aree di tocco di 24 px, titoli del footer in ordine, nessun link vuoto ("Scopri il servizio" -> "Chiedi una consulenza" verso #contatti).
