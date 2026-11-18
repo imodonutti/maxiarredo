@@ -1,5 +1,5 @@
 {
- "nota": "Progetti 01-03: testi e dati forniti dal cliente (novembre 2026). Gli altri progetti sono ancora SIMULATI.",
+ "nota": "Progetti 01-03: testi e dati forniti dal cliente (novembre 2026). Progetti 04-10: testi da confermare con il cliente.",
  "servizi": {
   "progettazione": "Progettazione d'interni",
   "illuminotecnica": "Illuminotecnica",
@@ -277,10 +277,6 @@
     "cantiere": "Nessuna opera muraria: rilievo millimetrico, produzione nelle nostre falegnamerie e montaggio in dieci giorni.",
     "consegna": "L'ultimo pezzo è stato il lampadario, scelto in showroom insieme ai proprietari."
    },
-   "citazione": {
-    "testo": "Ogni anta si apre dove ti aspetti che si apra. Sembra una cosa da poco, ma non lo è.",
-    "autore": "S., Parma"
-   },
    "numero": "04",
    "prima_dopo": null
   },
@@ -348,10 +344,6 @@
     "cantiere": "Tre settimane di produzione in falegnameria e due giorni di montaggio.",
     "consegna": "Il disegno a matita e la parete finita coincidono: è la prova del metodo."
    },
-   "citazione": {
-    "testo": "Il disegno che ci avevano mostrato era identico al risultato. Fino all'ultima mensola.",
-    "autore": "R., Piacenza"
-   },
    "numero": "05"
   },
   {
@@ -413,10 +405,6 @@
     "progetto": "Invece di aprire tracce abbiamo scelto una lampada ad arco e disegnato attorno a lei tavolo, sedute e parete attrezzata.",
     "cantiere": "Nessun cantiere: solo arredi e una posa di due giorni.",
     "consegna": "La luce cade esattamente al centro del tavolo, come nel disegno."
-   },
-   "citazione": {
-    "testo": "Ci siamo innamorati della lampada in showroom e loro hanno costruito la stanza attorno.",
-    "autore": "C. e P., Salsomaggiore Terme"
    },
    "numero": "06"
   },
@@ -483,10 +471,6 @@
     "progetto": "Niente pensili: mensole sospese e una vetrina in bronzo che contiene dispensa e cristalleria, illuminata dall'interno.",
     "cantiere": "Tre mesi tra disegno esecutivo, campionature del bronzo e montaggio.",
     "consegna": "Dal soggiorno si vede una libreria, non una cucina."
-   },
-   "citazione": {
-    "testo": "Gli ospiti ci chiedono dove sia la cucina. Ed è proprio lì.",
-    "autore": "E., Lodi"
    },
    "numero": "07"
   },
@@ -557,10 +541,6 @@
     "progetto": "Abbiamo conservato boiserie e cornici e inserito tra loro elementi contemporanei: una cabina armadio a doghe, una parete living con vetrine.",
     "cantiere": "Sette mesi, impianti completamente rifatti e cinque imprese coordinate da un unico referente.",
     "consegna": "Una casa d'epoca che funziona come una casa nuova."
-   },
-   "citazione": {
-    "testo": "Avevamo paura di perdere il fascino della casa. È ancora tutto lì, solo che adesso ci si vive bene.",
-    "autore": "D. e M., Parma"
    },
    "numero": "08",
    "prima_dopo": null
@@ -648,10 +628,6 @@
     "cantiere": "Dodici mesi di lavori, a showroom aperto, un piano alla volta.",
     "consegna": "Lo spazio cambia ogni stagione: è un progetto che non finisce mai."
    },
-   "citazione": {
-    "testo": "È il progetto in cui siamo stati, per una volta, il cliente di noi stessi.",
-    "autore": "Maxiarredo"
-   },
    "numero": "09",
    "prima_dopo": null
   },
@@ -715,10 +691,6 @@
     "progetto": "Abbiamo diviso il cantiere in quattro fasi e progettato ogni stanza perché potesse essere consegnata da sola.",
     "cantiere": "Lavori rumorosi la sera e il sabato, traslochi interni nel fine settimana, un referente sempre presente.",
     "consegna": "Lo studio non ha perso un appuntamento."
-   },
-   "citazione": {
-    "testo": "Il lunedì mattina trovavamo ogni volta una stanza nuova, pulita e pronta.",
-    "autore": "Studio associato, Cremona"
    },
    "numero": "10",
    "prima_dopo": null

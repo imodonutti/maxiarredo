@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       ${p.citazione ? `
       <figure class="pp-quote container">
         <blockquote class="js-words">${esc(p.citazione.testo)}</blockquote>
-        <figcaption class="meta">— ${esc(p.citazione.autore)} <span class="placeholder-note" style="margin-left:.6rem">Testimonianza simulata</span></figcaption>
+        <figcaption class="meta">— ${esc(p.citazione.autore)}</figcaption>
       </figure>` : ''}
 
       ${pd ? `
