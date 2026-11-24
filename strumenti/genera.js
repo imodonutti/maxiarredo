@@ -108,7 +108,7 @@ for (const p of progetti) {
     '@graph': [
       { '@type': 'CreativeWork', '@id': url + '#progetto', url, name: p.titolo, alternativeHeadline: p.occhiello || undefined,
         description: p.estratto, abstract: testi.join(' '), inLanguage: 'it-IT',
-        dateCreated: String(p.anno), genre: `${p.tipologia} · ${p.intervento}`,
+        genre: `${p.tipologia} · ${p.intervento}`,
         image: [img.src, ...(p.galleria || []).map((g) => immagineAbs(g).src)],
         locationCreated: { '@type': 'Place', name: p.luogo, address: { '@type': 'PostalAddress', addressLocality: p.luogo, addressCountry: 'IT' } },
         size: `${MX.fmtNum(p.superficie)} m²`,
@@ -130,7 +130,7 @@ for (const p of progetti) {
 
 /* ---------- llms.txt: scheda del sito per assistenti e agenti AI (https://llmstxt.org) ---------- */
 {
-  const elenco = progetti.map((p) => `- [${p.titolo}](${BASE}${MX.projUrl(p).slice(1)}): ${p.occhiello ? p.occhiello + '. ' : ''}${p.estratto} (${p.luogo}, ${p.anno}, ${MX.fmtNum(p.superficie)} m², ${p.intervento.toLowerCase()})`).join('\n');
+  const elenco = progetti.map((p) => `- [${p.titolo}](${BASE}${MX.projUrl(p).slice(1)}): ${p.occhiello ? p.occhiello + '. ' : ''}${p.estratto} (${p.luogo}, ${MX.fmtNum(p.superficie)} m², ${p.intervento.toLowerCase()})`).join('\n');
   const nomiServizi = Object.values(servizi || {});
   const md = `# Maxiarredo
 
@@ -145,7 +145,7 @@ for (const p of progetti) {
 ## Pagine principali
 
 - [Home](${BASE}): metodo di lavoro in cinque fasi, servizi, progetti in evidenza, showroom su tre piani, contatti e richiesta di consulenza.
-- [Progetti](${BASE}progetti/): archivio dei progetti realizzati, con luogo, anno, superficie, tipo di intervento e racconto.
+- [Progetti](${BASE}progetti/): archivio dei progetti realizzati, con luogo, superficie, tipo di intervento e racconto.
 - [Contatti e consulenza](${BASE}#contatti): indirizzo, telefoni, orari e modulo per prenotare una consulenza in showroom.
 
 ## Servizi

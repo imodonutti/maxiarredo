@@ -26,7 +26,7 @@ I contenuti arrivano da `prototipo/assets/data/progetti.json` e `articoli.json` 
 `assets/js/pages.js` li legge con `fetch` e costruisce le pagine: per collegare il CMS basta che
 restituisca gli stessi campi (stesso JSON, altra URL) oppure che generi l'HTML con le stesse classi.
 - Progetto: slug, numero, titolo, titolo_html (con <em> per la parola in corsivo), estratto, tipologia,
-  intervento, luogo, anno, superficie (m²), durata (mesi), servizi[{slug,nome}], copertina{src,alt,w,h},
+  intervento, luogo, superficie (m²), durata (mesi), servizi[{slug,nome}], copertina{src,alt,w,h},
   galleria[{src,alt,w,h,didascalia}], prima_dopo{prima,dopo,etichette} (facoltativo),
   racconto: elenco di capitoli [{titolo,testo}] (oppure, vecchio formato, {richiesta,progetto,cantiere,consegna}),
   occhiello (facoltativo, sopra il titolo), citazione{testo,autore} (facoltativa).

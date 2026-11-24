@@ -50,7 +50,6 @@
           <span class="pj__num">${p.numero}</span>
           <h2 class="pj__title">${p.titolo_html}</h2>
           <span class="pj__place">${esc(p.luogo)}</span>
-          <span class="pj__year">${p.anno}</span>
           <span class="pj__type">${esc(p.tipologia)}</span>
           <span class="pj__arrow">${arrow}</span>
       </a>`).join('');
@@ -90,17 +89,16 @@
           <p class="pp-hero__lead" data-fade>${esc(p.estratto)}</p>
           <dl class="spec" data-fade>
             <div><dt>Luogo</dt><dd>${esc(p.luogo)}</dd></div>
-            <div><dt>Anno</dt><dd>${p.anno}</dd></div>
             <div><dt>Superficie</dt><dd>${fmtNum(p.superficie)} m²</dd></div>
-            <div><dt>Tipologia</dt><dd>${esc(p.tipologia)}</dd></div>
-            <div><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
             <div><dt>Durata</dt><dd>${fmtDurata(p.durata)}</dd></div>
+            <div><dt>Tipologia</dt><dd>${esc(p.tipologia)}</dd></div>
+            <div class="spec__wide"><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
           </dl>
         </div>
       </section>
 
       <figure class="pp-cover" data-cursor="${esc(p.luogo)}">${imgTag(p.copertina, 'fetchpriority="high" sizes="100vw"')}
-        <figcaption class="pp-cover__cap meta">${esc(p.luogo)} — ${p.anno}</figcaption></figure>
+        <figcaption class="pp-cover__cap meta">${esc(p.luogo)}</figcaption></figure>
 
       <section class="pp-story container" aria-label="Il racconto del progetto">
         <aside class="pp-aside">
@@ -163,7 +161,7 @@
           <span class="meta">Progetto successivo — ${next.numero}</span>
           <div>
             <p class="pp-next__t">${next.titolo_html}</p>
-            <span class="pp-next__go" style="margin-top:2rem"><i>${arrow}</i>${esc(next.luogo)} · ${next.anno}</span>
+            <span class="pp-next__go" style="margin-top:2rem"><i>${arrow}</i>${esc(next.luogo)}</span>
           </div>
         </div>
       </a>`;
