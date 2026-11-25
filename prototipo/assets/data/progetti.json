@@ -20,6 +20,7 @@
    "luogo": "Provincia di Parma",
    "superficie": 1200,
    "durata": 24,
+   "ambienti": "Casa, foresteria, cantina, piscina",
    "servizi": [
     {
      "slug": "progettazione",
@@ -95,6 +96,7 @@
    "luogo": "Piacenza",
    "superficie": 200,
    "durata": 24,
+   "ambienti": "Studio, zona tv e relax",
    "servizi": [
     {
      "slug": "progettazione",
@@ -163,6 +165,7 @@
    "luogo": "Provincia di Piacenza",
    "superficie": 180,
    "durata": 18,
+   "ambienti": "Zona giorno, pergola, zona notte",
    "servizi": [
     {
      "slug": "progettazione",

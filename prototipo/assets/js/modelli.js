@@ -92,7 +92,8 @@
             <div><dt>Superficie</dt><dd>${fmtNum(p.superficie)} m²</dd></div>
             <div><dt>Durata</dt><dd>${fmtDurata(p.durata)}</dd></div>
             <div><dt>Tipologia</dt><dd>${esc(p.tipologia)}</dd></div>
-            <div class="spec__wide"><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
+            <div${p.ambienti ? '' : ' class="spec__wide"'}><dt>Intervento</dt><dd>${esc(p.intervento)}</dd></div>
+            ${p.ambienti ? `<div><dt>Ambienti</dt><dd>${esc(p.ambienti)}</dd></div>` : ''}
           </dl>
         </div>
       </section>

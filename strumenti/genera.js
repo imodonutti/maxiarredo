@@ -130,7 +130,7 @@ for (const p of progetti) {
 
 /* ---------- llms.txt: scheda del sito per assistenti e agenti AI (https://llmstxt.org) ---------- */
 {
-  const elenco = progetti.map((p) => `- [${p.titolo}](${BASE}${MX.projUrl(p).slice(1)}): ${p.occhiello ? p.occhiello + '. ' : ''}${p.estratto} (${p.luogo}, ${MX.fmtNum(p.superficie)} m², ${p.intervento.toLowerCase()})`).join('\n');
+  const elenco = progetti.map((p) => `- [${p.titolo}](${BASE}${MX.projUrl(p).slice(1)}): ${p.occhiello ? p.occhiello + '. ' : ''}${p.estratto} (${p.luogo}, ${MX.fmtNum(p.superficie)} m², ${p.intervento.toLowerCase()}${p.ambienti ? '; ambienti: ' + p.ambienti.toLowerCase() : ''})`).join('\n');
   const nomiServizi = Object.values(servizi || {});
   const md = `# Maxiarredo
 
