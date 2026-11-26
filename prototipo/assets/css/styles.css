@@ -265,7 +265,8 @@ html.lenis, html.lenis body { height: auto; }
   border-color: var(--c-line);
 }
 .header.is-hidden { transform: translateY(-100%); }
-.logo { display: block; width: clamp(150px, 12vw, 190px); color: var(--c-accent); }   /* marchio in bronzo (richiesta cliente 26/11) */
+.logo { display: block; width: clamp(150px, 12vw, 190px); color: var(--c-ink); }
+.logo .logo__x { fill: var(--c-accent); }   /* solo la X in bronzo, come nel footer (richiesta cliente 26/11) */
 .logo__svg { width: 100%; height: auto; display: block; }
 .logo__sub { opacity: .55; }
 
@@ -869,10 +870,11 @@ html.intro .loader { display: block; position: fixed; inset: 0; z-index: 200; cu
 html.intro .header .logo { opacity: 0; }
 .loader__bg { position: absolute; inset: 0; background: var(--c-paper); }
 .loader__mark { position: absolute; left: 50%; top: 50%; width: min(70vw, 760px); transform: translate(-50%, -50%); }
-.loader__svg { display: block; width: 100%; height: auto; overflow: visible; color: var(--c-accent); }
+.loader__svg { display: block; width: 100%; height: auto; overflow: visible; color: var(--c-ink); }
 .ld-g { stroke: var(--c-accent); stroke-width: .5; stroke-dasharray: 0 99999; }   /* invisibili finché JS non misura le linee */
-.ld-l { fill: var(--c-accent); fill-opacity: 0; stroke: var(--c-accent); stroke-width: .55; stroke-dasharray: 0 99999; }
-.ld-s { fill: var(--c-accent); opacity: 0; }
+.ld-l { fill: var(--c-ink); fill-opacity: 0; stroke: var(--c-ink); stroke-width: .55; stroke-dasharray: 0 99999; }
+.ld-s { fill: var(--c-ink); opacity: 0; }
+.ld-x { fill: var(--c-accent); stroke: var(--c-accent); }   /* nell'apertura la X resta in bronzo */
 .loader__foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: var(--gutter); display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
 .loader__count { font-variant-numeric: tabular-nums; color: var(--c-ink); font-size: .8rem; }
 @media (max-width: 900px) {
